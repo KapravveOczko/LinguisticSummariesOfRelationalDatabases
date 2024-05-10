@@ -4,6 +4,8 @@ from waterTmpSurface import print_water_temp_surface
 from depth import print_water_depth
 from salinityDepth import print_water_salinity_depth
 from salinitySurface import print_water_salinity_surface
+from waveFrequency import print_wave_frequency
+from waveHight import print_wave_high
 
 if __name__ == '__main__':
     # print_linguistic_quantifiers()
@@ -11,4 +13,6 @@ if __name__ == '__main__':
     # print_water_temp_surface()
     # print_water_depth()
     # print_water_salinity_depth()
-    print_water_salinity_surface()
+    # print_water_salinity_surface()
+    # print_wave_frequency()
+    print_wave_high()
