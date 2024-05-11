@@ -13,9 +13,7 @@ def no_salty(x):
 
 
 def moderately_salty(x):
-    if x <= 24:
-        return 0
-    elif 24 < x <= 26:
+    if 24 < x <= 26:
         return (x - 24) / 2
     elif 26 < x <= 30.5:
         return 1
@@ -26,10 +24,8 @@ def moderately_salty(x):
 
 
 def strong(x):
-    if x <= 30:
-        return 0
-    elif 30 < x < 34:
-        return (x - 30) / 4
+    if 30.5 < x < 34:
+        return (x - 30.5) / 3.5
     elif x == 34:
         return 1
     elif 34 < x <= 36:

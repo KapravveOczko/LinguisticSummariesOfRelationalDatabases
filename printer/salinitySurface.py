@@ -48,7 +48,7 @@ def print_water_salinity_surface():
     plt.plot(x_values, y_s, label="silnie słona")
     plt.plot(x_values, y_ss, label="bardzo silnie słona")
 
-    plt.title("Funkcje przynależności dla zasolenia na dnie")
+    plt.title("Funkcje przynależności dla zasolenia na powierzchni")
     plt.xlabel("Wartość x")
     plt.ylabel("Przynależność")
     plt.legend()

@@ -45,8 +45,8 @@ def print_wave_frequency():
     plt.figure(figsize=(10, 6))
 
     plt.plot(x_values, y_ns, label="zmarszczki")
-    plt.plot(x_values, y_ms, label="rzadkie wiatrowe")
-    plt.plot(x_values, y_s, label="wiatrowe")
+    plt.plot(x_values, y_ms, label="rzadkie fale wiatrowe")
+    plt.plot(x_values, y_s, label="fale wiatrowe")
 
     plt.title("Funkcje przynależności dla częstotliwości fal")
     plt.xlabel("Wartość x")

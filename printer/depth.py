@@ -39,10 +39,8 @@ def moderately_deep(x):
 
 
 def deep(x):
-    if x <= 20:
-        return 0
-    elif 20 < x <= 29:
-        return (x - 20) / 9
+    if 21 < x <= 29:
+        return (x - 21) / 8
     elif 29 < x <= 32:
         return 1
     elif 32 < x <= 34:
