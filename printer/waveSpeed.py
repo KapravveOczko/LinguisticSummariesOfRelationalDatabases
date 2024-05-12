@@ -64,7 +64,7 @@ def print_wave_speed():
     y_hot = [fast(x) for x in x_values]
     y_really_hot = [fast_af(x) for x in x_values]
 
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(10, 4))
 
     plt.plot(x_values, y_cold, label="praktycznie bez prędkości")
     plt.plot(x_values, y_cool, label="bardzo niska prędkość")

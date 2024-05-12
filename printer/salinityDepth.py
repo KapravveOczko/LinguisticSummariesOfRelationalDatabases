@@ -52,7 +52,7 @@ def print_water_salinity_depth():
     y_s = [strong(x) for x in x_values]
     y_ss = [really_salty(x) for x in x_values]
 
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(10, 4))
 
     plt.plot(x_values, y_ns, label="nie słona")
     plt.plot(x_values, y_ms, label="umiarkowane słona")

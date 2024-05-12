@@ -38,7 +38,7 @@ def moderate(x):
         return 0
 
 
-def warm(x):
+def high(x):
     if x <= 2.6:
         return 0
     elif 2.6 < x <= 2.7:
@@ -54,9 +54,9 @@ def print_wave_high():
     y_calm = [calm_waters(x) for x in x_values]
     y_moderate = [low_waves(x) for x in x_values]
     y_x = [moderate(x) for x in x_values]
-    y_high = [warm(x) for x in x_values]
+    y_high = [high(x) for x in x_values]
 
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(10, 4))
 
     plt.plot(x_values, y_calm, label="spokojne morze")
     plt.plot(x_values, y_moderate, label="umiarkowana wysokość")

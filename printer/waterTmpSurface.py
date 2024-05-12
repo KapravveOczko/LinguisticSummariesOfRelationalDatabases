@@ -56,7 +56,7 @@ def print_water_temp_surface():
     y_moderate = [moderate(x) for x in x_values]
     y_warm = [warm(x) for x in x_values]
 
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(10, 4))
 
     plt.plot(x_values, y_cold, label="zimna")
     plt.plot(x_values, y_cool, label="chłodna")

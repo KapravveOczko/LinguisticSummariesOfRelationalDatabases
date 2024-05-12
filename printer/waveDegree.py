@@ -2,86 +2,169 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def north(x):
-    if x <= 12.5:
+    if x <= 0:
         return 1
-    elif 12.5 < x <= 32.5:
-        return (32.5 - x) / 20
-    elif 327.5 < x <= 347.5:
-        return (x - 327.5) / 20
-    elif x >= 347.5:
+    elif 0 < x <= 32.5:
+        return (32.5 - x) / 32.5
+    elif 327.5 < x <= 360:
+        return (x - 327.5) / 32.5
+    elif x >= 360:
         return 1
     else:
         return 0
 
 def northeast(x):
-    if 12.5 < x <= 32.5:
-        return (x - 12.5) / 20
-    elif 32.5 < x <= 57.5:
+    if 12.5 < x <= 45:
+        return (x - 12.5) / 32.5
+    elif x == 45:
         return 1
-    elif 57.5 < x <= 77.5:
-        return (77.5 - x) / 20
+    elif 45 <= x <= 77.5:
+        return (77.5 - x) / 32.5
     else:
         return 0
 
 def east(x):
-    if 57.5 < x <= 77.5:
-        return (x - 57.5) / 20
-    elif 77.5 < x <= 102.5:
+    if 57.5 < x <= 90:
+        return (x - 57.5) / 32.5
+    elif x == 90:
         return 1
-    elif 102.5 < x <= 122.5:
-        return (122.5 - x) / 20
+    elif 90 < x <= 122.5:
+        return (122.5 - x) / 32.5
     else:
         return 0
 
 def southeast(x):
-    if 102.5 < x <= 122.5:
-        return (x - 102.5) / 20
-    elif 122.5 < x <= 147.5:
+    if 102.5 < x <= 135:
+        return (x - 102.5) / 32.5
+    elif x == 135:
         return 1
-    elif 147.5 < x <= 167.5:
-        return (167.5 - x) / 20
+    elif 135 < x <= 167.5:
+        return (167.5 - x) / 32.5
     else:
         return 0
 
 def south(x):
-    if 147.5 < x <= 167.5:
-        return (x - 147.5) / 20
-    elif 167.5 < x <= 192.5:
+    if 147.5 < x < 180:
+        return (x - 147.5) / 32.5
+    elif x == 180:
         return 1
-    elif 192.5 < x <= 212.5:
-        return (212.5 - x) / 20
+    elif 180 < x <= 212.5:
+        return (212.5 - x) / 32.5
     else:
         return 0
 
 def southwest(x):
-    if 192.5 < x <= 212.5:
-        return (x - 192.5) / 20
-    elif 212.5 < x <= 237.5:
+    if 192.5 < x <= 225:
+        return (x - 192.5) / 32.5
+    elif x == 225:
         return 1
-    elif 237.5 < x <= 257.5:
-        return (257.5 - x) / 20
+    elif 225 < x <= 257.5:
+        return (257.5 - x) / 32.5
     else:
         return 0
 
 def west(x):
-    if 237.5 < x <= 257.5:
-        return (x - 237.5) / 20
-    elif 257.5 < x <= 282.5:
+    if 237.5 < x <= 270:
+        return (x - 237.5) / 32.5
+    elif x == 270:
         return 1
-    elif 282.5 < x <= 302.5:
-        return (302.5 - x) / 20
+    elif 270 < x <= 302.5:
+        return (302.5 - x) / 32.5
     else:
         return 0
 
 def northwest(x):
-    if 282.5 < x <= 302.5:
-        return (x - 282.5) / 20
-    elif 302.5 < x <= 327.5:
+    if 282.5 < x <= 315:
+        return (x - 282.5) / 32.5
+    elif x == 315:
         return 1
-    elif 327.5 < x <= 347.5:
-        return (347.5 - x) / 20
+    elif 315 < x <= 347.5:
+        return (347.5 - x) / 32.5
     else:
         return 0
+
+
+# def north(x):
+#     if x <= 12.5:
+#         return 1
+#     elif 12.5 < x <= 32.5:
+#         return (32.5 - x) / 20
+#     elif 327.5 < x <= 347.5:
+#         return (x - 327.5) / 20
+#     elif x >= 347.5:
+#         return 1
+#     else:
+#         return 0
+#
+# def northeast(x):
+#     if 12.5 < x <= 32.5:
+#         return (x - 12.5) / 20
+#     elif 32.5 < x <= 57.5:
+#         return 1
+#     elif 57.5 < x <= 77.5:
+#         return (77.5 - x) / 20
+#     else:
+#         return 0
+#
+# def east(x):
+#     if 57.5 < x <= 77.5:
+#         return (x - 57.5) / 20
+#     elif 77.5 < x <= 102.5:
+#         return 1
+#     elif 102.5 < x <= 122.5:
+#         return (122.5 - x) / 20
+#     else:
+#         return 0
+#
+# def southeast(x):
+#     if 102.5 < x <= 122.5:
+#         return (x - 102.5) / 20
+#     elif 122.5 < x <= 147.5:
+#         return 1
+#     elif 147.5 < x <= 167.5:
+#         return (167.5 - x) / 20
+#     else:
+#         return 0
+#
+# def south(x):
+#     if 147.5 < x <= 167.5:
+#         return (x - 147.5) / 20
+#     elif 167.5 < x <= 192.5:
+#         return 1
+#     elif 192.5 < x <= 212.5:
+#         return (212.5 - x) / 20
+#     else:
+#         return 0
+#
+# def southwest(x):
+#     if 192.5 < x <= 212.5:
+#         return (x - 192.5) / 20
+#     elif 212.5 < x <= 237.5:
+#         return 1
+#     elif 237.5 < x <= 257.5:
+#         return (257.5 - x) / 20
+#     else:
+#         return 0
+#
+# def west(x):
+#     if 237.5 < x <= 257.5:
+#         return (x - 237.5) / 20
+#     elif 257.5 < x <= 282.5:
+#         return 1
+#     elif 282.5 < x <= 302.5:
+#         return (302.5 - x) / 20
+#     else:
+#         return 0
+#
+# def northwest(x):
+#     if 282.5 < x <= 302.5:
+#         return (x - 282.5) / 20
+#     elif 302.5 < x <= 327.5:
+#         return 1
+#     elif 327.5 < x <= 347.5:
+#         return (347.5 - x) / 20
+#     else:
+#         return 0
 
 
 x_values = np.linspace(0, 360, 1000)

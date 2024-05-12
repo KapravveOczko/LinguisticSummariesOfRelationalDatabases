@@ -39,7 +39,7 @@ def print_latitude():
     y_i = [latitude_Irland(x) for x in x_values]
     y_ln = [latitude_north(x) for x in x_values]
 
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(10, 4))
 
     plt.plot(x_values, y_ls, label="południe od Irlandii")
     plt.plot(x_values, y_i, label="szerokość Irlandii")
@@ -90,13 +90,13 @@ def print_longitude():
     y_i = [longitude_Irland(x) for x in x_values]
     y_ln = [longitude_east(x) for x in x_values]
 
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(10, 4))
 
     plt.plot(x_values, y_ls, label="zachód od Irlandii")
     plt.plot(x_values, y_i, label="szerokość Irlandii")
     plt.plot(x_values, y_ln, label="wschód od Irlandii")
 
-    plt.title("Funkcje przynależności dla wysokości geograficznej na której robiony był pomiar")
+    plt.title("Funkcje przynależności dla długości geograficznej na której robiony był pomiar")
     plt.xlabel("Wartość x")
     plt.ylabel("Przynależność")
     plt.legend()

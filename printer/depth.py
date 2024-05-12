@@ -68,7 +68,7 @@ def print_water_depth():
     y_deep = [deep(x) for x in x_values]
     y_prof = [profundal(x) for x in x_values]
 
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(10, 4))
 
     plt.plot(x_values, y_surface, label="Powierzchniowe")
     plt.plot(x_values, y_shallow, label="płytko")

@@ -1,0 +1,1019 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage{listingsutf8}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{caption}
+%{Informatyka stosowana 2020, I st., semestr VI}
+
+
+\author{
+	{Kacper Czernik 242371} \\
+	{Mateusz Grzeszczak 242398}\\ 
+{Prowadzący: Dr inż. Marcin Kacprowicz }
+}
+
+\title{Komputerowe systemy rozpoznawania 2020/2021\\Projekt 2. Podsumowania lingwistyczne relacyjnych baz danych}
+\begin{document}
+\maketitle
+
+\section{Cel}
+W ramach projektu zaimplementowano aplikację umożliwiającą lingwistyczną agregację danych liczbowych z wykorzystaniem logiki rozmytej. Poprzez stworzenie struktury klas reprezentujących różne typy zbiorów rozmytych oraz operacje na nich, aplikacja generuje podsumowania lingwistyczne w języku quasi-naturalnym \cite{zadrozny06}. Dzięki interfejsowi graficznemu użytkownicy mogą dostosować generowane podsumowania poprzez wybór predefiniowanych sumaryzatorów, kwalifikatorów i kwantyfikatorów, określanie wag dla miar jakości oraz sortowanie wyników.\\ 
+
+\section{Baza danych, zmienne lingwistyczne, kwantyfikatory lingwistyczne}
+
+\subsection{Charakterystyka podsumowywanej bazy danych}
+
+W ramach projektu wybrano bazę danych \cite{dataBase}, zawierającą pomiary parametrów zbiorników wodnych wokół Irlandii. Baza ta zawiera łącznie 281 600 rekordów, jednak po wykluczeniu wartości "Null"  pozostaje ponad 210 tysięcy wyników. Zestaw danych posiada 12 kolumn możliwych do rozmycia, z których 4 zostaną połączone podczas pre-procesingu danych, w celu zachowania logicznej spójności podsumowania. Przykładowe wartości dla tego zbioru danych przedstawiono poniżej (Tabela 1). Kolumny latitude\_degrees\_north oraz longitude\_degrees\_east zostaną połączone, aby reprezentować odległość od środka Irlandii, umożliwiając identyfikację położenia pomiaru w zależności od części kraju. Analogicznie, kolumny sea\_surface\_x\_velocity\_m\_s oraz \\sea\_surface\_y\_velocity\_m\_s zostaną połączone w celu reprezentacji bezwzględnej prędkości wody, ułatwiając podsumowywanie wyników.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{assets/dataBase.png}
+\caption{Marine Institute Monthly Model Means $\epsilon$}
+\label{fig:epsilon_bat}
+\end{figure}
+
+
+\subsection{Zmienne lingwistyczne (atrybuty/własności obiektów)}
+
+W ramach projektu opisano zmienne lingwistyczne, nadając im etykiety oraz prezentując wykresy funkcji przynależności oraz wzory analityczne. Poniżej przedstawiono opisy poszczególnych zmiennych wraz z ich definicjami:
+
+\subsubsection{Miejsce pomiaru}
+
+Najbardziej niestandardową zmienną lingwistyczną utworzoną na potrzeby zadania jest miejsce pobierania pomiaru, zmienna ta składać się będzie z dwóch części: szerokości geograficznej oraz długości geograficznej. Dla obu tych części utworzone zostały osobne funkcje przynależności pozwalające na dokładne opisanie miejsca, w którym dany pomiar został zebrany. \\
+
+Poniżej znajduje się mapa na której zaznaczony został obszar poddany badaniom.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.2]{ksr/projekt_2_fuzzy/assets/map.png}
+\label{fig:epsilon_bat}
+\end{figure}
+
+\begin{equation*}
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{na zachód od Irlandii}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+1 & \text{dla } x \leq -10.5 \\
+\frac{-9 - x}{1.5} & \text{dla } -10.5 < x \leq -9 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{na połódnie od Irlandii}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+1 & \text{dla } x \leq 51.5 \\
+\frac{52 - x}{0.5} & \text{dla } 51.5 < x \leq 52 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}
+\end{minipage}
+\end{equation*}
+\begin{equation*}
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{na szerokości Irlandii}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+\frac{x - (-10.5)}{1.5} & \text{dla } -10.5 < x \leq -9 \\
+1 & \text{dla } -10.5 < x < -6.3 \\
+\frac{-5.4 - x}{0.9} & \text{dla } -6.3 < x \leq -5.4 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{na szerokości Irlandii}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+\frac{x - 51.5}{0.5} & \text{dla } 51.5 < x \leq 52 \\
+1 & \text{dla } 52 < x < 55 \\
+56 - x & \text{dla } 55 < x \leq 56 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}
+\end{minipage}
+\end{equation*}
+\begin{equation*}
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{na wschód od Irlandii}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+0 & \text{dla } x \leq -6.3 \\
+\frac{x - (-6.3)}{0.9} & \text{dla } -6.3 < x \leq -5.4 \\
+1 & \text{w przeciwnym przypadku}
+\end{cases}
+$}
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{na północ od Irlandii}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+0 & \text{dla } x \leq 55 \\
+x - 55 & \text{dla } 55 < x \leq 56 \\
+1 & \text{w przeciwnym przypadku}
+\end{cases}
+$}
+\end{minipage}
+\end{equation*}
+
+
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{cc}
+    \includegraphics[width=0.5\textwidth]{ksr/projekt_2_fuzzy/assets/longitude.png} &
+    \includegraphics[width=0.5\textwidth]{ksr/projekt_2_fuzzy/assets/latitude.png} \\
+     \\
+\end{tabular}
+\label{fig:two_images}
+\end{table}
+
+%===================================================================================================
+\subsubsection{Temperatura na powierzchni}
+
+\noindent Poniżej zaprezentowany został podział temperatury na wyselekcjonowane etykiety wraz z funkcjami przynależności dla każdej z nich. Zmienna ta opisuje temperaturę uzyskaną podczas pomiaru na powierzchni tafli wody.
+
+\begin{equation*}
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{zimna}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+1 & \text{dla } x \leq 12.5 \\
+\frac{14 - x}{1.5} & \text{dla } 12.5 < x \leq 14 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{umiarkowana}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+\frac{x - 15.5}{1.5} & \text{dla } 15.5 < x < 17 \\
+1 & \text{dla } x = 17 \\
+\frac{18.5 - x}{1.5} & \text{dla } 17 < x \leq 18.5 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}
+\end{minipage}
+\end{equation*}
+\begin{equation*}
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{chłodna}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+\frac{x - 13}{1.5} & \text{dla } 13 < x < 14.5 \\
+1 & \text{dla } x = 14.5 \\
+\frac{16.5 - x}{2} & \text{dla } 14.5 < x \leq 16.5 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{ciepła}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+0 & \text{dla } x \leq 18 \\
+\frac{x - 18}{1.5} & \text{dla } 18 < x \leq 19.5 \\
+1 & \text{w przeciwnym przypadku}
+\end{cases}
+$}
+\end{minipage}
+\end{equation*}
+
+
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{ksr/projekt_2_fuzzy/assets/tmp_surface.png}
+\label{fig:epsilon_bat}
+\end{figure}
+
+%===================================================================================================
+\subsubsection{Temperatura na dnie}
+
+\noindent Zmienna ta działa podobnie jak zmienna opisująca temperaturę na powierzchni z tą różnicą, że opisuje temperaturę zmierzoną na dnie zbiornika wodnego. Poniżej znajdują się wzory przynależności dla tej zmiennej lingwistycznej.
+
+\begin{equation*}
+\begin{minipage}{0.5\textwidth}
+\centering
+$\text{\scalebox{0.5}{zimna}}(x) = 
+\scalebox{0.5}{$
+\begin{cases} 
+1 & \text{dla } x \leq 3 \\
+\frac{5 - x}{2} & \text{dla } 3 < x \leq 5 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}$
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+$\text{\scalebox{0.5}{umiarkowana}}(x) = 
+\scalebox{0.5}{$
+\begin{cases} 
+\frac{x - 8}{2} & \text{dla } 8 < x \leq 10 \\
+1 & \text{dla } 10 < x \leq 11 \\
+\frac{13 - x}{2} & \text{dla } 11 < x \leq 13 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}$
+\end{minipage}
+\end{equation*}
+
+\begin{equation*}
+\begin{minipage}{0.5\textwidth}
+\centering
+$\text{\scalebox{0.5}{chłodna}}(x) = 
+\scalebox{0.5}{$
+\begin{cases} 
+\frac{x - 3}{3} & \text{dla } 3 < x \leq 6 \\
+1 & \text{dla } 6 < x \leq 8 \\
+9 - x & \text{dla } 8 < x \leq 9 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}$
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+$\text{\scalebox{0.5}{ciepła}}(x) = 
+\scalebox{0.5}{$
+\begin{cases} 
+x - 12 & \text{dla } 12 < x \leq 13 \\
+1 & \text{dla } 13 < x \leq 14 \\
+\frac{17 - x}{3} & \text{dla } 14 < x \leq 17 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}$
+\end{minipage}
+\end{equation*}
+
+\begin{equation*}
+\begin{minipage}{0.5\textwidth}
+\centering
+$\text{\scalebox{0.5}{bardzo ciepła}}(x) = 
+\scalebox{0.5}{$
+\begin{cases} 
+\frac{x - 15.5}{1.5} & \text{dla } 15.5 < x < 17 \\
+1 & \text{dla } x = 17 \\
+18 - x & \text{dla } 17 < x \leq 18 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}$
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+$\text{\scalebox{0.5}{skrajnie ciepła}}(x) = 
+\scalebox{0.5}{$
+\begin{cases} 
+0 & \text{dla } x \leq 17.5 \\
+x - 17.5 & \text{dla } 17.5 < x \leq 18.5 \\
+1 & \text{w przeciwnym przypadku}
+\end{cases}
+$}$
+\end{minipage}
+\end{equation*}
+
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{ksr/projekt_2_fuzzy/assets/tmp_bottom.png}
+\label{fig:epsilon_bat}
+\end{figure}
+
+%===================================================================================================
+\subsubsection{Zasolenie na powierzchni}
+
+\noindent Zmienna lingwistyczna opisująca zasolenie na powierzchni tafli wody, wartości przedstawione są w jednostkach zasolenia [PSU].
+
+\begin{equation*}
+\text{\scalebox{0.5}{umiarkowanie słona}}(x) = 
+\scalebox{0.5}{$
+\begin{cases} 
+1 & \text{dla } x \leq 26 \\
+\frac{30 - x}{4} & \text{dla } 26 < x \leq 30 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}
+\end{equation*}
+
+\begin{equation*}
+\text{\scalebox{0.5}{silnie słona}}(x) = 
+\scalebox{0.5}{$
+\begin{cases} 
+\frac{x - 26}{4} & \text{dla } 26 < x \leq 30 \\
+1 & \text{dla } 30 < x < 33 \\
+\frac{35 - x}{2} & \text{dla } 33 < x \leq 35 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}
+\end{equation*}
+
+\begin{equation*}
+\text{\scalebox{0.5}{bardzo silnie słona}}(x) = 
+\scalebox{0.5}{$
+\begin{cases} 
+0 & \text{dla } x \leq 34 \\
+x - 34 & \text{dla } 34 < x \leq 35 \\
+1 & \text{w przeciwnym przypadku}
+\end{cases}
+$}
+\end{equation*}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{ksr/projekt_2_fuzzy/assets/salinity_surface.png}
+\label{fig:epsilon_bat}
+\end{figure}
+
+%===================================================================================================
+\subsubsection{Zasolenie na dnie}
+
+\noindent Ta zmienna lingwistyczna opisuje zasolenie na dnie opisane w jednostkach zasolenia [PSU].
+
+\begin{equation*}
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{nie słona}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+1 & \text{dla } x \leq 22 \\
+\frac{26 - x}{4} & \text{dla } 22 < x \leq 26 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{umiarkowanie słona}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+\frac{x - 24}{2} & \text{dla } 24 < x \leq 26 \\
+1 & \text{dla } 26 < x \leq 30.5 \\
+\frac{32 - x}{1.5} & \text{dla } 30.5 < x \leq 32 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}
+\end{minipage}
+\end{equation*}
+
+\begin{equation*}
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{silnie słona}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+\frac{x - 30.5}{3.5} & \text{dla } 30.5 < x < 34 \\
+1 & \text{dla } x = 34 \\
+\frac{36 - x}{2} & \text{dla } 34 < x \leq 36 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{bardzo silnie słona}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+0 & \text{dla } x \leq 35 \\
+x - 35 & \text{dla } 35 < x \leq 36 \\
+1 & \text{w przeciwnym przypadku}
+\end{cases}
+$}
+\end{minipage}
+\end{equation*}
+
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{ksr/projekt_2_fuzzy/assets/salinity_bottom.png}
+\label{fig:epsilon_bat}
+\end{figure}
+
+%===================================================================================================
+\subsubsection{Prędkość wody}
+
+\noindent Wspomniana Zmienna opisuje prędkość, z jaką poruszała się woda w miejscu pomiaru w momencie jego robienia, jednostka, w której dane zostały zebrane to [m/s].
+
+\begin{equation*}
+\begin{minipage}{0.5\textwidth}
+\centering
+$\text{\scalebox{0.5}{praktycznie bez prędkości}}(x) = 
+\scalebox{0.5}{$
+\begin{cases} 
+1 & \text{dla } x \leq 0.05 \\
+\frac{0.1 - x}{0.05} & \text{dla } 0.05 < x \leq 0.1 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}$
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+$\text{\scalebox{0.5}{bardzo niska prędkość}}(x) = 
+\scalebox{0.5}{$
+\begin{cases} 
+\frac{x - 0.05}{0.05} & \text{dla } 0.05 < x \leq 0.1 \\
+1 & \text{dla } 0.1 < x \leq 0.2 \\
+\frac{0.25 - x}{0.05} & \text{dla } 0.2 < x \leq 0.25 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}$
+\end{minipage}
+\end{equation*}
+\begin{equation*}
+\begin{minipage}{0.5\textwidth}
+\centering
+$\text{\scalebox{0.5}{niska prędkość}}(x) = 
+\scalebox{0.5}{$
+\begin{cases} 
+\frac{x - 0.2}{0.05} & \text{dla } 0.2 < x \leq 0.25 \\
+1 & \text{dla } 0.25 < x \leq 0.3 \\
+\frac{0.4 - x}{0.1} & \text{dla } 0.3 < x \leq 0.4 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}$
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+$\text{\scalebox{0.5}{wysoka prędkość}}(x) = 
+\scalebox{0.5}{$
+\begin{cases} 
+\frac{x - 0.3}{0.1} & \text{dla } 0.3 < x \leq 0.4 \\
+1 & \text{dla } 0.4 < x \leq 0.475 \\
+\frac{0.55 - x}{0.075} & \text{dla } 0.475 < x \leq 0.55 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}$
+\end{minipage}
+\end{equation*}
+\begin{equation*}
+\text{\scalebox{0.5}{bardzo wysoka prędkość}}(x) = 
+\scalebox{0.5}{$
+\begin{cases} 
+0 & \text{dla } x \leq 0.475 \\
+\frac{x - 0.475}{0.075} & \text{dla } 0.475 < x \leq 0.55 \\
+1 & \text{w przeciwnym przypadku}
+\end{cases}
+$}
+\end{equation*}
+
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{ksr/projekt_2_fuzzy/assets/wave_speed.png}
+\label{fig:epsilon_bat}
+\end{figure}
+
+%===================================================================================================
+\subsubsection{Głębokość dna}
+
+\noindent Zmienna opisująca, na jakiej głębokości znajduje się dno w miejscu robienia danego pomiaru, głębokość ta opisana została w metrach [m]. Etykiety wraz z funkcjami przynależności opisane zostały poniżej.
+
+\begin{equation*}
+\begin{minipage}{0.5\textwidth}
+\centering
+$\text{\scalebox{0.5}{głębokość przypowierzchniowa}}(x) =
+\scalebox{0.5}{$
+\begin{cases}
+1 & \text{dla } x \leq 4 \\
+\frac{10 - x}{6} & \text{dla } 4 < x \leq 10 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}$
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+$\text{\scalebox{0.5}{płytko}}(x) =
+\scalebox{0.5}{$
+\begin{cases}
+\frac{x - 6}{4} & \text{dla } 6 < x \leq 10 \\
+1 & \text{dla } 10 < x \leq 14 \\
+\frac{16 - x}{2} & \text{dla } 14 < x \leq 16 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}$
+\end{minipage}
+\end{equation*}
+\begin{equation*}
+\begin{minipage}{0.5\textwidth}
+\centering
+$\text{\scalebox{0.5}{umiarkowanie głęboko}}(x) =
+\scalebox{0.5}{$
+\begin{cases}
+\frac{x - 14}{4} & \text{dla } 14 < x \leq 18 \\
+1 & \text{dla } 18 < x \leq 21 \\
+\frac{28 - x}{7} & \text{dla } 21 < x \leq 28 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}$
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+$\text{\scalebox{0.5}{głęboko}}(x) =
+\scalebox{0.5}{$
+\begin{cases}
+\frac{x - 21}{8} & \text{dla } 21 < x \leq 29 \\
+1 & \text{dla } 29 < x \leq 32 \\
+\frac{34 - x}{2} & \text{dla } 32 < x \leq 34 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}$
+\end{minipage}
+\end{equation*}
+\begin{equation*}
+\text{\scalebox{0.5}{profundalnie głęboko}}(x) =
+\scalebox{0.5}{$
+\begin{cases}
+0 & \text{dla } x \leq 32 \\
+\frac{x - 32}{2} & \text{dla } 32 < x \leq 34 \\
+1 & \text{w przeciwnym przypadku}
+\end{cases}
+$}
+\end{equation*}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{ksr/projekt_2_fuzzy/assets/depth.png}
+\label{fig:epsilon_bat}
+\end{figure}
+
+%===================================================================================================
+\subsubsection{wysokość fal}
+
+\noindent Wysokość fal to zmienna lingwistyczna mówiąca o tym, jak wysokie fale zostały zarejestrowane w momencie robienia pomiaru. Zmierzona wysokość ta opisana została w jednostkach si, czyli metrach [m]. Dokładny opis o tym, jak mierzy się wspomnianą wysokość opisana została w prezentacji \cite{waves}.
+
+\begin{equation*}
+\begin{minipage}{0.5\textwidth}
+\centering
+$\text{\scalebox{0.5}{spokojne morze}}(x) =
+\scalebox{0.5}{$
+\begin{cases}
+1 & \text{dla } x \leq 0.5 \\
+\frac{0.7 - x}{0.2} & \text{dla } 0.5 < x \leq 0.7 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}$
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+$\text{\scalebox{0.5}{niewielkie fale}}(x) =
+\scalebox{0.5}{$
+\begin{cases}
+\frac{x - 0.5}{0.7} & \text{dla } 0.5 < x \leq 1.2 \\
+1 & \text{dla } 1.2 < x \leq 1.8 \\
+\frac{2 - x}{0.2} & \text{dla } 1.8 < x \leq 2 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}$
+\end{minipage}
+\end{equation*}
+\begin{equation*}
+\begin{minipage}{0.5\textwidth}
+\centering
+$\text{\scalebox{0.5}{średnie fale}}(x) =
+\scalebox{0.5}{$
+\begin{cases}
+\frac{x - 1.8}{0.7} & \text{dla } 1.8 < x < 2.5 \\
+1 & \text{dla } x = 2.5 \\
+\frac{2.7 - x}{0.2} & \text{dla } 2.5 < x \leq 2.7 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}$
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+$\text{\scalebox{0.5}{wysokie fale}}(x) =
+\scalebox{0.5}{$
+\begin{cases}
+0 & \text{dla } x \leq 2.6 \\
+\frac{x - 2.6}{0.1} & \text{dla } 2.6 < x \leq 2.7 \\
+1 & \text{w przeciwnym przypadku}
+\end{cases}
+$}$
+\end{minipage}
+\end{equation*}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{ksr/projekt_2_fuzzy/assets/wave_hight.png}
+\label{fig:epsilon_bat}
+\end{figure}
+
+%===================================================================================================
+\subsubsection{Kierunek fal}
+
+\noindent Kierunek fal mierzony mówi o tym, w którą stronę skierowane były fale w momencie robienia pomiaru. Wartość ta mierzona była w stopniach, jednakże dla ułatwienia analizy etykiety wybrane dla tej zmiennej zapisane zostały jako kierunki świata.
+
+\begin{equation*}
+\begin{minipage}{0.5\textwidth}
+\centering
+$\text{\scalebox{0.5}{północ}}(x) =
+\scalebox{0.5}{$
+\begin{cases}
+1 & \text{dla } x \leq 0 \\
+\frac{32.5 - x}{32.5} & \text{dla } 0 < x \leq 32.5 \\
+\frac{x - 327.5}{32.5} & \text{dla } 327.5 < x \leq 360 \\
+1 & \text{dla } x \geq 360 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}$
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+$\text{\scalebox{0.5}{północny-wschód}}(x) =
+\scalebox{0.5}{$
+\begin{cases}
+\frac{x - 12.5}{32.5} & \text{dla } 12.5 < x \leq 45 \\
+1 & \text{dla } x = 45 \\
+\frac{77.5 - x}{32.5} & \text{dla } 45 < x \leq 77.5 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}$
+\end{minipage}
+\end{equation*}
+\begin{equation*}
+\begin{minipage}{0.5\textwidth}
+\centering
+$\text{\scalebox{0.5}{wschód}}(x) =
+\scalebox{0.5}{$
+\begin{cases}
+\frac{x - 57.5}{32.5} & \text{dla } 57.5 < x \leq 90 \\
+1 & \text{dla } x = 90 \\
+\frac{122.5 - x}{32.5} & \text{dla } 90 < x \leq 122.5 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}$
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+$\text{\scalebox{0.5}{połódniowy-wschód}}(x) =
+\scalebox{0.5}{$
+\begin{cases}
+\frac{x - 102.5}{32.5} & \text{dla } 102.5 < x \leq 135 \\
+1 & \text{dla } x = 135 \\
+\frac{167.5 - x}{32.5} & \text{dla } 135 < x \leq 167.5 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}$
+\end{minipage}
+\end{equation*}
+\begin{equation*}
+\begin{minipage}{0.5\textwidth}
+\centering
+$\text{\scalebox{0.5}{połódnie}}(x) =
+\scalebox{0.5}{$
+\begin{cases}
+\frac{x - 147.5}{32.5} & \text{dla } 147.5 < x < 180 \\
+1 & \text{dla } x = 180 \\
+\frac{212.5 - x}{32.5} & \text{dla } 180 < x \leq 212.5 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}$
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+$\text{\scalebox{0.5}{połódniowy-zachód}}(x) =
+\scalebox{0.5}{$
+\begin{cases}
+\frac{x - 192.5}{32.5} & \text{dla } 192.5 < x \leq 225 \\
+1 & \text{dla } x = 225 \\
+\frac{257.5 - x}{32.5} & \text{dla } 225 < x \leq 257.5 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}$
+\end{minipage}
+\end{equation*}
+\begin{equation*}
+\begin{minipage}{0.5\textwidth}
+\centering
+$\text{\scalebox{0.5}{zachód}}(x) =
+\scalebox{0.5}{$
+\begin{cases}
+\frac{x - 237.5}{32.5} & \text{dla } 237.5 < x \leq 270 \\
+1 & \text{dla } x = 270 \\
+\frac{302.5 - x}{32.5} & \text{dla } 270 < x \leq 302.5 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}$
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+$\text{\scalebox{0.5}{północny-zachód}}(x) =
+\scalebox{0.5}{$
+\begin{cases}
+\frac{x - 282.5}{32.5} & \text{dla } 282.5 < x \leq 315 \\
+1 & \text{dla } x = 315 \\
+\frac{347.5 - x}{32.5} & \text{dla } 315 < x \leq 347.5 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}$
+\end{minipage}
+\end{equation*}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{ksr/projekt_2_fuzzy/assets/wave_direction.png}
+\label{fig:epsilon_bat}
+\end{figure}
+
+%===================================================================================================
+\subsubsection{Częstotliwość fal}
+
+\noindent Zmienna lingwistyczna opisująca częstotliwość tworzenia się fal opisana została przy pomocy etykiet utworzonych na podstawie dokumentu \cite{waves}, niewielka ilość etykiet utworzonych dla tej zmiennej spowodowana jest niewielkim przedziałem częstotliwości tworzenia się fal dla badanego obszaru.
+
+\begin{equation*}
+\text{\scalebox{0.5}{zmarszczki}}(x) = \scalebox{0.5}{$\exp\left(-\frac{{(x - 0.5)^2}}{{2 \cdot 0.5^2}}\right)$}
+\end{equation*}
+\begin{equation*}
+\text{\scalebox{0.5}{razadkie fale wiatrowe}}(x) = \scalebox{0.5}{$\exp\left(-\frac{{(x - 2.6)^2}}{{2 \cdot 0.6^2}}\right)$}
+\end{equation*}
+\begin{equation*}
+\text{\scalebox{0.5}{fale wiatrowe}}(x) = \scalebox{0.5}{$\exp\left(-\frac{{(x - 5)^2}}{{2 \cdot 0.75^2}}\right)$}
+\end{equation*}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{ksr/projekt_2_fuzzy/assets/wave_frequency.png}
+\label{fig:epsilon_bat}
+\end{figure}
+
+\subsection{Kwantyfikatory lingwistyczne}
+
+\noindent W ramach projektu opisano kwantyfikatory lingwistyczne, nadając im etykiety oraz prezentując wykresy funkcji przynależności, oraz wzory analityczne. Kwantyfikatory rozmyte względne i absolutne są narzędziami w logice rozmytej służącymi do opisu stopnia przynależności elementów do zbiorów rozmytych. Kwantyfikatory względne odnoszą się do relacji między zbiorami, podczas gdy kwantyfikatory absolutne opisują stopień przynależności wszystkich elementów do konkretnego zbioru rozmytego.\\
+
+\subsubsection{Kwantyfikatory rozmyte względne}
+
+\begin{equation*}
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{little}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+1 & \text{dla } x \leq 0.1 \\
+\frac{0.3 - x}{0.2} & \text{dla } 0.1 < x \leq 0.3 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{around\_1\_3}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+0 & \text{dla } x \leq 0.2 \\
+10(x - 0.2) & \text{dla } 0.2 < x \leq 0.3 \\
+1 & \text{dla } 0.3 < x \leq 0.36 \\
+1 - 10(x - 0.36) & \text{dla } 0.36 < x \leq 0.46 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}
+\end{minipage}
+\end{equation*}
+\begin{equation*}
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{almost\_half}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+0 & \text{dla } x \leq 0.4 \\
+14(x - 0.4) & \text{dla } 0.4 < x \leq 0.47 \\
+1 & \text{dla } 0.47 < x \leq 0.53 \\
+1 - 15(x - 0.53) & \text{dla } 0.53 < x \leq 0.6 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{around\_2\_3}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+0 & \text{dla } x \leq 0.53 \\
+10(x - 0.53) & \text{dla } 0.53 < x \leq 0.63 \\
+1 & \text{dla } 0.63 < x \leq 0.7 \\
+1 - 10(x - 0.7) & \text{dla } 0.7 < x \leq 0.8 \\
+0 & \text{w przeciwnym przypadku}
+\end{cases}
+$}
+\end{minipage}
+\end{equation*}
+\begin{equation*}
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{almost\_all}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+0 & \text{dla } x \leq 0.7 \\
+\frac{x - 0.7}{0.2} & \text{dla } 0.7 < x \leq 0.9 \\
+1 & \text{w przeciwnym przypadku}
+\end{cases}
+$}
+\end{minipage}
+\end{equation*}
+
+\subsubsection{Kwantyfikatory rozmyte absolutne}
+
+\[
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{mniej niż 10\%}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+1 & \text{if } x \leq 0.1 \\
+0 & \text{otherwise}
+\end{cases}
+$}
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{około 20\%}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+\frac{x - 0.1}{0.1} & \text{if } 0.1 < x < 0.2 \\
+1 & \text{if } x = 0.2 \\
+\frac{0.3 - x}{0.1} & \text{if } 0.2 < x \leq 0.3 \\
+0 & \text{otherwise}
+\end{cases}
+$}
+\end{minipage}
+\]
+\[
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{około 30\%}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+\frac{x - 0.2}{0.1} & \text{if } 0.2 < x \leq 0.3 \\
+1 & \text{if } x = 0.3 \\
+\frac{0.4 - x}{0.1} & \text{if } 0.3 < x \leq 0.4 \\
+0 & \text{otherwise}
+\end{cases}
+$}
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{około 40\%}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+\frac{x - 0.3}{0.1} & \text{if } 0.3 < x \leq 0.4 \\
+1 & \text{if } x = 0.4 \\
+\frac{0.5 - x}{0.1} & \text{if } 0.4 < x \leq 0.5 \\
+0 & \text{otherwise}
+\end{cases}
+$}
+\end{minipage}
+\]
+\[
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{około 50\%}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+\frac{x - 0.4}{0.1} & \text{if } 0.4 < x \leq 0.5 \\
+1 & \text{if } x = 0.5 \\
+\frac{0.6 - x}{0.1} & \text{if } 0.5 < x \leq 0.6 \\
+0 & \text{otherwise}
+\end{cases}
+$}
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{około 60\%}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+\frac{x - 0.5}{0.1} & \text{if } 0.5 < x \leq 0.6 \\
+1 & \text{if } x = 0.6 \\
+\frac{0.7 - x}{0.1} & \text{if } 0.6 < x \leq 0.7 \\
+0 & \text{otherwise}
+\end{cases}
+$}
+\end{minipage}
+\]
+\[
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{około 70\%}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+\frac{x - 0.6}{0.1} & \text{if } 0.6 < x \leq 0.7 \\
+1 & \text{if } x = 0.7 \\
+\frac{0.8 - x}{0.1} & \text{if } 0.7 < x \leq 0.8 \\
+0 & \text{otherwise}
+\end{cases}
+$}
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{około 80\%}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+\frac{x - 0.7}{0.1} & \text{if } 0.7 < x \leq 0.8 \\
+1 & \text{if } x = 0.8 \\
+\frac{0.9 - x}{0.1} & \text{if } 0.8 < x \leq 0.9 \\
+0 & \text{otherwise}
+\end{cases}
+$}
+\end{minipage}
+\]
+\[
+\begin{minipage}{0.5\textwidth}
+\centering
+\text{\scalebox{0.5}{więcej niż 90\%}}(x) = \scalebox{0.5}{$
+\begin{cases} 
+0 & \text{if } x \leq 0.9 \\
+1 & \text{otherwise}
+\end{cases}
+$}
+\end{minipage}
+\]
+
+
+\subsubsection{wykresy wybranych kwalifikatorów lingwistycznych}
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{cc}
+    \includegraphics[width=0.5\textwidth]{ksr/projekt_2_fuzzy/assets/qualifiers.png} &
+    \includegraphics[width=0.5\textwidth]{ksr/projekt_2_fuzzy/assets/qualifiers2.png} \\
+     \\
+\end{tabular}
+\label{fig:two_images}
+\end{table}
+
+
+Opisy zostały przygotowane z uwzględnieniem literatury dotyczącej lingwistyki rozmytej oraz jej zastosowań.
+
+\section{Narzędzia obliczeniowe: wybór/implementacja. Diagram UML pakietu
+obliczeń rozmytych i~generatora podsumowań. Instrukcja użytkownika}
+\noindent {\bf Sekcja uzupełniona jako efekt zadania Tydzień 10 wg Harmonogramu Zajęć na WIKAMP KSR.}
+
+Diagram UML i zwięzły opis pakietu obliczeń rozmytych: źródło pakietu
+(zewnętrzny/własny/hybrydowy), przypis do literatury/źródeł. Krótka charakterystyka
+najważniejszych klas i podstawowych dla zadania ich metod. \\
+
+Diagram UML generatora podsumowań (warstwy obliczeniowej oraz interfejsu
+użytkownika). Krótki ilustrowany opis jak użytkownik może korzystać z aplikacji, w~szczególności
+wprowadzać parametry  podsumowań, odczytywać wyniki oraz definiować własne etykiety i
+kwantyfikatory.\\
+
+Wersja JRE i inne wymogi niezbędne do uruchomienia aplikacji przez użytkownika na własnym komputerze. 
+
+\section{ Jednopodmiotowe podsumowania lingwistyczne. Miary jakości, podsumowanie optymalne}
+Wyniki kolejnych eksperymentów wg punktów 2.-4. opisu projektu 2.  Listy podsumowań
+jednopodmiotowych i tabele/rankingi podsumowań dla danych atrybutów obowiązkowe i dokładnie opisane w ,,captions'' (tytułach), konieczny opis kolumn i wierszy tabel. Dla każdego podsumowania podane miary jakości oraz miara jakości podsumowania
+optymalnego. {\bf Wzorów podsumowań ani miar nie należy przepisywać ani cytować, wystarczy podać literaturę, ale
+należy skomentować co oznaczają i jaką informacje niosą wybrane miary w wybranych
+przypadkach.}\\
+\noindent {\bf Sekcja uzupełniona jako efekt zadania Tydzień 11 wg Harmonogramu Zajęć na WIKAMP KSR.}
+
+\section{Wielopodmiotowe podsumowania lingwistyczne i~ich miary jakości} 
+Wyniki kolejnych eksperymentów wg punktów 2.-4. opisu projektu 2. Uzasadnienie i
+metoda podziału zbioru danych na rozłączne podmioty. Listy podsumowań
+wielopodmiotowych i tabele/rankingi podsumowań dla danych atrybutów obowiązkowe i
+dokładnie opisane w ,,captions'' (tytułach), konieczny opis kolumn i wierszy tabel.
+{\bf Wzorów podsumowań ani miar nie należy przepisywać ani cytować, wystarczy podać literaturę, ale
+należy skomentować co oznaczają i jaką informacje niosą wybrane miary w wybranych
+przypadkach.}Konieczne uwzględnienie wszystkich 4-ch form podsumowań wielopodmiotowych. 
+\\ 
+
+** Możliwe sformułowanie zagadnienia wielopodmiotowego podsumowania optymalnego **.\\
+\indent {** Ewentualne wyniki realizacji punktu ,,na ocenę 5.0'' wg opisu Projektu 2. i ich porównanie do wyników z
+części obowiązkowej **.}\\
+
+\noindent {\bf Sekcja uzupełniona jako efekt zadania Tydzień 12 wg Harmonogramu Zajęć
+na WIKAMP KSR.}
+
+
+\section{Dyskusja, wnioski}
+Dokładne interpretacje uzyskanych wyników w zależności od parametrów klasyfikacji
+opisanych w punktach 3.-4 opisu Projektu 2. 
+Szczególnie istotne są wnioski o charakterze uniwersalnym, istotne dla podobnych zadań. 
+Omówić i wyjaśnić napotkane problemy (jeśli były). Każdy wniosek/problem powinien mieć poparcie
+w przeprowadzonych eksperymentach (odwołania do konkretnych wyników: tabel i miar
+jakości). Ocena które wybrane kwantyfikatory, sumaryzatory, kwalifikatory i/lub ich
+miary jakości mają małe albo duże znaczenie dla wiarygodności i jakości otrzymanych
+agregacji/podsumowań.  \\
+\underline{Dla końcowej oceny jest to najważniejsza sekcja} sprawozdania, gdyż prezentuje poziom
+zrozumienia rozwiązywanego problemu.\\
+
+** Możliwości kontynuacji prac w obszarze logiki rozmytej i wnioskowania rozmytego, zwłaszcza w kontekście pracy inżynierskiej,
+magisterskiej, naukowej, itp. **\\
+
+\noindent {\bf Sekcja uzupełniona jako efekt zadań Tydzień 11 i Tydzień 12 wg
+Harmonogramu Zajęć na WIKAMP KSR.}
+
+
+\section{Braki w realizacji projektu 2.}
+Wymienić wg opisu Projektu 2. wszystkie niezrealizowane obowiązkowe elementy projektu, ewentualnie
+podać merytoryczne (ale nie czasowe) przyczyny tych braków. 
+
+
+\begin{thebibliography}{99}
+ \bibitem{niewiadomski19} A. Niewiadomski, Zbiory rozmyte typu 2. Zastosowania w reprezentowaniu informacji.  Seria „Problemy współczesnej informatyki” pod redakcją L. Rutkowskiego. Akademicka Oficyna Wydawnicza EXIT, Warszawa, 2019.
+\bibitem{zadrozny06} S. Zadrożny, Zapytania nieprecyzyjne i lingwistyczne podsumowania baz danych, EXIT, 2006, Warszawa
+\bibitem{niewiadomski08} A. Niewiadomski, Methods for the Linguistic Summarization of Data: Applications of Fuzzy Sets and Their Extensions, Akademicka Oficyna Wydawnicza EXIT, Warszawa, 2008.
+\bibitem{dataBase} Marine Institute Monthly Model Means: https://data.world/marineinstitute/b2348da6-873f-4ebb-a03c-5280ee2cf025
+\bibitem{waves} Mechanizm falowania wod morskich Kryteria podzialu i typy falowania morz
+\end{thebibliography}
+
+Literatura zawiera wyłącznie źródła recenzowane i/lub o potwierdzonej wiarygodności,
+możliwe do weryfikacji i cytowane w sprawozdaniu. 
+\end{document}

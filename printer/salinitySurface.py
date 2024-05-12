@@ -42,7 +42,7 @@ def print_water_salinity_surface():
     y_s = [strong(x) for x in x_values]
     y_ss = [really_salty(x) for x in x_values]
 
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(10, 4))
 
     plt.plot(x_values, y_ms, label="umiarkowane słona")
     plt.plot(x_values, y_s, label="silnie słona")

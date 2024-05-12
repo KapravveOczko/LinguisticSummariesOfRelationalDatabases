@@ -84,7 +84,7 @@ def print_water_temp_depth():
     y_hot = [hot(x) for x in x_values]
     y_really_hot = [really_hot(x) for x in x_values]
 
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(10, 4))
 
     plt.plot(x_values, y_cold, label="zimna")
     plt.plot(x_values, y_cool, label="chłodna")
