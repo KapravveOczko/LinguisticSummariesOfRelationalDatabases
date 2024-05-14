@@ -1,4 +1,4 @@
-package org.ksr.LinguisticVariables.MembershipFunction;
+package org.ksr.FuzzyLib.MembershipFunction;
 
 public class TriangularMembershipFunction implements MembershipFunction{
     private final String name;
@@ -9,6 +9,11 @@ public class TriangularMembershipFunction implements MembershipFunction{
         this.a = a;
         this.b = b;
         this.c = c;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
     }
 
     @Override

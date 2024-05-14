@@ -1,4 +1,4 @@
-package org.ksr.LinguisticVariables.MembershipFunction;
+package org.ksr.FuzzyLib.MembershipFunction;
 
 public class GaussianMembershipFunction implements MembershipFunction {
     private final String name;
@@ -8,6 +8,11 @@ public class GaussianMembershipFunction implements MembershipFunction {
         this.name = name;
         this.mean = mean;
         this.stdDeviation = stdDeviation;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
     }
 
     @Override

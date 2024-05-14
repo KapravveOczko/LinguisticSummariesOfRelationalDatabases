@@ -1,4 +1,4 @@
-package org.ksr.LinguisticVariables.MembershipFunction;
+package org.ksr.FuzzyLib.MembershipFunction;
 
 public class MembershipFactoryConsts {
     public static final String TRIANGULAR = "triangular";

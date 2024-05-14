@@ -1,4 +1,4 @@
-package org.ksr.LinguisticVariables.MembershipFunction;
+package org.ksr.FuzzyLib.MembershipFunction;
 
 public class TrapezoidalMembershipFunction implements MembershipFunction {
     private final String name;
@@ -10,6 +10,11 @@ public class TrapezoidalMembershipFunction implements MembershipFunction {
         this.b = b;
         this.c = c;
         this.d = d;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
     }
 
     @Override
