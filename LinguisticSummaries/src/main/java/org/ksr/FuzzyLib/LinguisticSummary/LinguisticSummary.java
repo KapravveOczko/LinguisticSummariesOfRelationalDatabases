@@ -9,7 +9,7 @@ public abstract class LinguisticSummary<T> {
     private FuzzySet qualifier;
     private T object;
     private List<FuzzySet> summarizer;
-    private Float degreeOfTruth;
+    private TruthChecker truthChecker;
     private FuzzySet quantifier;
 
 
