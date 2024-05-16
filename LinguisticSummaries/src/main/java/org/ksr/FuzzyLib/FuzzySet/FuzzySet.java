@@ -12,7 +12,7 @@ public abstract class FuzzySet {
     private List<MembershipFunction> membershipFunctions;
     private Boolean isConcave;
     private Double cardinality;
-    private List<Integer> support;
+    private List<Double> support;
 
 
     public FuzzySet(String name) {

@@ -73,6 +73,7 @@ public class GuiMainViewController {
             Stage previousStage = (Stage) buttonGenerateLS.getScene().getWindow();
             previousStage.close();
 
+            stage.setTitle("EditMode");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

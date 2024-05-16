@@ -7,18 +7,15 @@ import java.util.List;
 public abstract class LinguisticSummary<T> {
 
     private FuzzySet qualifier;
-    private T object;
+    private T subject;
     private List<FuzzySet> summarizer;
     private TruthChecker truthChecker;
     private FuzzySet quantifier;
 
 
-    public StringBuilder createLinguisticSummary(FuzzySet qualifier, T object, FuzzySet totalizator){
+    public String createLinguisticSummary(){
         return null;
     }
 
-    public StringBuilder createLinguisticSummary(FuzzySet qualifier, T object, FuzzySet quantifier, FuzzySet totalizator){
-        return null;
-    }
 
 }

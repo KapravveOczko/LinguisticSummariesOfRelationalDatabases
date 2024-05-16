@@ -24,7 +24,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem fx:id="exitEditMode" mnemonicParsing="false" onAction="#handleExitEditModeClick" text="Exit edit mode" />
+              <MenuItem fx:id="exitEditMode" mnemonicParsing="false" onAction="#handleExitEditModeClick" text="exit edit mode" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">

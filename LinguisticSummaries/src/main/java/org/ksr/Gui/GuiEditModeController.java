@@ -77,6 +77,7 @@ public class GuiEditModeController {
             Stage previousStage = (Stage) createMembershipFunction.getScene().getWindow();
             previousStage.close();
 
+            stage.setTitle("LinguisticSummaries");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -111,7 +112,7 @@ public class GuiEditModeController {
                     "            return 0.0;\n" +
                     "        }";
         } else if (newValue.equals("GAUSSIAN")) {
-            newValue = "\nexp(-0.5 * Math.pow((x - a) / b, 2)";
+            newValue = "\nexp(-0.5 * pow((x - a) / b, 2)";
         }
         preview.setText(newValue);
     }
