@@ -1,4 +1,4 @@
-package org.ksr.Controller.Assets;
+package org.ksr.Assets;
 import org.ksr.FuzzyLib.FuzzySet.FuzzySet;
 import org.ksr.FuzzyLib.MembershipFunction.MembershipFactoryConsts;
 import org.ksr.FuzzyLib.MembershipFunction.MembershipFunctionFactory;

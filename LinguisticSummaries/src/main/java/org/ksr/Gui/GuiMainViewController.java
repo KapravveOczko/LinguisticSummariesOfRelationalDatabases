@@ -6,9 +6,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import org.ksr.Controller.Assets.BottomSalinity;
-import org.ksr.Controller.Assets.None;
-import org.ksr.Controller.Assets.SurfaceSalinity;
+import org.ksr.Assets.BottomSalinity;
+import org.ksr.Assets.None;
+import org.ksr.Assets.SurfaceSalinity;
 import org.ksr.FuzzyLib.FuzzySet.FuzzySet;
 
 import java.io.IOException;

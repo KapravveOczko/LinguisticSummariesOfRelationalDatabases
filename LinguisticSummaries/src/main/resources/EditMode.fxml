@@ -24,7 +24,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem fx:id="exitEditMode" mnemonicParsing="false" text="Exit edit mode" onAction="#handleExitEditModeClick"/>
+              <MenuItem fx:id="exitEditMode" mnemonicParsing="false" onAction="#handleExitEditModeClick" text="Exit edit mode" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -46,7 +46,7 @@
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
-                                    <TextArea prefHeight="341.0" prefWidth="236.0" />
+                                    <TextArea fx:id="preview" prefHeight="341.0" prefWidth="236.0" text="please select function type for preview." />
                                  </children>
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
@@ -82,7 +82,7 @@
                                              <GridPane.margin>
                                                 <Insets />
                                              </GridPane.margin></Text>
-                                          <TextField GridPane.columnIndex="1">
+                                          <TextField fx:id="name" GridPane.columnIndex="1">
                                              <GridPane.margin>
                                                 <Insets right="10.0" />
                                              </GridPane.margin>
@@ -91,18 +91,18 @@
                                              <GridPane.margin>
                                                 <Insets />
                                              </GridPane.margin></Text>
-                                          <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <TextField GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                          <ChoiceBox fx:id="functionType" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <TextField fx:id="a" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                              <GridPane.margin>
                                                 <Insets right="10.0" />
                                              </GridPane.margin>
                                           </TextField>
-                                          <TextField GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                          <TextField fx:id="b" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                              <GridPane.margin>
                                                 <Insets right="10.0" />
                                              </GridPane.margin>
                                           </TextField>
-                                          <TextField GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                          <TextField fx:id="c" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                              <GridPane.margin>
                                                 <Insets right="10.0" />
                                              </GridPane.margin>
@@ -111,7 +111,7 @@
                                              <GridPane.margin>
                                                 <Insets />
                                              </GridPane.margin></Text>
-                                          <TextField GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                          <TextField fx:id="d" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                              <GridPane.margin>
                                                 <Insets right="10.0" />
                                              </GridPane.margin>
@@ -160,9 +160,9 @@
                                     <Insets />
                                  </GridPane.margin>
                               </Text>
-                              <Button mnemonicParsing="false" text="confirm" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                              <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                              <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                              <Button fx:id="confirmAddingMembershipButton" mnemonicParsing="false" text="add" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                              <ChoiceBox fx:id="setToAddTo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                              <ChoiceBox fx:id="membershipFunction" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                            </children>
                         </GridPane>
                      </children>
@@ -189,9 +189,11 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="object to delete" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                              <Button mnemonicParsing="false" text="delete" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                              <ChoiceBox fx:id="choiceToDeleteFrom" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="from" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                              <Button fx:id="deleteButton" mnemonicParsing="false" text="delete" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                              <ChoiceBox fx:id="choiceToDelete" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="delete" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
                      </children>

@@ -30,11 +30,6 @@ public abstract class FuzzySet {
         return membershipFunctions;
     }
 
-    //    obsolete:
-//    public void appendMembershipFunction(MembershipFunction membershipFunction){
-//        this.membershipFunctions.add(membershipFunction);
-//    }
-
     public void appendMembershipFunction(MembershipFunction membershipFunction){
         Optional<MembershipFunction> functionToRemove = this.membershipFunctions.stream()
                 .filter(function -> membershipFunction.getName().equals(function.getName()))
