@@ -1,6 +1,5 @@
 package org.ksr;
 import org.ksr.Gui.Gui;
-import org.ksr.Gui.GuiController;
 
 public class Main {
     public static void main(String[] args) {

@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public abstract class FuzzySet<T> {
+public abstract class FuzzySet {
     private String name;
     private List<MembershipFunction> membershipFunctions;
     private Boolean isConcave;
     private Double cardinality;
-    private List<T> support;
+    private List<Integer> support;
 
 
     public FuzzySet(String name) {
@@ -20,7 +20,17 @@ public abstract class FuzzySet<T> {
         this.membershipFunctions = new ArrayList<MembershipFunction>();
     }
 
-//    obsolete:
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
+
+    public List<MembershipFunction> getMembershipFunctions() {
+        return membershipFunctions;
+    }
+
+    //    obsolete:
 //    public void appendMembershipFunction(MembershipFunction membershipFunction){
 //        this.membershipFunctions.add(membershipFunction);
 //    }
