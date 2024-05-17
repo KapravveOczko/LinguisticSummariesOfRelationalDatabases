@@ -1,16 +1,16 @@
 package org.ksr.FuzzyLib.LinguisticSummary;
 
-import org.ksr.FuzzyLib.FuzzySet.FuzzySet;
+import org.ksr.FuzzyLib.LinguisticVariable.LinguisticVariable;
 
 import java.util.List;
 
 public abstract class LinguisticSummary<T> {
 
-    private FuzzySet qualifier;
-    private T subject;
-    private List<FuzzySet> summarizer;
+    private LinguisticVariable qualifier;
+    private List<T> subject;
+    private List<LinguisticVariable> summarizer;
     private TruthChecker truthChecker;
-    private FuzzySet quantifier;
+    private LinguisticVariable quantifier;
 
 
     public String createLinguisticSummary(){

@@ -1,10 +1,10 @@
-package org.ksr.FuzzyLib.MembershipFunction;
+package org.ksr.FuzzyLib.FuzzySet;
 
-public class TriangularMembershipFunction implements MembershipFunction{
+public class TriangularFuzzySet extends FuzzySet implements FuzzySetInterface {
     private final String name;
     private final double a, b, c;
 
-    public TriangularMembershipFunction(String name, double a, double b, double c) {
+    public TriangularFuzzySet(String name, double a, double b, double c) {
         this.name = name;
         this.a = a;
         this.b = b;

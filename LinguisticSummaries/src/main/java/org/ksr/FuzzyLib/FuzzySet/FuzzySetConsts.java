@@ -1,6 +1,6 @@
-package org.ksr.FuzzyLib.MembershipFunction;
+package org.ksr.FuzzyLib.FuzzySet;
 
-public class MembershipFactoryConsts {
+public class FuzzySetConsts {
     public static final String TRIANGULAR = "triangular";
     public static final String TRAPEZOIDAL = "trapezoidal";
     public static final String GAUSSIAN = "gaussian";

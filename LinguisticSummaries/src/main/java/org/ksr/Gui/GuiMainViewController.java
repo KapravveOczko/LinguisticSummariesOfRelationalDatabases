@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import org.ksr.Assets.BottomSalinity;
 import org.ksr.Assets.None;
 import org.ksr.Assets.SurfaceSalinity;
-import org.ksr.FuzzyLib.FuzzySet.FuzzySet;
+import org.ksr.FuzzyLib.LinguisticVariable.LinguisticVariable;
 
 import java.io.IOException;
 
@@ -18,15 +18,15 @@ public class GuiMainViewController {
     @FXML
     private Button buttonGenerateLS;
     @FXML
-    private ChoiceBox<FuzzySet> quantifierChoice;
+    private ChoiceBox<LinguisticVariable> quantifierChoice;
     @FXML
-    private ChoiceBox<FuzzySet> qualifierChoice;
+    private ChoiceBox<LinguisticVariable> qualifierChoice;
     @FXML
-    private ChoiceBox<FuzzySet> summarizer1;
+    private ChoiceBox<LinguisticVariable> summarizer1;
     @FXML
-    private ChoiceBox<FuzzySet> summarizer2;
+    private ChoiceBox<LinguisticVariable> summarizer2;
     @FXML
-    private ChoiceBox<FuzzySet> summarizer3;
+    private ChoiceBox<LinguisticVariable> summarizer3;
     @FXML
     private MenuItem editButton;
 
@@ -48,9 +48,9 @@ public class GuiMainViewController {
     }
     @FXML
     public void initializeSummarizers(){
-        FuzzySet bottomSalinity = new BottomSalinity("bottomSalinity");
-        FuzzySet surfaceSalinity = new SurfaceSalinity("surfaceSalinity");
-        FuzzySet none = new None("none");
+        LinguisticVariable bottomSalinity = new BottomSalinity("bottomSalinity");
+        LinguisticVariable surfaceSalinity = new SurfaceSalinity("surfaceSalinity");
+        LinguisticVariable none = new None("none");
         summarizer1.getItems().addAll(none, bottomSalinity, surfaceSalinity);
         summarizer2.getItems().addAll(summarizer1.getItems());
         summarizer3.getItems().addAll(summarizer1.getItems());

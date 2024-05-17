@@ -1,17 +1,16 @@
-package org.ksr.FuzzyLib.MembershipFunction;
+package org.ksr.FuzzyLib.FuzzySet;
 
-public class TrapezoidalMembershipFunction implements MembershipFunction {
+public class TrapezoidalFuzzySet extends FuzzySet implements FuzzySetInterface {
     private final String name;
     private final double a, b, c, d;
 
-    public TrapezoidalMembershipFunction(String name, double a, double b, double c, double d) {
+    public TrapezoidalFuzzySet(String name, double a, double b, double c, double d) {
         this.name = name;
         this.a = a;
         this.b = b;
         this.c = c;
         this.d = d;
     }
-
     @Override
     public String getName() {
         return this.name;

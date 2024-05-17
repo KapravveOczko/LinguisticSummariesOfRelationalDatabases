@@ -1,10 +1,10 @@
-package org.ksr.FuzzyLib.MembershipFunction;
+package org.ksr.FuzzyLib.FuzzySet;
 
-public class GaussianMembershipFunction implements MembershipFunction {
+public class GaussianFuzzySet extends FuzzySet implements FuzzySetInterface {
     private final String name;
     private final double mean, stdDeviation;
 
-    public GaussianMembershipFunction(String name, double mean, double stdDeviation) {
+    public GaussianFuzzySet(String name, double mean, double stdDeviation) {
         this.name = name;
         this.mean = mean;
         this.stdDeviation = stdDeviation;

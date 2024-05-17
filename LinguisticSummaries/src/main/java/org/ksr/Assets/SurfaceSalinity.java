@@ -1,8 +1,8 @@
 package org.ksr.Assets;
 
-import org.ksr.FuzzyLib.FuzzySet.FuzzySet;
+import org.ksr.FuzzyLib.LinguisticVariable.LinguisticVariable;
 
-public class SurfaceSalinity extends FuzzySet {
+public class SurfaceSalinity extends LinguisticVariable {
 
     public SurfaceSalinity(String name) {
         super(name);

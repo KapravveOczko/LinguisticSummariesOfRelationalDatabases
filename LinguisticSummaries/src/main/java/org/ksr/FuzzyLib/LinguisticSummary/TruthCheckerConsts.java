@@ -7,4 +7,6 @@ public class TruthCheckerConsts {
     public static final int T3 = 2;
 
     //[...]
+
+    public static final int T4toT11 = 99;
 }

@@ -48,4 +48,6 @@ public class TruthChecker {
     private Float T3(){
         return null;
     }
+
+    private Float T4toT11(){return null;}
 }

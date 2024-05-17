@@ -162,7 +162,7 @@
                               </Text>
                               <Button fx:id="confirmAddingMembershipButton" mnemonicParsing="false" text="add" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
                               <ChoiceBox fx:id="setToAddTo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                              <ChoiceBox fx:id="membershipFunction" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                              <ChoiceBox fx:id="fuzzySet" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                            </children>
                         </GridPane>
                      </children>
