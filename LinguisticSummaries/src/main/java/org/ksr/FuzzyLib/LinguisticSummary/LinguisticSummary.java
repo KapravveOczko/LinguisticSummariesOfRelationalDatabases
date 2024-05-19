@@ -6,11 +6,11 @@ import java.util.List;
 
 public abstract class LinguisticSummary<T> {
 
-    private LinguisticVariable qualifier;
+    private Label qualifier;
     private List<T> subject;
-    private List<LinguisticVariable> summarizer;
+    private List<Label> summarizer;
     private TruthChecker truthChecker;
-    private LinguisticVariable quantifier;
+    private Label quantifier;
 
 
     public String createLinguisticSummary(){

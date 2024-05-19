@@ -27,26 +27,14 @@ public class TruthChecker {
 
         for(Integer method: selectedMethods){
             switch (method){
-                case TruthCheckerConsts.T1 -> truth += T1();
-                case TruthCheckerConsts.T2 -> truth += T2();
-                case TruthCheckerConsts.T3 -> truth += T3();
+//                case TruthCheckerConsts.T1 -> truth += T1();
+//                case TruthCheckerConsts.T2 -> truth += T2();
+//                case TruthCheckerConsts.T3 -> truth += T3();
                 // [...]
             }
         }
 
         return truth/selectedMethods.size();
-    }
-
-    private Float T1(){
-        return null;
-    }
-
-    private Float T2(){
-        return null;
-    }
-
-    private Float T3(){
-        return null;
     }
 
     private Float T4toT11(){return null;}
