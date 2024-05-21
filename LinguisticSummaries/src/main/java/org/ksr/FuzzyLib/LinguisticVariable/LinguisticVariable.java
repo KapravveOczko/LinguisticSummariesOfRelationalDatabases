@@ -1,7 +1,6 @@
 package org.ksr.FuzzyLib.LinguisticVariable;
 
 import org.ksr.FuzzyLib.FuzzySet.FuzzySet;
-import org.ksr.FuzzyLib.FuzzySet.FuzzySetInterface;
 
 import java.util.ArrayList;
 import java.util.List;

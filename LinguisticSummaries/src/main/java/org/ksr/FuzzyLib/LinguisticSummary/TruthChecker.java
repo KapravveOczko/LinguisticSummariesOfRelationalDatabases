@@ -1,5 +1,4 @@
 package org.ksr.FuzzyLib.LinguisticSummary;
-import org.ksr.FuzzyLib.LinguisticSummary.TruthCheckerConsts;
 
 import java.util.List;
 
