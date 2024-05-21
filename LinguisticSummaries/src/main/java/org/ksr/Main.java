@@ -1,10 +1,13 @@
 package org.ksr;
-import org.ksr.Db.DatabaseConnector;
+import org.ksr.Assets.BottomSalinity;
+import org.ksr.DataController.DatabaseConnector;
+import org.ksr.DataController.JsonConnector;
+import org.ksr.FuzzyLib.LinguisticVariable.LinguisticVariable;
 
-import java.util.ArrayList;
+import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 //        Gui gui = new Gui();
 //        gui.launchGui();
 
@@ -16,11 +19,16 @@ public class Main {
         DatabaseConnector db = new DatabaseConnector(url, user, password);
 //        db.queryDataTable("test_data");
 
-        ArrayList<Double> data = db.getDataFromColumn("test_small_data", "sea_bottom_temperature");
+//        ------------------------------------------------------------
+        JsonConnector jc = new JsonConnector();
+        LinguisticVariable bottomSalinity = new BottomSalinity("bottomSalinity");
 
-        for(int i=0; i!= data.size(); i++){
-            System.out.println(data.get(i));
-        }
+        jc.saveAllFuzzySetsToFolder(bottomSalinity.getFuzzySets(), "BottomSalinity");
+//        --------------------------------------------------------------
+        LinguisticVariable bottomSalinityTest = new BottomSalinity("bottomSalinityTest");
+        bottomSalinityTest.setFuzzySets(jc.loadAllFuzzySetsFromFolder("BottomSalinity"));
+        jc.saveAllFuzzySetsToFolder(bottomSalinityTest.getFuzzySets(), "BottomSalinityTest");
+
 
     }
 }

@@ -15,6 +15,9 @@ public class TrapezoidalFuzzySet extends FuzzySet {
         this.b = b;
         this.c = c;
         this.d = d;
+        calculateSupport();
+        calculateConcave();
+        calculateCardinality();
     }
     @Override
     public String getName() {
@@ -44,5 +47,19 @@ public class TrapezoidalFuzzySet extends FuzzySet {
         }
 
         setSupport(support);
+    }
+
+    //
+    public double getA() {
+        return a;
+    }
+    public double getB() {
+        return b;
+    }
+    public double getC() {
+        return c;
+    }
+    public double getD() {
+        return d;
     }
 }

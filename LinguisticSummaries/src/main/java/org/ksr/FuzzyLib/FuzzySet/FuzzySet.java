@@ -6,7 +6,7 @@ import java.util.List;
 import static org.ksr.FuzzyLib.FuzzySet.FuzzySetConstants.ALPHA_STEP;
 
 public abstract class FuzzySet {
-
+    private double a, b, c, d;
     private String name;
     private Boolean isConcave;
     private Double cardinality;
@@ -52,7 +52,13 @@ public abstract class FuzzySet {
         setConcave(true);
     }
 
-
+    public void calculateCardinality(){
+        Double cardinality = 0.0;
+        for(Double position: getSupport()){
+            cardinality += calculateMembership(position);
+        }
+        setCardinality(cardinality);
+    }
 
     public void calculateSupport(){}
 
@@ -72,28 +78,23 @@ public abstract class FuzzySet {
     public void setName(String name) {
         this.name = name;
     }
-
     public Boolean getConcave() {
         return isConcave;
     }
-
     public void setConcave(Boolean concave) {
         isConcave = concave;
     }
-
     public Double getCardinality() {
         return cardinality;
     }
-
     public void setCardinality(Double cardinality) {
         this.cardinality = cardinality;
     }
-
     public List<Double> getSupport() {
         return support;
     }
-
     public void setSupport(List<Double> support) {
         this.support = support;
     }
+
 }

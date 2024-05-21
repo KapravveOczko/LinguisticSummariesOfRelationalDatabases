@@ -13,7 +13,7 @@ public abstract class LinguisticVariable {
 
     public LinguisticVariable(String name) {
         this.name = name;
-        this.fuzzySets = new ArrayList<FuzzySet>();
+        this.fuzzySets = new ArrayList<>();
     }
 
 
@@ -22,7 +22,7 @@ public abstract class LinguisticVariable {
         return this.name;
     }
 
-    public List<FuzzySet> getMembershipFunctions() {
+    public List<FuzzySet> getFuzzySets() {
         return fuzzySets;
     }
 
@@ -48,5 +48,7 @@ public abstract class LinguisticVariable {
         }
     }
 
-
+    public void setFuzzySets(List<FuzzySet> fuzzySets) {
+        this.fuzzySets = fuzzySets;
+    }
 }

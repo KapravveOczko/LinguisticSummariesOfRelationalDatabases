@@ -14,6 +14,9 @@ public class TriangularFuzzySet extends FuzzySet {
         this.a = a;
         this.b = b;
         this.c = c;
+        calculateSupport();
+        calculateConcave();
+        calculateCardinality();
     }
 
     @Override
@@ -44,5 +47,15 @@ public class TriangularFuzzySet extends FuzzySet {
         setSupport(support);
     }
 
+    //
+    public double getA() {
+        return a;
+    }
+    public double getB() {
+        return b;
+    }
+    public double getC() {
+        return c;
+    }
 }
 
