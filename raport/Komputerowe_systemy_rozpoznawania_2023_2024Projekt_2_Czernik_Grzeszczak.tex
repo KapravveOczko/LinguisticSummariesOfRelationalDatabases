@@ -941,20 +941,142 @@ $}
 
 Opisy zostały przygotowane z uwzględnieniem literatury dotyczącej lingwistyki rozmytej oraz jej zastosowań.
 
+
+
+
+%=======================================================================================
+
 \section{Narzędzia obliczeniowe: wybór/implementacja. Diagram UML pakietu
 obliczeń rozmytych i~generatora podsumowań. Instrukcja użytkownika}
-\noindent {\bf Sekcja uzupełniona jako efekt zadania Tydzień 10 wg Harmonogramu Zajęć na WIKAMP KSR.}
 
-Diagram UML i zwięzły opis pakietu obliczeń rozmytych: źródło pakietu
-(zewnętrzny/własny/hybrydowy), przypis do literatury/źródeł. Krótka charakterystyka
-najważniejszych klas i podstawowych dla zadania ich metod. \\
 
-Diagram UML generatora podsumowań (warstwy obliczeniowej oraz interfejsu
-użytkownika). Krótki ilustrowany opis jak użytkownik może korzystać z aplikacji, w~szczególności
-wprowadzać parametry  podsumowań, odczytywać wyniki oraz definiować własne etykiety i
-kwantyfikatory.\\
+\subsection{Opis pakietu obliczeń rozmytych - fuzzyLib}
 
-Wersja JRE i inne wymogi niezbędne do uruchomienia aplikacji przez użytkownika na własnym komputerze. 
+\noindent W celu zaspokojenia wymagąń zadania utworzony został pakiet przeznaczony do obsługi logiki aplikacji. Poniżej zaprezentowany został diagram UML przedstawiający strukturę pakietu oraz jego pakietów pochodnych.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{ksr/projekt_2_fuzzy/assetsUml/packets.png}
+\caption{pakiet fuzzyLib wraz z jego podpakietami}
+\label{fig:epsilon_bat}
+\end{figure}
+
+\noindent Warto tutaj zaznaczyć że przedstawione w tej sekcji UML'e nie zawierają metod pomocniczych (setery i getery), które zaimplementowe są domyślnie.
+
+\subsubsection{pakiet FuzzySet}
+
+\noindent Pakiet definiujący interfejsy i implementacje funkcji przynależności, które są elementarnymi składnikami zbiorów rozmytych. Zawiera klasy i narzędzia służące do tworzenia, analizy i manipulacji tymi funkcjami. Dodatkowo klasa abstrakcyjna FuzzySet zapenia operacje możliwe do przeprowadzenia na zbiorach rozmytych.
+
+\begin{itemize}
+    \item[FuzzySet:] Klasa abstrakcyjna po której dziedziczą wszystkie pozostałe klasy reprezentujące zbiory rozmyte oraz ich funkcje przynależności, udostęnia operacje możliwe do wykoania na zbiorach rozmytych (dopełnienie, liczba kardynalna czy alfa cut). 
+    \item[FuzzySetFactoryConsts:] Zawiera stałe reprezentujące różne typy funkcji przynależności, takie jak TRIANGULAR, TRAPEZOIDAL i GAUSSIAN.
+    \item[Interfejs FuzzySetInterface:] Jest to interfejs definiujący ogólną funkcję przynależności.
+    \item[FuzzySetFactory:] Fabryka do tworzenia różnych typów funkcji przynależności na podstawie podanego typu oraz parametrów.
+    Wykorzystuje wyrażenie switch do dynamicznego tworzenia odpowiednich instancji klas na podstawie podanego typu.
+    \item[TrapezoidalFuzzySet:] Reprezentuje funkcję przynależności trapezoidalnej w ramach zbioru rozmytego.
+    \item[TriangularFuzzySet:] Reprezentuje funkcję przynależności trójkątną w ramach zbioru rozmytego.
+    \item[GaussianFuzzySet:] Reprezentuje funkcję przynależności Gaussa w ramach zbioru rozmytego.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{ksr/projekt_2_fuzzy/assetsUml/FuzzySet.png}
+\caption{Pakiet MembershipFunction}
+\label{fig:epsilon_bat}
+\end{figure}
+
+\subsubsection{Pakiet LinguisticSummary}
+
+\noindent Pakiet zajmujący się generowaniem podsumowań lingwistycznych, czyli formułowania wniosków na podstawie zbiorów rozmytych. Zawiera klasy i narzędzia do tworzenia podsumowań lingwistycznych różnych stopni złożoności, w oparciu o zbiory rozmyte jako elementy wnioskowania.
+
+\begin{itemize}
+    \item[Label:] Klasa pomocnicza służąca do obsługi sumatyzatorów, kwalifikatorów i kwantyfikatorów, przechowuje nazwę funkcji przynależności oraz zmienną lingwistyczną. Dzięki tem jesteśmy wstanie określić przestrzeń rozważań oraz posługiwać się odpowiednią funkcją podczas tworzenia podsumowań. 
+    \item[LinguisticSummary<T>:]  Jest to klasa abstrakcyjna reprezentująca podsumowanie lingwistyczne. Posiada pola takie jak qualifier (kwalifikator), object (obiekt), summarizer (sumatory), truthChecker (obiekt sprawdzający prawdziwość) i quantifier (kwantyfikator). Udostępnia metody do tworzenia podsumowań lingwistycznych.
+    \item[TruthChecker:] Jest to klasa służąca do sprawdzania stopnia prawdziwości podsumowań lingwistycznych. Jest zaimplementowana jako Singleton, aby zapewnić tylko jedną instancję tej klasy w aplikacji.
+    \item[TruthCheckerConsts:]  Zawiera stałe używane do identyfikowania różnych metod sprawdzania stopnia prawdziwości w klasie TruthChecker.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{ksr/projekt_2_fuzzy/assetsUml/LinguisticSummary.png}
+\caption{Pakiet LinguisticSummary}
+\label{fig:epsilon_bat}
+\end{figure}
+
+\noindent Tu warto zaznaczyć ze klasay TruthChecker oraz TrutchCheckerConsts zawierają tylko poglądową ilość pul zwiżanych z funkcjami jakości podsumowania ligwistycznego, ich docelowa ilość to 11 (od T1 do T11).
+
+\subsubsection{Pakiet LinguisticVariable}
+
+\noindent Pakiet odpowiedzialny za reprezentację i zarządzanie zbiorami rozmytymi. Zawiera klasy i narzędzia do definiowania, manipulowania i analizowania zbiorów rozmytych \cite{niewiadomski19}, w tym klasy reprezentujące same zbiory rozmyte oraz fabrykę umożliwiającą ich tworzenie.
+
+\begin{itemize}
+    \item[LinguisticVariable:] Jest to abstrakcyjna klasa reprezentująca zmienną lingwistyczną. Zawiera pola takie jak nazwa, lista funkcji przynależności. Udostępnia metody do dodawania i usuwania funkcji przynależności. Celem tej klasy jest reprezentowanie takich wartości jak na przykład kwalifikator bądź sumaryzator.
+    \item[LinguisticVariableFactory]  Jest to klasa fabryki służąca do tworzenia instancji zmiennych lingwistycznych, będzie ona nadwyraz pomocna podczas ładowania zapisanych przez użytkownika customowo utworoznych funkcji przynależności.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{ksr/projekt_2_fuzzy/assetsUml/LinguisticVariable.png}
+\caption{Pakiet FuzzySet}
+\label{fig:epsilon_bat}
+\end{figure}
+
+\subsection{Interfejs urzytkownika}
+
+\noindent Aplikacja posiada relatywnie intuicyjny interfejs użytkownika składający się z 2 paneli, pierwszy z nich służy do generowania podsumowań lingwistycznych, drugi to tak zwany interfejs użytkownika zaawansowanego pozwalający na tworzenie i dodawanie funkcji przynależności do danych zmiennych lingwistycznych. Cały front naszego programu realizowany jest przez pakiet "Gui" \\ 
+
+\subsubsection{Panel główny}
+
+\noindent Panel główny aplikacji pozwala na wybranie z listy dostępnych obiektów kwantyfikatora, kwalifikatora oraz do 3 sumatyzatorów, po zatwierdzeniu parametrów wynik wyświetlony zostanie po lewej stronie ekranu.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{ksr/projekt_2_fuzzy/assetsGui/mainView.png}
+\caption{główny ekran aplikacji}
+\label{fig:epsilon_bat}
+\end{figure}
+
+\subsubsection{Panel użytkownika zaawansowanego}
+
+\noindent Wejście do panelu użytkownika zaawansowanego odbywa się poprzez panel Edit-> enter edit mode, w ten sam sposób można wspomniany panel opuścić Edit -> exit edit mode.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{ksr/projekt_2_fuzzy/assetsGui/edit_exit_editMode.png}
+\caption{przełączanie się między panelem użytkownika zaawansowanego a panelem głównym}
+\label{fig:epsilon_bat}
+\end{figure}
+
+\begin{figure}[H]
+  \begin{minipage}[b]{0.3\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{ksr/projekt_2_fuzzy/assetsGui/editMode.png}
+    \caption{ekran tworzenia funkcji przynależności}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.3\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{ksr/projekt_2_fuzzy/assetsGui/EditModeAdd.png}
+    \caption{ekran dodawania funkcji przynależności do zmiennej lingwistycznej}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.3\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{ksr/projekt_2_fuzzy/assetsGui/editModeDelete.png}
+    \caption{ekran usuwania funkcji przynależności ze zmiennej lingwistycznej}
+  \end{minipage}
+\end{figure}
+
+\noindent Utworzenie nowej funkcji przynależności odbywa się poprzez wybranie kształtu funkcji (trójkątna, trapezoidalna oraz gausowska) oraz wprowadzenie odpowiednich parametrów. W celu dodania/usunięcia funkcji ze zmiennej lingwistycznej należy skorzystać z odpowiednich paneli.
+
+
+\subsection{JRE}
+
+\noindent Aby uruchomić naszą aplikację, użytkownik musi mieć zainstalowane środowisko uruchomieniowe Java (Java Runtime Environment, JRE). Aplikacja została przetestowana i działa z najnowszą wersją JRE LTS (Long-Term Support), co zapewnia stabilność i długoterminowe wsparcie.
+
+\noindent Aplikacja do poprawnego działania wymaga dostępu do relacyjnej bazy danych. Stworzona została z myślą o użyciu PostgreSQL 13. Użytkownik musi zainstalować i skonfigurować bazę danych oraz dostarczyć odpowiednie dane dostępowe. Dodatkowo Aplikacja wykorzystuje biblioteki Java, które są zarządzane przez system budowania Maven. Użytkownik musi mieć zainstalowany Maven w wersji 3.6.3 lub nowszej. 
+
+%=======================================================================================
 
 \section{ Jednopodmiotowe podsumowania lingwistyczne. Miary jakości, podsumowanie optymalne}
 Wyniki kolejnych eksperymentów wg punktów 2.-4. opisu projektu 2.  Listy podsumowań
