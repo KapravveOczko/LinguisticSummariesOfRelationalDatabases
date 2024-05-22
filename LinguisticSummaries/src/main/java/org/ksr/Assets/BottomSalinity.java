@@ -5,8 +5,8 @@ import org.ksr.FuzzyLib.FuzzySet.FuzzySetFactory;
 
 public class BottomSalinity extends LinguisticVariable {
 
-    public BottomSalinity(String name) {
-        super(name);
+    public BottomSalinity() {
+        super("sea_bottom_salinity");
         appendMembershipFunctions();
     }
 

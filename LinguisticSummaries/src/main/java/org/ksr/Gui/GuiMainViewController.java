@@ -48,8 +48,8 @@ public class GuiMainViewController {
     }
     @FXML
     public void initializeSummarizers(){
-        LinguisticVariable bottomSalinity = new BottomSalinity("bottomSalinity");
-        LinguisticVariable surfaceSalinity = new SurfaceSalinity("surfaceSalinity");
+        LinguisticVariable bottomSalinity = new BottomSalinity();
+        LinguisticVariable surfaceSalinity = new SurfaceSalinity();
         LinguisticVariable none = new None("none");
         summarizer1.getItems().addAll(none, bottomSalinity, surfaceSalinity);
         summarizer2.getItems().addAll(summarizer1.getItems());
