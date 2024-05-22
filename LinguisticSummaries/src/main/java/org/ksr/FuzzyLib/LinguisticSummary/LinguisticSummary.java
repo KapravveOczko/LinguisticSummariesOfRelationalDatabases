@@ -5,59 +5,63 @@ import org.ksr.FuzzyLib.FuzzySet.FuzzySet;
 import org.ksr.FuzzyLib.LinguisticVariable.LinguisticVariable;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-//public class LinguisticSummary<T> {
 public class LinguisticSummary {
 
     private Label qualifier;
-//    private List<T> subject;
-    private List<Label> summarizer;
+    private List<LinguisticVariable> summarizers;
     private TruthChecker truthChecker;
     private Label quantifier;
     private DatabaseConnector db;
 
-    public LinguisticSummary(Label qualifier, List<Label> summarizer, Label quantifier) {
+    public LinguisticSummary(Label qualifier, List<LinguisticVariable> summarizers, Label quantifier) {
         this.qualifier = qualifier;
-//        this.subject = subject;
-        this.summarizer = summarizer;
-        this.truthChecker = new TruthChecker();
+        this.summarizers = summarizers;
+        this.truthChecker = TruthChecker.getInstance();
         this.quantifier = quantifier;
         connectToDb();
     }
 
     public List<String> createLinguisticSummary() {
-        List<String> summaries = new ArrayList<>();
+        Set<String> summaries = new HashSet<>();
 
         // Generate all possible combinations of summarizers (max 3)
-        for (int i = 0; i < summarizer.size(); i++) {
-            for (int j = i; j < summarizer.size(); j++) {
-                for (int k = j; k < summarizer.size(); k++) {
-                    List<Label> currentSummarizers = new ArrayList<>();
-                    currentSummarizers.add(summarizer.get(i));
-                    if (j != i) currentSummarizers.add(summarizer.get(j));
-                    if (k != j && k != i) currentSummarizers.add(summarizer.get(k));
+        for (int i = 0; i < summarizers.size(); i++) {
+            LinguisticVariable var1 = summarizers.get(i);
+            for (int j = i; j < summarizers.size(); j++) {
+                LinguisticVariable var2 = summarizers.get(j);
+                for (int k = j; k < summarizers.size(); k++) {
+                    LinguisticVariable var3 = summarizers.get(k);
 
-                    // Get data for subjects based on the first summarizer's linguistic variable
-                    List<Double> data = db.getDataFromColumn("test_small_data", currentSummarizers
-                            .get(0).getLinguisticVariable().getName());
+                    // Generate combinations of fuzzy sets from the three variables
+                    for (FuzzySet set1 : var1.getFuzzySets()) {
+                        for (FuzzySet set2 : var2.getFuzzySets()) {
+                            for (FuzzySet set3 : var3.getFuzzySets()) {
+                                List<Label> currentSummarizers = new ArrayList<>();
+                                currentSummarizers.add(new Label(set1.getName(), var1));
+                                if (j != i) currentSummarizers.add(new Label(set2.getName(), var2));
+                                if (k != j && k != i) currentSummarizers.add(new Label(set3.getName(), var3));
 
-                    // Generate summary text
-                    String summary = generateSummaryText(currentSummarizers);
+                                // Get data for subjects based on the first summarizer's linguistic variable
+                                List<Double> data = db.getDataFromColumn("test_small_data", currentSummarizers
+                                        .get(0).getLinguisticVariable().getName());
 
-                    // Calculate truth degree for the summary
-//                    double truthDegree = calculateTruthDegree(data, currentSummarizers);
+                                // Generate summary text
+                                String summary = generateSummaryText(currentSummarizers);
 
-                    //tmp:
-                    double truthDegree = 0.0;
-
-                    // Store the summary and its truth degree
-                    summaries.add(summary + " - [ " + truthDegree + " ]") ;
+                                // Store the summary (degree of truth calculation is skipped)
+                                summaries.add(summary);
+                            }
+                        }
+                    }
                 }
             }
         }
 
-        return summaries;
+        return new ArrayList<>(summaries);
     }
 
     private String generateSummaryText(List<Label> summarizers) {
@@ -80,30 +84,6 @@ public class LinguisticSummary {
         return summary.toString();
     }
 
-//    private double calculateTruthDegree(List<Double> data, List<Label> summarizers) {
-//        double truthDegree = 0.0;
-//        int count = 0;
-//
-//        for (Double value : data) {
-//            double membership = calculateMembership(value, summarizers);
-//            truthDegree += membership;
-//            count++;
-//        }
-//
-//        return truthDegree / count;
-//    }
-//
-//    private double calculateMembership(Double value, List<Label> summarizers) {
-//        double membership = 1.0;
-//
-//        for (Label summarizer : summarizers) {
-//            FuzzySet fuzzySet = summarizer.getLinguisticVariable().getMembershipFunction(summarizer.getSetName());
-//            membership = Math.min(membership, fuzzySet.calculateMembership(value));
-//        }
-//
-//        return membership;
-//    }
-
     public void connectToDb() {
         String url = "jdbc:postgresql://localhost:5432/ksr";
         String user = "postgres";
@@ -112,3 +92,5 @@ public class LinguisticSummary {
         this.db = new DatabaseConnector(url, user, password);
     }
 }
+
+

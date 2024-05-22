@@ -22,7 +22,7 @@ public class DatabaseConnector {
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url, user, password);
-            System.out.println("Connected to the PostgreSQL server successfully.");
+//            System.out.println("Connected to the PostgreSQL server successfully.");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -76,21 +76,4 @@ public class DatabaseConnector {
         return data;
     }
 
-
-//    obsolete
-//    public void queryData(String tableName, String columnName) {
-//        String query = "SELECT * FROM" + tableName;
-//
-//        try (Connection conn = connect();
-//             Statement stmt = conn.createStatement();
-//             ResultSet rs = stmt.executeQuery(query)) {
-//
-//            while (rs.next()) {
-//                System.out.println(rs.getString(columnName));
-//            }
-//
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
 }

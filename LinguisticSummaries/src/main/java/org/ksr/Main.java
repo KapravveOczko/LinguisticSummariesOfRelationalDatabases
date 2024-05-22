@@ -18,10 +18,11 @@ public class Main {
 
         Assets assets = new Assets();
         Label qualifier = new Label("a few", assets.getVariable("relative_quantifiers"));
-        List<Label> summarizers = new ArrayList<>();
-        summarizers.add(new Label("calm seas", assets.getVariable("significant_wave_height")));
-        summarizers.add(new Label("east", assets.getVariable("mean_wave_direction")));
-        summarizers.add(new Label("surface", assets.getVariable("mixed_layer_depth")));
+        List<LinguisticVariable> summarizers = new ArrayList<>();
+        summarizers.add(assets.getVariable("longitude"));
+//        summarizers.add(assets.getVariable("significant_wave_height"));
+//        summarizers.add(assets.getVariable("mixed_layer_depth"));
+//        summarizers.add(assets.getVariable("mixed_layer_depth"));
 
         LinguisticSummary testSummary = new LinguisticSummary(qualifier, summarizers, qualifier);
         List<String> summaries = testSummary.createLinguisticSummary();
