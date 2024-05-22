@@ -21,6 +21,6 @@ public class WaveDirection extends LinguisticVariable {
         appendMembershipFunction(FuzzySetFactory.createMembershipFunction(TRIANGULAR, "south-west", 192.5, 225.0, 257.5));
         appendMembershipFunction(FuzzySetFactory.createMembershipFunction(TRIANGULAR, "west", 237.5, 270.0, 302.5));
         appendMembershipFunction(FuzzySetFactory.createMembershipFunction(TRIANGULAR, "north-west", 282.5, 315.0, 347.5));
-        appendMembershipFunction(FuzzySetFactory.createMembershipFunction(TRIANGULAR, "north ", 327.5, 360.0, 360.0));
+        appendMembershipFunction(FuzzySetFactory.createMembershipFunction(TRIANGULAR, "north 2", 327.5, 360.0, 360.0));
     }
 }

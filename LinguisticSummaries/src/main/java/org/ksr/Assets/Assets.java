@@ -33,6 +33,14 @@ public class Assets {
         this.qualifiers = qualifiers;
     }
 
+    public LinguisticVariable getVariable(String name) {
+        return getVariables().stream()
+                .filter(linguisticVariable -> linguisticVariable.getName().equals(name))
+                .findFirst()
+                .orElse(null);
+    }
+
+
     public List<LinguisticVariable> getVariables() {
         return variables;
     }

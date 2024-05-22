@@ -5,7 +5,7 @@ import java.util.List;
 public class TruthChecker {
     private static TruthChecker instance;
 
-    private TruthChecker() {
+    public TruthChecker() {
     }
 
     public static TruthChecker getInstance() {

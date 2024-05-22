@@ -66,4 +66,19 @@ public class JsonConnector {
         return FuzzySetFactory.createMembershipFunction(dto.getType(), dto.getName(),
                 dto.getA(), dto.getB(), dto.getC(), dto.getD());
     }
+
+    public static void deleteFile(String folederName, String fileName) throws IOException {
+        String assetsDirectory = Paths.get("Assets", folederName).toAbsolutePath().toString();
+        File file = new File(assetsDirectory, fileName);
+
+        if (file.exists()) {
+            if (!file.delete()) {
+                throw new IOException("Nie udało się usunąć pliku: " + fileName);
+            } else {
+                System.out.println("Plik " + fileName + " został pomyślnie usunięty.");
+            }
+        } else {
+            throw new IOException("Plik " + fileName + " nie istnieje w folderze: " + assetsDirectory);
+        }
+    }
 }

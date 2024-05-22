@@ -16,7 +16,7 @@ public abstract class FuzzySet {
         return name;
     }
 
-    Double calculateMembership(double x){
+    public Double calculateMembership(double x){
         return null;
     }
 

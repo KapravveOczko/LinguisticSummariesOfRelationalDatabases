@@ -5,6 +5,7 @@ import org.ksr.FuzzyLib.FuzzySet.FuzzySet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public abstract class LinguisticVariable {
     private String name;
@@ -24,6 +25,13 @@ public abstract class LinguisticVariable {
 
     public List<FuzzySet> getFuzzySets() {
         return fuzzySets;
+    }
+
+    public FuzzySet getMembershipFunction(String name){
+        return getFuzzySets().stream()
+                .filter(fuzzySet -> fuzzySet.getName().equals(name))
+                .findFirst()
+                .orElse(null);
     }
 
     public void appendMembershipFunction(FuzzySet fuzzySet){
@@ -50,5 +58,9 @@ public abstract class LinguisticVariable {
 
     public void setFuzzySets(List<FuzzySet> fuzzySets) {
         this.fuzzySets = fuzzySets;
+    }
+
+    public String getName() {
+        return name;
     }
 }
