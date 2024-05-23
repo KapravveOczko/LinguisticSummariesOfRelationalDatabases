@@ -13,14 +13,12 @@ public class LinguisticSummary {
 
     private Label qualifier; //W
     private List<LinguisticVariable> summarizers;
-    private TruthChecker truthChecker;
     private Label quantifier;
     private DatabaseConnector db;
 
     public LinguisticSummary(Label qualifier, List<LinguisticVariable> summarizers, Label quantifier) {
         this.qualifier = qualifier; //W
         this.summarizers = summarizers;
-        this.truthChecker = TruthChecker.getInstance();
         this.quantifier = quantifier;
         connectToDb();
     }
@@ -29,7 +27,7 @@ public class LinguisticSummary {
         Set<String> summaries = new HashSet<>();
 
         // Get data for subjects based on the summarizer's linguistic variable
-        List<ArrayList<Double>> data = new ArrayList<>();
+        List<List<Double>> data = new ArrayList<>();
         for( LinguisticVariable summarizer : this.summarizers){
         data.add(db.getDataFromColumn("test_small_data", summarizer.getName()));
         }
@@ -57,8 +55,13 @@ public class LinguisticSummary {
                                 // Generate summary text
                                 String summary = generateSummaryText(currentSummarizers);
 
+                                // Calculate degree of truth
+                                TruthChecker truthChecker = new TruthChecker(data, currentSummarizers, qualifier, quantifier);
+
+                                float degreeOfTruth = truthChecker.checkTruth();
+
                                 // Store the summary (degree of truth calculation is skipped)
-                                summaries.add(summary);
+                                summaries.add(summary + " [" + degreeOfTruth + "]");
                             }
                         }
                     }

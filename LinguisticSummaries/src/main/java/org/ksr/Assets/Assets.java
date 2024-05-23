@@ -8,7 +8,6 @@ import java.util.List;
 public class Assets {
 
     private List<LinguisticVariable> variables;
-    private List<LinguisticVariable> qualifiers;
 
     public Assets() {
 
@@ -24,13 +23,10 @@ public class Assets {
         variables.add(new WaveFrequency());
         variables.add(new WaveHeight());
         variables.add(new WaveSpeed());
-
-        ArrayList<LinguisticVariable> qualifiers = new ArrayList<>();
-        qualifiers.add(new AbsoluteQuantifiers());
-        qualifiers.add(new RelativeQuantifiers());
+        variables.add(new AbsoluteQuantifiers());
+        variables.add(new RelativeQuantifiers());
 
         this.variables = variables;
-        this.qualifiers = qualifiers;
     }
 
     public LinguisticVariable getVariable(String name) {
@@ -40,12 +36,8 @@ public class Assets {
                 .orElse(null);
     }
 
-
     public List<LinguisticVariable> getVariables() {
         return variables;
     }
 
-    public List<LinguisticVariable> getQualifiers() {
-        return qualifiers;
-    }
 }
