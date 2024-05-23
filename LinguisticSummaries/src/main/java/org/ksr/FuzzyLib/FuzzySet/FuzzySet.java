@@ -73,6 +73,17 @@ public abstract class FuzzySet {
         return exceeding;
     }
 
+// degree of fuzziness
+    public double getImprecision() {
+        double entropy = 0.0;
+        for (double mu : this.support) {
+            if (mu > 0 && mu < 1) {
+                entropy += -mu * Math.log(mu) - (1 - mu) * Math.log(1 - mu);
+            }
+        }
+        return entropy / this.support.size();
+    }
+
     // getters and setters
 
     public void setName(String name) {

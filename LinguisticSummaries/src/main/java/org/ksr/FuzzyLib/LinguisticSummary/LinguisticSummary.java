@@ -11,14 +11,14 @@ import java.util.Set;
 
 public class LinguisticSummary {
 
-    private Label qualifier;
+    private Label qualifier; //W
     private List<LinguisticVariable> summarizers;
     private TruthChecker truthChecker;
     private Label quantifier;
     private DatabaseConnector db;
 
     public LinguisticSummary(Label qualifier, List<LinguisticVariable> summarizers, Label quantifier) {
-        this.qualifier = qualifier;
+        this.qualifier = qualifier; //W
         this.summarizers = summarizers;
         this.truthChecker = TruthChecker.getInstance();
         this.quantifier = quantifier;
@@ -27,6 +27,15 @@ public class LinguisticSummary {
 
     public List<String> createLinguisticSummary() {
         Set<String> summaries = new HashSet<>();
+
+        // Get data for subjects based on the summarizer's linguistic variable
+        List<ArrayList<Double>> data = new ArrayList<>();
+        for( LinguisticVariable summarizer : this.summarizers){
+        data.add(db.getDataFromColumn("test_small_data", summarizer.getName()));
+        }
+
+        // W implementation
+
 
         // Generate all possible combinations of summarizers (max 3)
         for (int i = 0; i < summarizers.size(); i++) {
@@ -44,10 +53,6 @@ public class LinguisticSummary {
                                 currentSummarizers.add(new Label(set1.getName(), var1));
                                 if (j != i) currentSummarizers.add(new Label(set2.getName(), var2));
                                 if (k != j && k != i) currentSummarizers.add(new Label(set3.getName(), var3));
-
-                                // Get data for subjects based on the first summarizer's linguistic variable
-                                List<Double> data = db.getDataFromColumn("test_small_data", currentSummarizers
-                                        .get(0).getLinguisticVariable().getName());
 
                                 // Generate summary text
                                 String summary = generateSummaryText(currentSummarizers);

@@ -1,6 +1,9 @@
 package org.ksr.FuzzyLib.LinguisticSummary;
 
 import org.ksr.FuzzyLib.FuzzySet.FuzzySet;
+import org.ksr.FuzzyLib.LinguisticVariable.LinguisticVariable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class TruthChecker {
@@ -17,92 +20,214 @@ public class TruthChecker {
     }
 
     // Will check degreeOfTruth using average from all truth checking methods
-    public Float checkTruth(List<Double> data, List<Label> summarizers) {
-        float T1 = T1(data, summarizers);
-        float T2 = T2(data, summarizers);
-        float T3 = T3(data, summarizers);
-        float T4 = T4(data, summarizers);
-        float T5 = T5(data, summarizers);
-        float T6 = T6(data, summarizers);
-        float T7 = T7(data, summarizers);
-        float T8 = T8(data, summarizers);
-        float T9 = T9(data, summarizers);
-        float T10 = T10(data, summarizers);
-        float T11 = T11(data, summarizers);
+    public Float checkTruth(List<List> data, List<LinguisticVariable> summarizers, Label qualifier, Label quantivier ) {
+        float result = 0.0F;
 
-        // Compute the average of all truth values
-        return (T1 + T2 + T3 + T4 + T5 + T6 + T7 + T8 + T9 + T10 + T11) / 11;
+
+        return result;
     }
 
-    private float T1(List<Double> data, List<Label> summarizers) {
-        // Degree of truth for the summarizer
-        return calculateMembership(data, summarizers);
-    }
+    private float T1(List<Double> data, FuzzySet summarizer, boolean isRelativeQuantifier) {
+        float result = 0.0F;
 
-    private float T2(List<Double> data, List<Label> summarizers) {
-        // Degree of Imprecision
-        return 1 - (1.0f / summarizers.size());
-    }
-
-    private float T3(List<Double> data, List<Label> summarizers) {
-        // Degree of Covering
-        return calculateMembership(data, summarizers) / data.size();
-    }
-
-    private float T4(List<Double> data, List<Label> summarizers) {
-        // Degree of Appropriateness
-        return calculateMembership(data, summarizers) / summarizers.size();
-    }
-
-    private float T5(List<Double> data, List<Label> summarizers) {
-        // Length of the summarizer
-        return (float) (2.0 / (1 + Math.exp(-summarizers.size())));
-    }
-
-    private float T6(List<Double> data, List<Label> summarizers) {
-        // Degree of Quantifier Imprecision
-        return 1 - (1.0f / data.size());
-    }
-
-    private float T7(List<Double> data, List<Label> summarizers) {
-        // Degree of Quantifier Cardinality
-        return (float) summarizers.size() / data.size();
-    }
-
-    private float T8(List<Double> data, List<Label> summarizers) {
-        // Degree of Summarizer Cardinality
-        return calculateMembership(data, summarizers);
-    }
-
-    private float T9(List<Double> data, List<Label> summarizers) {
-        // Degree of Qualifier Cardinality
-        return 1 - calculateMembership(data, summarizers);
-    }
-
-    private float T10(List<Double> data, List<Label> summarizers) {
-        // Degree of Length of qualifier
-        return (float) (2.0 / (1 + Math.exp(-summarizers.size())));
-    }
-
-    private float T11(List<Double> data, List<Label> summarizers) {
-        // Degree of Qualifier Imprecision
-        return 1 - (1.0f / summarizers.size());
-    }
-
-    private float calculateMembership(List<Double> data, List<Label> summarizers) {
-        float membership = 0.0f;
-
-        for (Double value : data) {
-            float minMembership = Float.MAX_VALUE;
-
-            for (Label summarizer : summarizers) {
-                FuzzySet fuzzySet = summarizer.getLinguisticVariable().getMembershipFunction(summarizer.getSetName());
-                minMembership = Math.min(minMembership, fuzzySet.calculateMembership(value).floatValue());
-            }
-
-            membership += minMembership;
+        for(Double value : data)
+        {
+            result+=summarizer.calculateMembership(value);
         }
 
-        return membership / data.size();
+        if(isRelativeQuantifier){
+            return result/data.size();
+        }
+        else {
+            return result;
+        }
     }
+
+//    5.24
+    public float T2(List<LinguisticVariable> summarizers) {
+        double productImprecision = 1.0;
+        int p = summarizers.size();
+
+        for (LinguisticVariable summarizer : summarizers) {
+            List<FuzzySet> fuzzySets = summarizer.getFuzzySets();
+            for (FuzzySet fuzzySet : fuzzySets) {
+                productImprecision *= fuzzySet.getImprecision();
+            }
+        }
+
+        return 1 - (float) Math.pow(productImprecision, p);
+    }
+
+    public float T3(List<List<Double>> data, List<LinguisticVariable> summarizers) {
+        double sumCoverages = 0.0;
+        int dataSize = data.get(0).size();
+
+        for (int index = 0; index < dataSize; index++) {
+            double minMembership = Double.MAX_VALUE;
+            for (int i = 0; i < summarizers.size(); i++) {
+                LinguisticVariable summarizer = summarizers.get(i);
+                double value = data.get(i).get(index);
+                List<FuzzySet> fuzzySets = summarizer.getFuzzySets();
+                for (FuzzySet fuzzySet : fuzzySets) {
+                    double membership = fuzzySet.calculateMembership(value);
+                    minMembership = Math.min(minMembership, membership);
+                }
+            }
+            sumCoverages += minMembership;
+        }
+
+        return (float) (sumCoverages / dataSize);
+    }
+
+    public float T4(List<List<Double>> data, List<LinguisticVariable> summarizers, float T3Value) {
+        double productOfR = 1.0;
+        int dataSize = data.get(0).size();
+
+        // Calculate the product of values r for each summarizer
+        for (int i = 0; i < summarizers.size(); i++) {
+            LinguisticVariable summarizer = summarizers.get(i);
+            double sumMembership = 0.0;
+
+            // Calculate the sum of memberships for each summarizer
+            for (int index = 0; index < dataSize; index++) {
+                double value = data.get(i).get(index);
+                List<FuzzySet> fuzzySets = summarizer.getFuzzySets();
+                double maxMembership = Double.MIN_VALUE;
+
+                // Find the maximum membership for each value
+                for (FuzzySet fuzzySet : fuzzySets) {
+                    double membership = fuzzySet.calculateMembership(value);
+                    maxMembership = Math.max(maxMembership, membership);
+                }
+                // Add the maximum membership to the sum
+                sumMembership += maxMembership;
+            }
+
+            // Calculate r for each summarizer and multiply it with the previous product
+            double r = sumMembership / dataSize;
+            productOfR *= r;
+        }
+        // Calculate T4 using the formula
+        return Math.abs((float) (productOfR - T3Value));
+    }
+
+    private float T5(List<LinguisticVariable> summarizers){
+        int p = 0;
+
+        for(LinguisticVariable summarizer : summarizers){
+            p += summarizer.getFuzzySets().size();
+        }
+
+        return (float) (2 * Math.pow(0.5, p));
+    }
+
+//    M = data.size() ?
+    private float T6(Label quantifier, boolean isRelativeQuantifier, int M){
+        float result = 0.0F;
+        FuzzySet fuzzyQuantivier = quantifier.getLinguisticVariable().getMembershipFunction(quantifier.getSetName());
+
+        if(isRelativeQuantifier){
+            result = (float ) (1 - Math.abs(fuzzyQuantivier.getSupport().size()));
+        }else {
+            result = (float ) (1 - Math.abs(fuzzyQuantivier.getSupport().size()) / M);
+        }
+
+        return result;
+    }
+
+    private float T7(Label quantifier, boolean isRelativeQuantifier, int M){
+        float result = 0.0F;
+        FuzzySet fuzzyQuantivier = quantifier.getLinguisticVariable().getMembershipFunction(quantifier.getSetName());
+
+        if(isRelativeQuantifier){
+            result = (float ) (1 - Math.abs(fuzzyQuantivier.getCardinality()));
+        }else {
+            result = (float ) (1 - Math.abs(fuzzyQuantivier.getCardinality()) / M);
+        }
+
+        return result;
+    }
+
+    private float T8(List<LinguisticVariable> summarizers) {
+        double result = 0.0;
+        double totalResult = 0.0;
+        double maxMembership = Double.MIN_VALUE;
+
+        for (LinguisticVariable summarizer : summarizers) {
+
+            for(FuzzySet fuzzySet : summarizer.getFuzzySets()) {
+                for(Double position : fuzzySet.getSupport()){
+                    double membership = fuzzySet.calculateMembership(position);
+                    maxMembership = Math.max(maxMembership, membership);
+                }
+                result *= fuzzySet.getCardinality();
+            }
+            totalResult += Math.pow(result, 1.0/summarizer.getFuzzySets().size());
+        }
+
+        return 1 - (float) totalResult;
+    }
+
+    private float T9(Label qualifier){
+        float result = 0.0F;
+
+        for(FuzzySet fuzzySet : qualifier.getLinguisticVariable().getFuzzySets()){
+            result *= (float) fuzzySet.getImprecision();
+        }
+
+        return 1 - (float) Math.pow(result, (double) 1 /qualifier.getLinguisticVariable().getFuzzySets().size());
+    }
+
+    private float T10(Label qualifier){
+        float result = 0.0F;
+        double maxMembership = Double.MIN_VALUE;
+
+        for(FuzzySet fuzzySet : qualifier.getLinguisticVariable().getFuzzySets()) {
+            for (Double position : fuzzySet.getSupport()) {
+                double membership = fuzzySet.calculateMembership(position);
+                maxMembership = Math.max(maxMembership, membership);
+            }
+            result *= (float) (fuzzySet.getCardinality() / maxMembership);
+        }
+
+        return 1 - (float) Math.pow(result, (double) 1 /qualifier.getLinguisticVariable().getFuzzySets().size());
+    }
+
+
+    private float T11(Label qualifiers) {
+        return (float) (2 - (0.5 * qualifiers.getLinguisticVariable().getFuzzySets().size()));
+    }
+
+
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------
+//    private float T1(List<Double> data, List<Label> summarizers, boolean isRelativeQuantifier) {
+//        double sumMemberships = 0.0;
+//        double sumQuantifierMemberships = 0.0;
+//
+//        for (Double value : data) {
+//            double minMembership = Double.MAX_VALUE;
+//            for (Label summarizer : summarizers) {
+//                FuzzySet fuzzySet = summarizer.getLinguisticVariable().getMembershipFunction(summarizer.getSetName());
+//                minMembership = Math.min(minMembership, fuzzySet.calculateMembership(value));
+//            }
+//            sumMemberships += minMembership;
+//
+//            if (isRelativeQuantifier) {
+//                sumQuantifierMemberships += 1;
+//            } else {
+//                sumQuantifierMemberships += minMembership;
+//            }
+//        }
+//
+//        if (isRelativeQuantifier) {
+//            return (float) (sumMemberships / data.size());
+//        } else {
+//            return (float) (sumMemberships / sumQuantifierMemberships);
+//        }
+//    }
 }
