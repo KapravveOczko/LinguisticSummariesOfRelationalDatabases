@@ -20,7 +20,7 @@ public class Main {
         Assets assets = new Assets();
 
         Label quantifier = new Label("a few", assets.getVariable("relative_quantifiers"));
-        Label qualifier = new Label("not_salty", assets.getVariable("sea_bottom_salinity"));
+        Label qualifier = new Label("strongly_salty", assets.getVariable("sea_bottom_salinity"));
         List<LinguisticVariable> summarizers = new ArrayList<>();
         summarizers.add(assets.getVariable("longitude"));
         summarizers.add(assets.getVariable("significant_wave_height"));

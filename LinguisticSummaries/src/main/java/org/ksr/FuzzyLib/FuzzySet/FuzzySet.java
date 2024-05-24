@@ -21,29 +21,29 @@ public abstract class FuzzySet {
     }
 
     public void calculateConcave() {
-        boolean concaveTest = true;
-        List<Double> support = getSupport();
-        double step = ALPHA_STEP;
-
-        for (int i = 0; i < support.size() - 1; i++) {
-            double x1 = support.get(i);
-            double x2 = support.get(i + 1);
-
-            for (double lambda = 0; lambda <= 1; lambda += step) {
-                double interpolatedPoint = lambda * x1 + (1 - lambda) * x2;
-                double interpolatedMembership = calculateMembership(interpolatedPoint);
-                double minMembership = Math.min(calculateMembership(x1), calculateMembership(x2));
-
-                if (interpolatedMembership < minMembership) {
-                    concaveTest = false;
-                    break;
-                }
-            }
-
-            if (!concaveTest) {
-                break;
-            }
-        }
+//        boolean concaveTest = true;
+//        List<Double> support = getSupport();
+//        double step = ALPHA_STEP;
+//
+//        for (int i = 0; i < support.size() - 1; i++) {
+//            double x1 = support.get(i);
+//            double x2 = support.get(i + 1);
+//
+//            for (double lambda = 0; lambda <= 1; lambda += step) {
+//                double interpolatedPoint = lambda * x1 + (1 - lambda) * x2;
+//                double interpolatedMembership = calculateMembership(interpolatedPoint);
+//                double minMembership = Math.min(calculateMembership(x1), calculateMembership(x2));
+//
+//                if (interpolatedMembership < minMembership) {
+//                    concaveTest = false;
+//                    break;
+//                }
+//            }
+//
+//            if (!concaveTest) {
+//                break;
+//            }
+//        }
 
 //        setConcave(concaveTest);
 
@@ -59,7 +59,7 @@ public abstract class FuzzySet {
         setCardinality(cardinality);
     }
 
-    public void calculateSupport(){}
+    public void calculateSupport(List<Double> data){}
 
     public ArrayList<Double> calculateAlphaCut(double alpha){
         ArrayList<Double> exceeding = new ArrayList<>();

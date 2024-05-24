@@ -31,10 +31,14 @@ public class TruthChecker {
 
         float result = 0.0F;
         boolean isRelativeQuantifier = false;
-
         if(quantifier.getLinguisticVariable().getName().equals("relative_quantifiers")){
             isRelativeQuantifier = true;
         }
+
+//        for(Label summarizer : summarizers){
+//            summarizer.getLinguisticVariable().getMembershipFunction(summarizer.getSetName()).setSupport();
+//        }
+
 
 //        result += T1(data, summarizers, isRelativeQuantifier);
 //        result += T2(summarizers);
@@ -90,48 +94,48 @@ public class TruthChecker {
         return 1 - (float) Math.pow(productImprecision, p);
     }
 
-//    public static float T3(List<List<Double>> data, List<Double> qualifierData, List<Label> summarizers, Label qualifier) {
-//        double sumTi = 0.0;
-//        double sumHi = 0.0;
-//        int M = data.size();
-//
-//        FuzzySet qualifierSet = null;
-//        if (qualifier != null) {
-//            qualifierSet = qualifier.getLinguisticVariable().getMembershipFunction(qualifier.getSetName());
-//        }
-//
-//        for (int i = 0; i < data.size(); i++) {
-//            double ti = 1.0;
-//            double hi = 1.0;
-//            if (qualifierSet != null) {
-//                hi = qualifierSet.calculateMembership(qualifierData.get(i));
-//                if (!Double.isNaN(hi)) {
-//                    ti *= hi;
-//                }
-//            }
-//
-//            List<Double> record = data.get(i);
-//
-//            for (int j = 0; j < summarizers.size(); j++) {
-//                FuzzySet summarizerSet = summarizers.get(j).getLinguisticVariable().getMembershipFunction(summarizers.get(j).getSetName());
-//                double membership = summarizerSet.calculateMembership(record.get(j));
-//                if (!Double.isNaN(membership)) {
-//                    ti *= membership;
-//                }
-//            }
-//
-//            if (!Double.isNaN(hi)) {
-//                sumTi += ti;
-//                sumHi += hi;
-//            }
-//        }
-//
-//        if (sumHi != 0) {
-//            return (float) (sumTi / sumHi);
-//        } else {
-//            return (float) (sumTi / M);
-//        }
-//    }
+    public static float T3(List<List<Double>> data, List<Double> qualifierData, List<Label> summarizers, Label qualifier) {
+        double sumTi = 0.0;
+        double sumHi = 0.0;
+        int M = data.size();
+
+        FuzzySet qualifierSet = null;
+        if (qualifier != null) {
+            qualifierSet = qualifier.getLinguisticVariable().getMembershipFunction(qualifier.getSetName());
+        }
+
+        for (int i = 0; i < data.size(); i++) {
+            double ti = 1.0;
+            double hi = 1.0;
+            if (qualifierSet != null) {
+                hi = qualifierSet.calculateMembership(qualifierData.get(i));
+                if (!Double.isNaN(hi)) {
+                    ti *= hi;
+                }
+            }
+
+            List<Double> record = data.get(i);
+
+            for (int j = 0; j < summarizers.size(); j++) {
+                FuzzySet summarizerSet = summarizers.get(j).getLinguisticVariable().getMembershipFunction(summarizers.get(j).getSetName());
+                double membership = summarizerSet.calculateMembership(record.get(j));
+                if (!Double.isNaN(membership)) {
+                    ti *= membership;
+                }
+            }
+
+            if (!Double.isNaN(hi)) {
+                sumTi += ti;
+                sumHi += hi;
+            }
+        }
+
+        if (sumHi != 0) {
+            return (float) (sumTi / sumHi);
+        } else {
+            return (float) (sumTi / M);
+        }
+    }
 
 
 
@@ -204,22 +208,6 @@ public class TruthChecker {
 
         return 1.0F - (float) geometricMeanOfCardinalities;
     }
-
-//    private float T8(List<List<Double>> data, List<Label> summarizers) {
-//        double result = 0.0;
-//        double maxMembership = Double.MIN_VALUE;
-//
-//        for (int i=0; i!=summarizers.size(); i++) {
-//            FuzzySet fuzzySet = summarizers.get(i).getLinguisticVariable().getMembershipFunction(summarizers.get(i).getSetName());
-//            for(List<Double> value : data){
-//                double membership = fuzzySet.calculateMembership(value.get(i));
-//                maxMembership = Math.max(maxMembership, membership);
-//            }
-//            result *= fuzzySet.getCardinality()/maxMembership;
-//        }
-//
-//        return 1 - (float) Math.pow(result, 1.0/summarizers.size());
-//    }
 
 
     private float T9(Label qualifier){

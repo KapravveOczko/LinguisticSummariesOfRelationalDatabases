@@ -37,28 +37,41 @@ public class LinguisticSummary {
         }
 
         List<List<Double>> filteredData = new ArrayList<>();
+        for (int i = 0; i < data.size(); i++) {
+            filteredData.add(new ArrayList<>());
+        }
 
         // Filter data based on the qualifier (W)
-        if(this.qualifier != null){
-            qualifierData = db.getDataFromColumn("test_small_data", this.qualifier.getLinguisticVariable().getName());
+        if (this.qualifier != null) {
             List<Double> qualifierColumn = db.getDataFromColumn("test_small_data", this.qualifier.getLinguisticVariable().getName());
+            FuzzySet fuzzySetQualifier = qualifier.getLinguisticVariable().getMembershipFunction(qualifier.getSetName());
+
             for (int i = 0; i < qualifierColumn.size(); i++) {
-                double membership = 0.0;
-                for (FuzzySet fuzzySet : this.qualifier.getLinguisticVariable().getFuzzySets()) {
-                    membership = Math.max(membership, fuzzySet.calculateMembership(qualifierColumn.get(i)));
-                }
-                if (membership > 0) {
-                    ArrayList<Double> rowData = new ArrayList<>();
-                    for (List<Double> column : data) {
-                        rowData.add(column.get(i));
-                    }
-                    filteredData.add(rowData);
+                if (fuzzySetQualifier.calculateMembership(qualifierColumn.get(i)) > 0) {
+                    filteredData.get(0).add(data.get(0).get(i));
+                    filteredData.get(1).add(data.get(1).get(i));
+                    filteredData.get(2).add(data.get(2).get(i));
                 }
             }
+        } else {
+            for (int i = 0; i < data.size(); i++) {
+                filteredData.get(i).addAll(data.get(i)); // Kopiowanie danych zamiast przypisywania
+            }
         }
-        else {
-            filteredData = data;
+
+        ///////////////////////////
+        System.out.println("------------------------");
+        for (int i = 0; i != data.size(); i++) {
+            System.out.println(data.get(i));
         }
+        System.out.println("------------------------");
+        System.out.println("------------------------");
+        for (int i = 0; i != filteredData.size(); i++) {
+            System.out.println(filteredData.get(i));
+        }
+        System.out.println("------------------------");
+
+        //////////////////////////
 
         // Generate all possible combinations of summarizers (max 3)
         for (int i = 0; i < summarizers.size(); i++) {
@@ -79,10 +92,10 @@ public class LinguisticSummary {
 
                                 // Generate summary text
                                 String summary = generateSummaryText(currentSummarizers);
-                                float degreeOfTruth =  truthChecker.checkTruth(filteredData, data, currentSummarizers, qualifierData, qualifier, quantifier);
+                                // float degreeOfTruth =  truthChecker.checkTruth(filteredData, data, currentSummarizers, qualifierData, qualifier, quantifier);
 
                                 // Store the summary (degree of truth calculation is skipped)
-                                summaries.add(summary + " [" + degreeOfTruth + "]");
+                                // summaries.add(summary + " [" + degreeOfTruth + "]");
                             }
                         }
                     }
@@ -92,6 +105,7 @@ public class LinguisticSummary {
 
         return new ArrayList<>(summaries);
     }
+
 
     private String generateSummaryText(List<Label> summarizers) {
         StringBuilder summary = new StringBuilder();
