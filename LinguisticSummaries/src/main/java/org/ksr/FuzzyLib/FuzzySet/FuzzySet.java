@@ -73,14 +73,36 @@ public abstract class FuzzySet {
     }
 
 // degree of fuzziness
-    public double getImprecision() {
+    public Double getImprecision() {
         double entropy = 0.0;
-        for (double mu : this.support) {
+        for (Double mu : this.support) {
             if (mu > 0 && mu < 1) {
                 entropy += -mu * Math.log(mu) - (1 - mu) * Math.log(1 - mu);
             }
         }
         return entropy / this.support.size();
+    }
+
+    public void setValues(List<Double> data){
+
+        ArrayList<Double> support = new ArrayList<>();
+        Double cardinality = 0.0;
+        Double x = 0.0;
+
+        for(Double value : data){
+            x = calculateMembership(value);
+            if(x != 0){
+                support.add(value);
+                cardinality += x;
+            }
+        }
+
+        setSupport(support);
+        setCardinality(cardinality);
+
+//        System.out.println("calculated support: " + getSupport());
+//        System.out.println("calculated support size: " + getSupport().size());
+//        System.out.println("calculated cardinality: " + getCardinality());
     }
 
     // getters and setters

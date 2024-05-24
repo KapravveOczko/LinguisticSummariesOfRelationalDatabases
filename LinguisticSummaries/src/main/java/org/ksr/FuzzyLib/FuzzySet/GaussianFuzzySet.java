@@ -33,7 +33,7 @@ public class GaussianFuzzySet extends FuzzySet{
         List<Double> support = new ArrayList<>();
 
         for(Double value : data){
-            if(value >= start || value <= stop){
+            if(value >= start && value <= stop){
                 support.add(value);
             }
         }

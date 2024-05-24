@@ -41,9 +41,9 @@ public class LinguisticSummary {
             filteredData.add(new ArrayList<>());
         }
 
+        List<Double> qualifierColumn = db.getDataFromColumn("test_small_data", this.qualifier.getLinguisticVariable().getName());
         // Filter data based on the qualifier (W)
         if (this.qualifier != null) {
-            List<Double> qualifierColumn = db.getDataFromColumn("test_small_data", this.qualifier.getLinguisticVariable().getName());
             FuzzySet fuzzySetQualifier = qualifier.getLinguisticVariable().getMembershipFunction(qualifier.getSetName());
 
             for (int i = 0; i < qualifierColumn.size(); i++) {
@@ -55,22 +55,21 @@ public class LinguisticSummary {
             }
         } else {
             for (int i = 0; i < data.size(); i++) {
-                filteredData.get(i).addAll(data.get(i)); // Kopiowanie danych zamiast przypisywania
+                filteredData.get(i).addAll(data.get(i));
             }
         }
 
         ///////////////////////////
-        System.out.println("------------------------");
-        for (int i = 0; i != data.size(); i++) {
-            System.out.println(data.get(i));
-        }
-        System.out.println("------------------------");
-        System.out.println("------------------------");
-        for (int i = 0; i != filteredData.size(); i++) {
-            System.out.println(filteredData.get(i));
-        }
-        System.out.println("------------------------");
-
+//        System.out.println("------------------------");
+//        for (int i = 0; i != data.size(); i++) {
+//            System.out.println(data.get(i));
+//        }
+//        System.out.println("------------------------");
+//        System.out.println("------------------------");
+//        for (int i = 0; i != filteredData.size(); i++) {
+//            System.out.println(filteredData.get(i));
+//        }
+//        System.out.println("------------------------");
         //////////////////////////
 
         // Generate all possible combinations of summarizers (max 3)
@@ -92,10 +91,10 @@ public class LinguisticSummary {
 
                                 // Generate summary text
                                 String summary = generateSummaryText(currentSummarizers);
-                                // float degreeOfTruth =  truthChecker.checkTruth(filteredData, data, currentSummarizers, qualifierData, qualifier, quantifier);
+                                 float degreeOfTruth =  truthChecker.checkTruth(filteredData, data, currentSummarizers, qualifierColumn, qualifier, quantifier);
 
                                 // Store the summary (degree of truth calculation is skipped)
-                                // summaries.add(summary + " [" + degreeOfTruth + "]");
+                                 summaries.add(summary + " [" + degreeOfTruth + "]");
                             }
                         }
                     }

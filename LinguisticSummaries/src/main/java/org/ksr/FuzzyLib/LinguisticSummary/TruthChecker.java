@@ -27,20 +27,25 @@ public class TruthChecker {
                             Label qualifier,
                             Label quantifier ) {
 
-//        rawData = data not filterd by qualifier
-
         float result = 0.0F;
         boolean isRelativeQuantifier = false;
         if(quantifier.getLinguisticVariable().getName().equals("relative_quantifiers")){
             isRelativeQuantifier = true;
         }
 
-//        for(Label summarizer : summarizers){
-//            summarizer.getLinguisticVariable().getMembershipFunction(summarizer.getSetName()).setSupport();
-//        }
+        for(int i=0; i!= summarizers.size(); i++){
+            summarizers.get(i).getLinguisticVariable().getMembershipFunction(summarizers.get(i).getSetName()).setValues(data.get(i));
+        }
+        for (FuzzySet fuzzySet : qualifier.getLinguisticVariable().getFuzzySets()){
+            fuzzySet.setValues(qualifierData);
+        }
+
+//        qualifier.getLinguisticVariable().getMembershipFunction(qualifier.getSetName()).setValues(qualifierData);
 
 
-//        result += T1(data, summarizers, isRelativeQuantifier);
+
+
+        result += T1(data, summarizers, isRelativeQuantifier);
 //        result += T2(summarizers);
 //        float T3Value = T3(data, qualifierData ,summarizers, qualifier);
 //        result += T4(data, summarizers, T3Value);
@@ -88,7 +93,7 @@ public class TruthChecker {
 
         for (Label summarizer : summarizers) {
             FuzzySet fuzzySet = summarizer.getLinguisticVariable().getMembershipFunction(summarizer.getSetName());
-            productImprecision *= fuzzySet.getImprecision();
+//            productImprecision *= fuzzySet.getImprecision();
         }
 
         return 1 - (float) Math.pow(productImprecision, p);
@@ -197,7 +202,6 @@ public class TruthChecker {
 
         for (Label summarizer : summarizers) {
             FuzzySet fuzzySet = summarizer.getLinguisticVariable().getMembershipFunction(summarizer.getSetName());
-            fuzzySet.calculateCardinality();  // Ensure cardinality is calculated
 
             double relativeCardinality = fuzzySet.getCardinality() / M;
             productOfRelativeCardinalities *= relativeCardinality;
@@ -214,10 +218,12 @@ public class TruthChecker {
         float result = 0.0F;
 
         for(FuzzySet fuzzySet : qualifier.getLinguisticVariable().getFuzzySets()){
-            result *= (float) fuzzySet.getImprecision();
+            if(fuzzySet.getImprecision() != null){
+                result *= fuzzySet.getImprecision();
+            }
         }
 
-        return 1 - (float) Math.pow(result, (double) 1 /qualifier.getLinguisticVariable().getFuzzySets().size());
+        return 1 - (float) Math.pow(result, 1.0 /qualifier.getLinguisticVariable().getFuzzySets().size());
     }
 
     private float T10(Label qualifier){
@@ -237,39 +243,7 @@ public class TruthChecker {
 
 
     private float T11(Label qualifiers) {
-        return (float) (2 - (0.5 * qualifiers.getLinguisticVariable().getFuzzySets().size()));
+        return (float) (2 * Math.pow(0.5 , qualifiers.getLinguisticVariable().getFuzzySets().size()));
     }
 
-
-
-
-
-
-
-//----------------------------------------------------------------------------------------------------------------------
-//    private float T1(List<Double> data, List<Label> summarizers, boolean isRelativeQuantifier) {
-//        double sumMemberships = 0.0;
-//        double sumQuantifierMemberships = 0.0;
-//
-//        for (Double value : data) {
-//            double minMembership = Double.MAX_VALUE;
-//            for (Label summarizer : summarizers) {
-//                FuzzySet fuzzySet = summarizer.getLinguisticVariable().getMembershipFunction(summarizer.getSetName());
-//                minMembership = Math.min(minMembership, fuzzySet.calculateMembership(value));
-//            }
-//            sumMemberships += minMembership;
-//
-//            if (isRelativeQuantifier) {
-//                sumQuantifierMemberships += 1;
-//            } else {
-//                sumQuantifierMemberships += minMembership;
-//            }
-//        }
-//
-//        if (isRelativeQuantifier) {
-//            return (float) (sumMemberships / data.size());
-//        } else {
-//            return (float) (sumMemberships / sumQuantifierMemberships);
-//        }
-//    }
 }

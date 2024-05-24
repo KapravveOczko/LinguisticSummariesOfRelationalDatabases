@@ -38,7 +38,7 @@ public class TrapezoidalFuzzySet extends FuzzySet {
     public void calculateSupport(List<Double> data) {
         List<Double> support = new ArrayList<>();
         for(Double value : data){
-            if(value >= a || value <= d){
+            if(value >= a && value <= d){
                 support.add(value);
             }
         }

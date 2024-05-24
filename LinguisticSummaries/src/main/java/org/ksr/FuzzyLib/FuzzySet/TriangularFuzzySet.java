@@ -35,7 +35,7 @@ public class TriangularFuzzySet extends FuzzySet {
     public void calculateSupport(List<Double> data) {
         List<Double> support = new ArrayList<>();
         for(Double value : data){
-            if(value >= a || value <= c){
+            if(value >= a && value <= c){
                 support.add(value);
             }
         }
