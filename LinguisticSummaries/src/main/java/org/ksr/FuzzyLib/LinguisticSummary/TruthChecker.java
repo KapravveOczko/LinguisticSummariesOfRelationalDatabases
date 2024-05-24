@@ -36,36 +36,33 @@ public class TruthChecker {
         for(int i=0; i!= summarizers.size(); i++){
             summarizers.get(i).getLinguisticVariable().getMembershipFunction(summarizers.get(i).getSetName()).setValues(data.get(i));
         }
-        for (FuzzySet fuzzySet : qualifier.getLinguisticVariable().getFuzzySets()){
-            fuzzySet.setValues(qualifierData);
+        if(qualifier!=null) {
+            for (FuzzySet fuzzySet : qualifier.getLinguisticVariable().getFuzzySets()) {
+                fuzzySet.setValues(qualifierData);
+            }
         }
 
-//        qualifier.getLinguisticVariable().getMembershipFunction(qualifier.getSetName()).setValues(qualifierData);
-
-
-
-
         result += T1(data, summarizers, isRelativeQuantifier);
-//        result += T2(summarizers);
-//        float T3Value = T3(data, qualifierData ,summarizers, qualifier);
-//        result += T4(data, summarizers, T3Value);
-//        result += T3Value;
-//        result += T5(summarizers);
-//        result += T6(quantifier, data.size());
-//        result += T7(quantifier, data.size());
-//        result += T8(data, summarizers);
+        result += T2(summarizers);
+        float T3Value = T3(data, qualifierData ,summarizers, qualifier);
+        result += T4(data, summarizers, T3Value);
+        result += T3Value;
+        result += T5(summarizers);
+        result += T6(quantifier);
+        result += T7(quantifier);
+        result += T8(data, summarizers);
 //
-//        if(qualifier!=null) {
-//            result += T9(qualifier);
-//            result += T10(qualifier);
-//            result += T11(qualifier);
-//            result += T4(data, summarizers, T3Value);
-//            return result / 5;
-//        }
-//        else{
-//            return result / 7;
-//        }
-        return result;
+        if(qualifier!=null) {
+            result += T9(qualifier);
+            result += T10(qualifier);
+            result += T11(qualifier);
+            return result / 11;
+        }
+        else{
+            return result / 7;
+        }
+
+//        return result;
     }
 
     private float T1(List<List<Double>> data, List<Label> summarizers, boolean isRelativeQuantifier) {
@@ -88,17 +85,15 @@ public class TruthChecker {
 
     //    5.24
     public float T2(List<Label> summarizers) {
-        double productImprecision = 1.0;
-        int p = summarizers.size();
+        float result = 0.0F;
 
         for (Label summarizer : summarizers) {
             FuzzySet fuzzySet = summarizer.getLinguisticVariable().getMembershipFunction(summarizer.getSetName());
-//            productImprecision *= fuzzySet.getImprecision();
+                result *= fuzzySet.getImprecision();
         }
 
-        return 1 - (float) Math.pow(productImprecision, p);
+        return 1 - (float) Math.pow(result, 1.0 / summarizers.size());
     }
-
     public static float T3(List<List<Double>> data, List<Double> qualifierData, List<Label> summarizers, Label qualifier) {
         double sumTi = 0.0;
         double sumHi = 0.0;
@@ -142,16 +137,13 @@ public class TruthChecker {
         }
     }
 
-
-
-
-    public float T4(List<List<Double>> data, List<LinguisticVariable> summarizers, float T3Value) {
+    public float T4(List<List<Double>> data, List<Label> summarizers, float T3Value) {
         double productOfR = 1.0;
         int dataSize = data.get(0).size();
 
         // Calculate the product of values r for each summarizer
         for (int i = 0; i < summarizers.size(); i++) {
-            LinguisticVariable summarizer = summarizers.get(i);
+            LinguisticVariable summarizer = summarizers.get(i).getLinguisticVariable();
             double sumMembership = 0.0;
 
             // Calculate the sum of memberships for each summarizer
@@ -182,37 +174,37 @@ public class TruthChecker {
     }
 
     //    M = data.size() ?
-    private float T6(Label quantifier, int M) {
+    private float T6(Label quantifier) {
         FuzzySet fuzzyQuantifier = quantifier.getLinguisticVariable().getMembershipFunction(quantifier.getSetName());
         int supportSize = fuzzyQuantifier.getSupport().size();
-        return 1.0F - (float) supportSize / M;
+        return 1.0F -  (float) supportSize / fuzzyQuantifier.getSupport().size();
     }
 
 
-    private float T7(Label quantifier, int M) {
+    private float T7(Label quantifier) {
         FuzzySet fuzzyQuantifier = quantifier.getLinguisticVariable().getMembershipFunction(quantifier.getSetName());
         double cardinality = fuzzyQuantifier.getCardinality();
-        return 1.0F - (float) (cardinality / M);
+        return 1.0F - (float) (cardinality / fuzzyQuantifier.getSupport().size());
     }
 
+    private float T8(List<List<Double>> data, List<Label> summarizers){
+        float result = 0.0F;
+        float totalResult = 0.0F;
+        double maxMembership = Double.MIN_VALUE;
 
-    private float T8(List<List<Double>> data, List<Label> summarizers) {
-        double productOfRelativeCardinalities = 1.0;
-        int M = data.size();
+        for(Label summarizer : summarizers) {
+            for (FuzzySet fuzzySet : summarizer.getLinguisticVariable().getFuzzySets()) {
+                for (Double position : fuzzySet.getSupport()) {
+                    double membership = fuzzySet.calculateMembership(position);
+                    maxMembership = Math.max(maxMembership, membership);
+                }
+                result *= (float) (fuzzySet.getCardinality() / maxMembership);
+            }
 
-        for (Label summarizer : summarizers) {
-            FuzzySet fuzzySet = summarizer.getLinguisticVariable().getMembershipFunction(summarizer.getSetName());
-
-            double relativeCardinality = fuzzySet.getCardinality() / M;
-            productOfRelativeCardinalities *= relativeCardinality;
+            totalResult += 1 - (float) Math.pow(result, (double) 1 / summarizer.getLinguisticVariable().getFuzzySets().size());
         }
-
-        double p = summarizers.size();
-        double geometricMeanOfCardinalities = Math.pow(productOfRelativeCardinalities, 1.0 / p);
-
-        return 1.0F - (float) geometricMeanOfCardinalities;
+        return totalResult / summarizers.size();
     }
-
 
     private float T9(Label qualifier){
         float result = 0.0F;
@@ -223,7 +215,7 @@ public class TruthChecker {
             }
         }
 
-        return 1 - (float) Math.pow(result, 1.0 /qualifier.getLinguisticVariable().getFuzzySets().size());
+        return 1 - (float) Math.pow(result, 1.0 / qualifier.getLinguisticVariable().getFuzzySets().size());
     }
 
     private float T10(Label qualifier){

@@ -1,6 +1,8 @@
 package org.ksr.FuzzyLib.FuzzySet;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static org.ksr.FuzzyLib.FuzzySet.FuzzySetConstants.ALPHA_STEP;
@@ -59,7 +61,7 @@ public abstract class FuzzySet {
         setCardinality(cardinality);
     }
 
-    public void calculateSupport(List<Double> data){}
+    public void calculateSupport(){}
 
     public ArrayList<Double> calculateAlphaCut(double alpha){
         ArrayList<Double> exceeding = new ArrayList<>();
@@ -74,13 +76,24 @@ public abstract class FuzzySet {
 
 // degree of fuzziness
     public Double getImprecision() {
+//        if(getSupport().isEmpty()){
+//            return 0.0;
+//        }
+//
+//        Double imprecision =  Math.abs(Collections.max(getSupport()) - Collections.min(getSupport()));
+//        System.out.println(imprecision);
+//        return imprecision;
+
         double entropy = 0.0;
-        for (Double mu : this.support) {
+        for (double mu : getSupport())
+        {
+            mu = calculateMembership(mu);
             if (mu > 0 && mu < 1) {
-                entropy += -mu * Math.log(mu) - (1 - mu) * Math.log(1 - mu);
+                entropy += -mu * Math.log(mu) / Math.log(2) - (1 - mu) * Math.log(1 - mu) / Math.log(2);
             }
         }
-        return entropy / this.support.size();
+        return entropy;
+
     }
 
     public void setValues(List<Double> data){

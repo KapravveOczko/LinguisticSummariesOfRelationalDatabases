@@ -30,10 +30,9 @@ public class LinguisticSummary {
 
         // Get data for subjects based on the summarizer's linguistic variable
         List<List<Double>> data = new ArrayList<>();
-        List<Double> qualifierData = new ArrayList<>();
 
         for (LinguisticVariable summarizer : this.summarizers) {
-            data.add(db.getDataFromColumn("test_small_data", summarizer.getName()));
+            data.add(db.getDataFromColumn("test_data", summarizer.getName()));
         }
 
         List<List<Double>> filteredData = new ArrayList<>();
@@ -41,16 +40,17 @@ public class LinguisticSummary {
             filteredData.add(new ArrayList<>());
         }
 
-        List<Double> qualifierColumn = db.getDataFromColumn("test_small_data", this.qualifier.getLinguisticVariable().getName());
+        List<Double> qualifierColumn = new ArrayList<>();
         // Filter data based on the qualifier (W)
         if (this.qualifier != null) {
+            qualifierColumn = db.getDataFromColumn("test_data", this.qualifier.getLinguisticVariable().getName());
             FuzzySet fuzzySetQualifier = qualifier.getLinguisticVariable().getMembershipFunction(qualifier.getSetName());
 
             for (int i = 0; i < qualifierColumn.size(); i++) {
                 if (fuzzySetQualifier.calculateMembership(qualifierColumn.get(i)) > 0) {
-                    filteredData.get(0).add(data.get(0).get(i));
-                    filteredData.get(1).add(data.get(1).get(i));
-                    filteredData.get(2).add(data.get(2).get(i));
+                    for(int j=0; j != this.summarizers.size(); j++) {
+                        filteredData.get(j).add(data.get(j).get(i));
+                    }
                 }
             }
         } else {

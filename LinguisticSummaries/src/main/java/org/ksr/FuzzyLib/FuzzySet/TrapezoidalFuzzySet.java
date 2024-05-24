@@ -3,6 +3,8 @@ package org.ksr.FuzzyLib.FuzzySet;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.ksr.FuzzyLib.FuzzySet.FuzzySetConstants.STEP;
+
 
 public class TrapezoidalFuzzySet extends FuzzySet {
     private final String name;
@@ -14,6 +16,8 @@ public class TrapezoidalFuzzySet extends FuzzySet {
         this.b = b;
         this.c = c;
         this.d = d;
+        calculateSupport();
+        calculateCardinality();
         calculateConcave();
     }
     @Override
@@ -34,15 +38,15 @@ public class TrapezoidalFuzzySet extends FuzzySet {
         }
     }
 
-    @Override
-    public void calculateSupport(List<Double> data) {
-        List<Double> support = new ArrayList<>();
-        for(Double value : data){
-            if(value >= a && value <= d){
-                support.add(value);
-            }
-        }
 
+    @Override
+    public void calculateSupport() {
+        double step = (this.d - this.a) / STEP;
+        List<Double> support = new ArrayList<>();
+
+        for (double value = this.a; value <= this.d; value += step) {
+            support.add(value);
+        }
         setSupport(support);
     }
 

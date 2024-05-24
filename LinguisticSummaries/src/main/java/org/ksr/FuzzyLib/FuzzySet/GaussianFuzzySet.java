@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.ksr.FuzzyLib.FuzzySet.FuzzySetConstants.GAUSSIAN_STEP;
+import static org.ksr.FuzzyLib.FuzzySet.FuzzySetConstants.STEP;
 
 public class GaussianFuzzySet extends FuzzySet{
     private final String name;
@@ -13,6 +14,8 @@ public class GaussianFuzzySet extends FuzzySet{
         this.name = name;
         this.a = a; //mean
         this.b = b; //stdDeviation
+        calculateSupport();
+        calculateCardinality();
         calculateConcave();
     }
 
@@ -27,17 +30,15 @@ public class GaussianFuzzySet extends FuzzySet{
     }
 
     @Override
-    public void calculateSupport(List<Double> data) {
+    public void calculateSupport() {
         double start = getBoundaries();
         double stop = start + this.a;
+        double step = (stop - start) / STEP;
         List<Double> support = new ArrayList<>();
 
-        for(Double value : data){
-            if(value >= start && value <= stop){
-                support.add(value);
-            }
+        for (double value = start; value <= stop; value += step) {
+            support.add(value);
         }
-
         setSupport(support);
     }
 
