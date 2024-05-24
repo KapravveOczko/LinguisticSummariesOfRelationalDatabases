@@ -18,21 +18,16 @@ public class Main {
 
 
         Assets assets = new Assets();
-        Label qualifier = new Label("a few", assets.getVariable("relative_quantifiers"));
+
+        Label quantifier = new Label("a few", assets.getVariable("relative_quantifiers"));
+        Label qualifier = new Label("not_salty", assets.getVariable("sea_bottom_salinity"));
         List<LinguisticVariable> summarizers = new ArrayList<>();
         summarizers.add(assets.getVariable("longitude"));
         summarizers.add(assets.getVariable("significant_wave_height"));
-
-        List<ArrayList<Double>> data = new ArrayList<>();
-        for( LinguisticVariable summarizer : summarizers){
-        data.add(db.getDataFromColumn("test_small_data", summarizer.getName()));
-        }
-
-
-//        summarizers.add(assets.getVariable("mixed_layer_depth"));
+        summarizers.add(assets.getVariable("mixed_layer_depth"));
 //        summarizers.add(assets.getVariable("mixed_layer_depth"));
 
-        LinguisticSummary testSummary = new LinguisticSummary(qualifier, summarizers, qualifier);
+        LinguisticSummary testSummary = new LinguisticSummary(qualifier, summarizers, quantifier);
         List<String> summaries = testSummary.createLinguisticSummary();
         for(String summary : summaries){
             System.out.println(summary);

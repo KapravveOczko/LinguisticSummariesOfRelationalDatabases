@@ -15,11 +15,13 @@ public class LinguisticSummary {
     private List<LinguisticVariable> summarizers;
     private Label quantifier;
     private DatabaseConnector db;
+    TruthChecker truthChecker;
 
     public LinguisticSummary(Label qualifier, List<LinguisticVariable> summarizers, Label quantifier) {
         this.qualifier = qualifier; //W
         this.summarizers = summarizers;
         this.quantifier = quantifier;
+        this.truthChecker = TruthChecker.getInstance();
         connectToDb();
     }
 
@@ -28,12 +30,35 @@ public class LinguisticSummary {
 
         // Get data for subjects based on the summarizer's linguistic variable
         List<List<Double>> data = new ArrayList<>();
-        for( LinguisticVariable summarizer : this.summarizers){
-        data.add(db.getDataFromColumn("test_small_data", summarizer.getName()));
+        List<Double> qualifierData = new ArrayList<>();
+
+        for (LinguisticVariable summarizer : this.summarizers) {
+            data.add(db.getDataFromColumn("test_small_data", summarizer.getName()));
         }
 
-        // W implementation
+        List<List<Double>> filteredData = new ArrayList<>();
 
+        // Filter data based on the qualifier (W)
+        if(this.qualifier != null){
+            qualifierData = db.getDataFromColumn("test_small_data", this.qualifier.getLinguisticVariable().getName());
+            List<Double> qualifierColumn = db.getDataFromColumn("test_small_data", this.qualifier.getLinguisticVariable().getName());
+            for (int i = 0; i < qualifierColumn.size(); i++) {
+                double membership = 0.0;
+                for (FuzzySet fuzzySet : this.qualifier.getLinguisticVariable().getFuzzySets()) {
+                    membership = Math.max(membership, fuzzySet.calculateMembership(qualifierColumn.get(i)));
+                }
+                if (membership > 0) {
+                    ArrayList<Double> rowData = new ArrayList<>();
+                    for (List<Double> column : data) {
+                        rowData.add(column.get(i));
+                    }
+                    filteredData.add(rowData);
+                }
+            }
+        }
+        else {
+            filteredData = data;
+        }
 
         // Generate all possible combinations of summarizers (max 3)
         for (int i = 0; i < summarizers.size(); i++) {
@@ -54,11 +79,7 @@ public class LinguisticSummary {
 
                                 // Generate summary text
                                 String summary = generateSummaryText(currentSummarizers);
-
-                                // Calculate degree of truth
-                                TruthChecker truthChecker = new TruthChecker(data, currentSummarizers, qualifier, quantifier);
-
-                                float degreeOfTruth = truthChecker.checkTruth();
+                                float degreeOfTruth =  truthChecker.checkTruth(filteredData, data, currentSummarizers, qualifierData, qualifier, quantifier);
 
                                 // Store the summary (degree of truth calculation is skipped)
                                 summaries.add(summary + " [" + degreeOfTruth + "]");
@@ -79,7 +100,15 @@ public class LinguisticSummary {
         summary.append(quantifier.getSetName()).append(" ");
 
         // Add subject
-        summary.append("records are ");
+        summary.append("records ");
+
+        // Add qualifier
+        if(this.qualifier != null) {
+            summary.append("having ").append(this.qualifier.getSetName()).append(" are ");
+        }
+        else {
+            summary.append(" are ");
+        }
 
         // Add summarizers
         for (int i = 0; i < summarizers.size(); i++) {
@@ -95,7 +124,7 @@ public class LinguisticSummary {
     public void connectToDb() {
         String url = "jdbc:postgresql://localhost:5432/ksr";
         String user = "postgres";
-        String password = "pass";
+        String password = "";
 
         this.db = new DatabaseConnector(url, user, password);
     }

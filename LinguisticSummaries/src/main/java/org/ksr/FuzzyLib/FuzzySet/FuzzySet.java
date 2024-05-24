@@ -47,7 +47,6 @@ public abstract class FuzzySet {
 
 //        setConcave(concaveTest);
 
-
 //        OUR APP DISALLOWS CREATION OF NON CONCAVE FUNCTIONS
         setConcave(true);
     }
