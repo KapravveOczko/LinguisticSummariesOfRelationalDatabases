@@ -18,4 +18,14 @@ public class WaveHeight extends LinguisticVariable {
         appendMembershipFunction(FuzzySetFactory.createMembershipFunction(TRIANGULAR, "medium height", 1.8, 2.5, 2.7));
         appendMembershipFunction(FuzzySetFactory.createMembershipFunction(TRAPEZOIDAL, "height", 2.6, 2.7, 3.0, 3.0));
     }
+
+    @Override
+    public String toText(String fuzzySetName){
+        if(fuzzySetName.equals("calm seas")){
+            return fuzzySetName;
+        }
+        else {
+            return fuzzySetName + " waves";
+        }
+    }
 }

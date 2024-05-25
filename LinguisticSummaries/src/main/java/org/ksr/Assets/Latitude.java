@@ -16,4 +16,14 @@ public class Latitude extends LinguisticVariable {
         appendMembershipFunction(FuzzySetFactory.createMembershipFunction(TRAPEZOIDAL, "latitude fo Ireland", 51.5, 52.0, 55.0, 56.0));
         appendMembershipFunction(FuzzySetFactory.createMembershipFunction(TRAPEZOIDAL, "south fo Ireland", 55.0, 56.0, 60.0, 60.0));
     }
+
+    @Override
+    public String toText(String fuzzySetName){
+        if(fuzzySetName.equals("latitude fo Ireland")){
+            return "that record was made on " + fuzzySetName;
+        }
+        else {
+            return "that record was made " + fuzzySetName;
+        }
+    }
 }

@@ -21,4 +21,9 @@ public class BottomTemperature extends LinguisticVariable {
         appendMembershipFunction(FuzzySetFactory.createMembershipFunction(TRAPEZOIDAL, " extremely warm", 17.5, 18.5, 24.0, 24.0));
 
     }
+
+    @Override
+    public String toText(String fuzzySetName){
+        return fuzzySetName + " water temperature on sea bottom";
+    }
 }

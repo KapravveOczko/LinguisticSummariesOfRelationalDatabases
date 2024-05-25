@@ -19,4 +19,9 @@ public class WaveSpeed extends LinguisticVariable {
         appendMembershipFunction(FuzzySetFactory.createMembershipFunction(TRAPEZOIDAL, "very high velocity", 0.475, 0.55, 0.7, 0.7));
     }
 
+    @Override
+    public String toText(String fuzzySetName){
+        return "that waves were moving with " + fuzzySetName;
+    }
+
 }

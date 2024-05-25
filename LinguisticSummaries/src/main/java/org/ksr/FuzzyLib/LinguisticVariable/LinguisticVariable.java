@@ -5,7 +5,6 @@ import org.ksr.FuzzyLib.FuzzySet.FuzzySet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 public abstract class LinguisticVariable {
     private String name;
@@ -59,6 +58,11 @@ public abstract class LinguisticVariable {
     public void setFuzzySets(List<FuzzySet> fuzzySets) {
         this.fuzzySets = fuzzySets;
     }
+
+    public String toText(String fuzzySetName){
+        return fuzzySetName;
+    }
+
 
     public String getName() {
         return name;

@@ -17,4 +17,9 @@ public class WaveFrequency extends LinguisticVariable {
         appendMembershipFunction(FuzzySetFactory.createMembershipFunction(GAUSSIAN, "rare wind waves", 2.6, 0.6));
         appendMembershipFunction(FuzzySetFactory.createMembershipFunction(GAUSSIAN, "wind waves", 5.0, 0.75));
     }
+
+    @Override
+    public String toText(String fuzzySetName){
+        return "that waves frequency was on a level of: " + fuzzySetName;
+    }
 }

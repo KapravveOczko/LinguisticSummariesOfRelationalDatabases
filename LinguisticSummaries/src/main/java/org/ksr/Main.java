@@ -18,11 +18,11 @@ public class Main {
 
 
         Assets assets = new Assets();
+        Label quantifier = new Label("about one third", assets.getVariable("relative_quantifiers"));
+        Label qualifier = new Label("east fo Ireland", assets.getVariable("longitude"));
 
-        Label quantifier = new Label("almost_half", assets.getVariable("relative_quantifiers"));
-        Label qualifier = new Label("warm", assets.getVariable("sea_surface_temperature"));
         List<LinguisticVariable> summarizers = new ArrayList<>();
-        summarizers.add(assets.getVariable("longitude"));
+        summarizers.add(assets.getVariable("sea_surface_temperature"));
         summarizers.add(assets.getVariable("significant_wave_height"));
         summarizers.add(assets.getVariable("mixed_layer_depth"));
 

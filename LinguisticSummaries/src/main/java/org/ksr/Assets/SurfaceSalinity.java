@@ -17,4 +17,10 @@ public class SurfaceSalinity extends LinguisticVariable {
         appendMembershipFunction(FuzzySetFactory.createMembershipFunction(FuzzySetConstants.TRAPEZOIDAL, "salty", 26.0, 30.0, 33.0, 35.0));
         appendMembershipFunction(FuzzySetFactory.createMembershipFunction(FuzzySetConstants.TRAPEZOIDAL, "strongly_salty", 34.0, 35.0, 40.0, 40.0));
     }
+
+    @Override
+    public String toText(String fuzzySetName){
+        return "that water is " + fuzzySetName + " on the surface";
+    }
+
 }
