@@ -11,6 +11,11 @@ public class Label {
         this.linguisticVariable = linguisticVariable;
     }
 
+    public Label(Label other) {
+        this.setName = other.setName;
+        this.linguisticVariable = other.linguisticVariable;
+    }
+
     public String getSetName() {
         return setName;
     }

@@ -59,7 +59,7 @@ public class LinguisticSummary {
             }
         }
 
-        ///////////////////////////
+//        /////////////////////////
 //        System.out.println("------------------------");
 //        for (int i = 0; i != data.size(); i++) {
 //            System.out.println(data.get(i));
@@ -70,7 +70,7 @@ public class LinguisticSummary {
 //            System.out.println(filteredData.get(i));
 //        }
 //        System.out.println("------------------------");
-        //////////////////////////
+//        ////////////////////////
 
         // Generate all possible combinations of summarizers (max 3)
         for (int i = 0; i < summarizers.size(); i++) {
