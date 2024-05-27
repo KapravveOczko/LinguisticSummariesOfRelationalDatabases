@@ -32,7 +32,7 @@ public class Main {
 //        LinguisticSummary testSummary = new LinguisticSummary(db, qualifier, summarizers, quantifier);
 //        List<String> summaries = testSummary.createLinguisticSummary();
         //-------------------------------------------------------------------------------------------------------------//
-        LinguisticSummaryTwoSubject testSummaryTwoSubject = new LinguisticSummaryTwoSubject(db, "first", "second", qualifier, assets.getVariable("sea_surface_temperature"), quantifier);
+        LinguisticSummaryTwoSubject testSummaryTwoSubject = new LinguisticSummaryTwoSubject(db, "first", "second", qualifier, summarizers, quantifier);
         List<String> summaries = testSummaryTwoSubject.createLinguisticSummaryTwoSubject();
 
 
