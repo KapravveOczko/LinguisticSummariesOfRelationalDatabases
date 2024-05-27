@@ -17,12 +17,12 @@ public class LinguisticSummary {
     private DatabaseConnector db;
     TruthChecker truthChecker;
 
-    public LinguisticSummary(Label qualifier, List<LinguisticVariable> summarizers, Label quantifier) {
+    public LinguisticSummary(DatabaseConnector db, Label qualifier, List<LinguisticVariable> summarizers, Label quantifier) {
         this.qualifier = qualifier; //W
         this.summarizers = summarizers;
         this.quantifier = quantifier;
         this.truthChecker = TruthChecker.getInstance();
-        connectToDb();
+        this.db = db;
     }
 
     public List<String> createLinguisticSummary() {
@@ -134,14 +134,6 @@ public class LinguisticSummary {
         }
 
         return summary.toString();
-    }
-
-    public void connectToDb() {
-        String url = "jdbc:postgresql://localhost:5432/ksr";
-        String user = "postgres";
-        String password = "";
-
-        this.db = new DatabaseConnector(url, user, password);
     }
 }
 

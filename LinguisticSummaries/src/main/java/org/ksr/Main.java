@@ -3,6 +3,7 @@ import org.ksr.Assets.*;
 import org.ksr.DataController.DatabaseConnector;
 import org.ksr.FuzzyLib.LinguisticSummary.Label;
 import org.ksr.FuzzyLib.LinguisticSummary.LinguisticSummary;
+import org.ksr.FuzzyLib.LinguisticSummary.LinguisticSummaryTwoSubject;
 import org.ksr.FuzzyLib.LinguisticVariable.LinguisticVariable;
 
 import java.io.IOException;
@@ -14,10 +15,9 @@ public class Main {
 //        Gui gui = new Gui();
 //        gui.launchGui();
 
-        DatabaseConnector db = new DatabaseConnector("jdbc:postgresql://localhost:5432/ksr", "postgres", "pass");
-
-
+        DatabaseConnector db = new DatabaseConnector("jdbc:postgresql://localhost:5432/ksr", "postgres", "");
         Assets assets = new Assets();
+
         Label quantifier = new Label("about one third", assets.getVariable("relative_quantifiers"));
         Label qualifier = new Label("east fo Ireland", assets.getVariable("longitude"));
 
@@ -26,8 +26,16 @@ public class Main {
         summarizers.add(assets.getVariable("significant_wave_height"));
         summarizers.add(assets.getVariable("mixed_layer_depth"));
 
-        LinguisticSummary testSummary = new LinguisticSummary(qualifier, summarizers, quantifier);
-        List<String> summaries = testSummary.createLinguisticSummary();
+
+
+        //--------------------------------------------------------------------------------------------------------------//
+//        LinguisticSummary testSummary = new LinguisticSummary(db, qualifier, summarizers, quantifier);
+//        List<String> summaries = testSummary.createLinguisticSummary();
+        //-------------------------------------------------------------------------------------------------------------//
+        LinguisticSummaryTwoSubject testSummaryTwoSubject = new LinguisticSummaryTwoSubject(db, "first", "second", qualifier, assets.getVariable("sea_surface_temperature"), quantifier);
+        List<String> summaries = testSummaryTwoSubject.createLinguisticSummaryTwoSubject();
+
+
         for(String summary : summaries){
             System.out.println(summary);
         }

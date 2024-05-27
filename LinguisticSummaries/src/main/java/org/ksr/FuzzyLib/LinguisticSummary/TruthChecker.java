@@ -59,7 +59,7 @@ public class TruthChecker {
             return result / 11;
         }
         else{
-            return result / 7;
+            return result / 8;
         }
 
 //        return result;
