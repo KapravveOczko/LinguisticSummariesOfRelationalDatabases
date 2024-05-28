@@ -124,16 +124,16 @@ public class LinguisticSummaryTwoSubject {
                                 if (k != j && k != i) currentSummarizers.add(new Label(set3.getName(), var3));
 
                                 // Generate summary text
-                                summariesType1.add(createLinguisticSummaryTwoSubjectType1(this.subjectOne, this.subjectTwo, currentSummarizers, filteredDataOne, filteredDataTwo));
-                                summariesType1.add(createLinguisticSummaryTwoSubjectType1(this.subjectTwo, this.subjectOne, currentSummarizers, filteredDataOne, filteredDataTwo));
+                                summariesType1.add(createLinguisticSummaryTwoSubjectType1(this.subjectOne, this.subjectTwo, currentSummarizers, dataSubjectOne, dataSubjectTwo));
+                                summariesType1.add(createLinguisticSummaryTwoSubjectType1(this.subjectTwo, this.subjectOne, currentSummarizers, dataSubjectOne, dataSubjectTwo));
                                 if (qualifier != null) {
-                                    summariesType2.add(createLinguisticSummaryTwoSubjectType2(this.subjectOne, this.subjectTwo, currentSummarizers));
-                                    summariesType2.add(createLinguisticSummaryTwoSubjectType2(this.subjectTwo, this.subjectOne, currentSummarizers));
-                                    summariesType3.add(createLinguisticSummaryTwoSubjectType3(this.subjectOne, this.subjectTwo, currentSummarizers));
-                                    summariesType3.add(createLinguisticSummaryTwoSubjectType3(this.subjectTwo, this.subjectOne, currentSummarizers));
+                                    summariesType2.add(createLinguisticSummaryTwoSubjectType2(this.subjectOne, this.subjectTwo, currentSummarizers, dataSubjectOne, filteredDataTwo));
+                                    summariesType2.add(createLinguisticSummaryTwoSubjectType2(this.subjectTwo, this.subjectOne, currentSummarizers, dataSubjectTwo, filteredDataOne));
+                                    summariesType3.add(createLinguisticSummaryTwoSubjectType3(this.subjectOne, this.subjectTwo, currentSummarizers, filteredDataOne, dataSubjectTwo));
+                                    summariesType3.add(createLinguisticSummaryTwoSubjectType3(this.subjectTwo, this.subjectOne, currentSummarizers, filteredDataTwo, dataSubjectOne));
                                 }
-                                summariesType4.add(createLinguisticSummaryTwoSubjectType4(this.subjectOne, this.subjectTwo, currentSummarizers));
-                                summariesType4.add(createLinguisticSummaryTwoSubjectType4(this.subjectTwo, this.subjectOne, currentSummarizers));
+                                summariesType4.add(createLinguisticSummaryTwoSubjectType4(this.subjectOne, this.subjectTwo, currentSummarizers, dataSubjectOne, dataSubjectTwo));
+                                summariesType4.add(createLinguisticSummaryTwoSubjectType4(this.subjectTwo, this.subjectOne, currentSummarizers, dataSubjectOne, dataSubjectTwo));
 
                             }
                         }
@@ -143,46 +143,46 @@ public class LinguisticSummaryTwoSubject {
         }
 
         summaries.addAll(summariesType1);
-//        summaries.addAll(summariesType2);
-//        summaries.addAll(summariesType3);
+        summaries.addAll(summariesType2);
+        summaries.addAll(summariesType3);
 //        summaries.addAll(summariesType4);
 
         return new ArrayList<>(summaries);
     }
 
-    private String createLinguisticSummaryTwoSubjectType1(String firstSubject, String secondSubject, List<Label> summarizers,List<List<Double>> filteredDataOne,List<List<Double>> filteredDataTwo) {
+    private String createLinguisticSummaryTwoSubjectType1(String firstSubject, String secondSubject, List<Label> summarizers,List<List<Double>> dataOne, List<List<Double>> dataTwo) {
         StringBuilder summary = new StringBuilder();
 
-        float degreeOfTruth = this.truthCheckerTwoSubject.checkTruthType1(filteredDataOne, filteredDataTwo, summarizers);
+        float degreeOfTruth = this.truthCheckerTwoSubject.checkTruthType1to3(dataOne, dataTwo, summarizers);
         summary.append(this.quantifier.getSetName()).append(" ").append(firstSubject).append(" comparing to ").append(secondSubject).append(" show: ").append(appendSummarizers(summarizers)).append(" [").append(degreeOfTruth).append("]");
 
         return summary.toString();
     }
 
-    private String createLinguisticSummaryTwoSubjectType2(String firstSubject, String secondSubject, List<Label> summarizers) {
+    private String createLinguisticSummaryTwoSubjectType2(String firstSubject, String secondSubject, List<Label> summarizers, List<List<Double>> dataOne, List<List<Double>> filteredDataTwo) {
         StringBuilder summary = new StringBuilder();
 
-        float degreeOfTruth = this.truthCheckerTwoSubject.checkTruthType2();
+        float degreeOfTruth = this.truthCheckerTwoSubject.checkTruthType1to3(dataOne, filteredDataTwo, summarizers);
 
         summary.append(this.quantifier.getSetName()).append(" ").append(firstSubject).append(" comparing to ").append(secondSubject).append(" having ").append(this.qualifier.getLinguisticVariable().toText(qualifier.getSetName())).append(" show: ").append(appendSummarizers(summarizers)).append(" [").append(degreeOfTruth).append("]");
 
         return summary.toString();
     }
 
-    private String createLinguisticSummaryTwoSubjectType3(String firstSubject, String secondSubject, List<Label> summarizers) {
+    private String createLinguisticSummaryTwoSubjectType3(String firstSubject, String secondSubject, List<Label> summarizers, List<List<Double>> filteredDataOne, List<List<Double>> dataTwo) {
         StringBuilder summary = new StringBuilder();
 
-        float degreeOfTruth = this.truthCheckerTwoSubject.checkTruthType3();
+        float degreeOfTruth = this.truthCheckerTwoSubject.checkTruthType1to3(filteredDataOne, dataTwo, summarizers);
 
         summary.append(this.quantifier.getSetName()).append(" ").append(firstSubject).append(" having ").append(this.qualifier.getLinguisticVariable().toText(qualifier.getSetName())).append(" comparing to ").append(secondSubject).append(" show: ").append(appendSummarizers(summarizers)).append(" [").append(degreeOfTruth).append("]");
 
         return summary.toString();
     }
 
-    private String createLinguisticSummaryTwoSubjectType4(String firstSubject, String secondSubject, List<Label> summarizers) {
+    private String createLinguisticSummaryTwoSubjectType4(String firstSubject, String secondSubject, List<Label> summarizers, List<List<Double>> dataOne, List<List<Double>> dataTwo) {
         StringBuilder summary = new StringBuilder();
 
-        float degreeOfTruth = this.truthCheckerTwoSubject.checkTruthType4();
+        float degreeOfTruth = this.truthCheckerTwoSubject.checkTruthType4(dataOne, dataTwo, summarizers);
         summary.append("more ").append(firstSubject).append(" than ").append(secondSubject).append(" show: ").append(appendSummarizers(summarizers)).append(" [").append(degreeOfTruth).append("]");
 
         return summary.toString();

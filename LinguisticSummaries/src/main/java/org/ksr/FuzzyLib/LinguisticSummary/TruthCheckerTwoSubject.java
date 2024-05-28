@@ -1,6 +1,7 @@
 package org.ksr.FuzzyLib.LinguisticSummary;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class TruthCheckerTwoSubject {
@@ -17,7 +18,7 @@ public class TruthCheckerTwoSubject {
         return instance;
     }
 
-    public Float checkTruthType1(List<List<Double>> dataFirst, List<List<Double>> dataSecond, List<Label> summarizers) {
+    public Float checkTruthType1to3(List<List<Double>> dataFirst, List<List<Double>> dataSecond, List<Label> summarizers) {
 
         float result = 0.0F;
 
@@ -49,16 +50,16 @@ public class TruthCheckerTwoSubject {
 
         return result / summarizers.size();
     }
+    public Float checkTruthType4(List<List<Double>> dataFirst, List<List<Double>> dataSecond, List<Label> summarizers) {
+        float result = 0.0F;
 
-    public Float checkTruthType2() {
-        return 0.0F;
-    }
+        for(int i=0; i!= summarizers.size(); i++){
+            List<Double> data = new ArrayList<>(dataFirst.get(i));
+            data.retainAll(dataSecond.get(i));
+            summarizers.get(i).getLinguisticVariable().getMembershipFunction(summarizers.get(i).getSetName()).setValues(data);
+            result += summarizers.get(i).getLinguisticVariable().getMembershipFunction(summarizers.get(i).getSetName()).getImprecision();
+        }
 
-    public Float checkTruthType3() {
-        return 0.0F;
-    }
-
-    public Float checkTruthType4() {
-        return 0.0F;
+        return 1 - result/3;
     }
 }
