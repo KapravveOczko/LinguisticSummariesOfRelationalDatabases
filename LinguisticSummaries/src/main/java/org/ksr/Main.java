@@ -19,7 +19,7 @@ public class Main {
         Assets assets = new Assets();
 
         Label quantifier = new Label("about one third", assets.getVariable("relative_quantifiers"));
-        Label qualifier = new Label("east fo Ireland", assets.getVariable("longitude"));
+        Label qualifier = new Label("east of Ireland", assets.getVariable("longitude"));
 
         List<LinguisticVariable> summarizers = new ArrayList<>();
         summarizers.add(assets.getVariable("sea_surface_temperature"));
@@ -30,11 +30,11 @@ public class Main {
 
 
         //--------------------------------------------------------------------------------------------------------------//
-        LinguisticSummary testSummary = new LinguisticSummary(db, qualifier, summarizers, quantifier);
-        List<String> summaries = testSummary.createLinguisticSummary();
+//        LinguisticSummary testSummary = new LinguisticSummary(db, qualifier, summarizers, quantifier);
+//        List<String> summaries = testSummary.createLinguisticSummary();
         //-------------------------------------------------------------------------------------------------------------//
-//        LinguisticSummaryTwoSubject testSummaryTwoSubject = new LinguisticSummaryTwoSubject(db, "first", "second", qualifier, summarizers, quantifier);
-//        List<String> summaries = testSummaryTwoSubject.createLinguisticSummaryTwoSubject();
+        LinguisticSummaryTwoSubject testSummaryTwoSubject = new LinguisticSummaryTwoSubject(db, "test_south_data", "test_north_data", qualifier, summarizers, quantifier);
+        List<String> summaries = testSummaryTwoSubject.createLinguisticSummaryTwoSubject();
 
 
         for(String summary : summaries){

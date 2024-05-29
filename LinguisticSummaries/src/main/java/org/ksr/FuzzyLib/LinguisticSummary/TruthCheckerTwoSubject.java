@@ -11,6 +11,16 @@ public class TruthCheckerTwoSubject {
     private TruthCheckerTwoSubject() {
     }
 
+    private int iter = 0;
+
+    public int getIter() {
+        return iter;
+    }
+
+    public void setIter(int iter) {
+        this.iter = iter;
+    }
+
     public static TruthCheckerTwoSubject getInstance() {
         if (instance == null) {
             instance = new TruthCheckerTwoSubject();
@@ -50,16 +60,20 @@ public class TruthCheckerTwoSubject {
 
         return result / summarizers.size();
     }
+
     public Float checkTruthType4(List<List<Double>> dataFirst, List<List<Double>> dataSecond, List<Label> summarizers) {
         float result = 0.0F;
 
         for(int i=0; i!= summarizers.size(); i++){
+            System.out.println(getIter());
+            setIter(getIter()+1);
             List<Double> data = new ArrayList<>(dataFirst.get(i));
             data.retainAll(dataSecond.get(i));
             summarizers.get(i).getLinguisticVariable().getMembershipFunction(summarizers.get(i).getSetName()).setValues(data);
             result += summarizers.get(i).getLinguisticVariable().getMembershipFunction(summarizers.get(i).getSetName()).getImprecision();
         }
 
-        return 1 - result/3;
+        return 1 - result/summarizers.size();
     }
+
 }
