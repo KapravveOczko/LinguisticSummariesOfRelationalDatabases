@@ -14,5 +14,5 @@ class LinguisticSummaries:
         return f"{self.text}  [{self.degreeOfTruth}]"
 
     def printToTable(self, best):
-        return f"{self.text} & {self.degreeOfTruth} & {np.round(np.abs(best - self.degreeOfTruth), 7)} \\\\ \\hline"
-
+        return f"{self.text} & {np.round(self.degreeOfTruth, 3)} & {np.round(np.abs(best - self.degreeOfTruth), 
+                                                                             3)} \\\\ \\hline"

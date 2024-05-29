@@ -89,6 +89,11 @@ public class LinguisticSummary {
                                 if (j != i) currentSummarizers.add(new Label(set2.getName(), var2));
                                 if (k != j && k != i) currentSummarizers.add(new Label(set3.getName(), var3));
 
+                                // we do not want to get summaries for insufficient summarizers
+                                if(currentSummarizers.size() != summarizers.size()){
+                                    continue;
+                                }
+
                                 // Generate summary text
                                 String summary = generateSummaryText(currentSummarizers);
                                  float degreeOfTruth =  truthChecker.checkTruth(filteredData, data, currentSummarizers, qualifierColumn, qualifier, quantifier);

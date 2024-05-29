@@ -12,9 +12,9 @@ public class Latitude extends LinguisticVariable {
     }
 
     public void appendMembershipFunctions() {
-        appendMembershipFunction(FuzzySetFactory.createMembershipFunction(TRAPEZOIDAL, "north fo Ireland", 48.0, 48.0, 51.5, 52.0));
-        appendMembershipFunction(FuzzySetFactory.createMembershipFunction(TRAPEZOIDAL, "latitude fo Ireland", 51.5, 52.0, 55.0, 56.0));
-        appendMembershipFunction(FuzzySetFactory.createMembershipFunction(TRAPEZOIDAL, "south fo Ireland", 55.0, 56.0, 60.0, 60.0));
+        appendMembershipFunction(FuzzySetFactory.createMembershipFunction(TRAPEZOIDAL, "north of Ireland", 48.0, 48.0, 51.5, 52.0));
+        appendMembershipFunction(FuzzySetFactory.createMembershipFunction(TRAPEZOIDAL, "latitude of Ireland", 51.5, 52.0, 55.0, 56.0));
+        appendMembershipFunction(FuzzySetFactory.createMembershipFunction(TRAPEZOIDAL, "south of Ireland", 55.0, 56.0, 60.0, 60.0));
     }
 
     @Override

@@ -1080,9 +1080,36 @@ obliczeń rozmytych i~generatora podsumowań. Instrukcja użytkownika}
 
 \subsection{Wstęp do Eksperymentów}
 
-W ramach niniejszej sekcji sprawozdania przeprowadzono serię eksperymentów mających na celu analizę skuteczności różnych rodzajów podsumowań jednopodmiotowych. Eksperymenty te zostały zrealizowane poprzez opracowanie tabel i rankingów podsumowań dla danych atrybutów. W każdym eksperymencie szczegółowo opisano zastosowane miary jakości, a także dokonano oceny jakości podsumowania optymalnego. Należy również wspomnieć że eksperymenty wykonywane były na całej bazie danych to jest 210 tysiącach rekordów.
+W ramach niniejszej sekcji sprawozdania przeprowadzono serię eksperymentów mających na celu analizę skuteczności różnych rodzajów podsumowań jednopodmiotowych. Eksperymenty te zostały zrealizowane poprzez opracowanie tabel i rankingów podsumowań dla danych atrybutów. W każdym eksperymencie szczegółowo opisano zastosowane miary jakości, a także dokonano oceny jakości podsumowania optymalnego. Należy również wspomnieć że eksperymenty wykonywane były na całej bazie danych to jest 210 tysiącach rekordów.\\
 
-\subsection{Eksperyment dla posumowania jednopodmiotowego w formie pierwszej}
+\noindent W trakcie wyznaczania miary jakości wygenerowanych podsumowań lingwistycznych wykorzystaliśmy wszystkie miary możliwe do wykorzystania dla danego przypadku zgodnie z materiałem źrudłowym \cite{niewiadomski19}. Dodatkowo w celu uzyskania wiarygodnych wyników wykorzystane zostały odpowiednie wagi nałożone na poszegulne miary jakości, ich rozkład zaprezentowany został w poniższych tabelach.
+
+
+\begin{table}[H]
+    \centering
+\caption{Przyjęte wagi nałożone na miary jakości dla jednopodmiotowych podsumowań lingwistycznych typu pierwszego}
+\label{tab:my_label}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|} \hline 
+        miara jakości & T1 & T2 & T3 & T4 & T5 & T6 & T7 & T8 & T9 & T10 & T11\\ \hline 
+        przyjęta waga & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & - & - & -\\ \hline
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+\caption{Przyjęte wagi nałożone na miary jakości dla jednopodmiotowych podsumowań lingwistycznych typu drugiego}
+\label{tab:my_label}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|} \hline 
+        miara jakości & T1 & T2 & T3 & T4 & T5 & T6 & T7 & T8 & T9 & T10 & T11\\ \hline 
+        przyjęta waga & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\ \hline
+    \end{tabular}
+\end{table}
+
+\noindent W celu uzyskania miary jakości z przedziału [0-1] wartość ta wyznaczona została poprzez zastosowanie odpowiedniej średniej.
+
+%======================================================================================
+
+\subsection{Eksperyment dla posumowania jednopodmiotowego w formie pierwszej dla maksymalnej ilosci sumaryzatorów}
 
 Do przeprowadzenia poniższego eksperymentu wykorzystane zostały następne wartości sumaryzatorów, oraz kwantyfikatorów:
 
@@ -1093,339 +1120,52 @@ Do przeprowadzenia poniższego eksperymentu wykorzystane zostały następne wart
 
 \subsubsection{Wyniki eksperymentu}
 
-W poniższej tabeli w kolumnie porównanie znajduje się porównanie miar jakości podsumowania do najlepszego odnalezionego podsumowania, nazwanego tutaj podsumowaniem optymalnym, odnalezione podsumowanie optymalne dla tego eksperymentu przedstawione zostało poniżej:
-
-\begin{itemize}
-    \item[podsumowanie optymalne]: about one third records show: that sea is moderately shallow  [0.8541077]
-\end{itemize}
+\noindent W poniższej tabeli w kolumnie zamieszczone zostało 5 najlepszych podsumowań znlaezionych dla aplikacji uruchomionej z wybranymi prarametramy zamieszczonymi powyżej, łączna ilość znalezionych podsumowań wynosi 80. Dodatkowo wyznaczone zostało porównanie różnicy między najlepszym znalezionym rozwiązaniem, nazwanym tutaj podsumowaniem optymalnym.
 
 \begin{longtable}{|p{0.9\linewidth}|c|c|}
 \hline
-\textbf{Podsumowanie} & \textbf{prawdziwość} & \textbf{Różnica} \\
+\textbf{Podsumowanie} & \textbf{T} & \textbf{\(\Delta \)T} \\
 \hline
-about one third records show: moderate water temperature on sea surface, height waves & 0.5076409 & 0.3464668 \\ \hline
-about one third records show: cool water temperature on sea surface, calm seas, that sea is deep & 0.42781729 & 0.4262904 \\ \hline
-about one third records show: medium height waves, that sea is profoundly & 0.5367546 & 0.3173531 \\ \hline
-about one third records show: moderate water temperature on sea surface, height waves, that sea is profoundly & 0.4476059 & 0.4065018 \\ \hline
-about one third records show: cold water temperature on sea surface & 0.5601522 & 0.2939555 \\ \hline
-about one third records show: cold water temperature on sea surface, medium height waves, that sea is deep & 0.5103021 & 0.3438056 \\ \hline
-about one third records show: cool water temperature on sea surface, moderately height waves, that sea is profoundly & 0.40358758 & 0.4505201 \\ \hline
-about one third records show: cool water temperature on sea surface, medium height waves, that sea is moderately shallow & 0.5840168 & 0.2700909 \\ \hline
-about one third records show: cool water temperature on sea surface, calm seas & 0.45812026 & 0.3959874 \\ \hline
-about one third records show: cold water temperature on sea surface, that sea is shallow & 0.4731951 & 0.3809126 \\ \hline
-about one third records show: cold water temperature on sea surface, calm seas, that sea is profoundly & 0.40358758 & 0.4505201 \\ \hline
-about one third records show: cool water temperature on sea surface, height waves, that sea is moderately shallow & 0.501532 & 0.3525757 \\ \hline
-about one third records show: moderate water temperature on sea surface, moderately height waves, that sea is profoundly & 0.4476059 & 0.4065018 \\ \hline
-about one third records show: warm water temperature on sea surface, height waves, that sea is moderately shallow & 0.501532 & 0.3525757 \\ \hline
-about one third records show: moderate water temperature on sea surface, that sea is deep & 0.5590603 & 0.2950474 \\ \hline
-about one third records show: warm water temperature on sea surface, that sea is moderately shallow & 0.62011176 & 0.2339959 \\ \hline
-about one third records show: cold water temperature on sea surface, moderately height waves, sea is almost on surface level depth & 0.46707964 & 0.3870281 \\ \hline
-about one third records show: calm seas, that sea is shallow & 0.41296747 & 0.4411402 \\ \hline
-about one third records show: cool water temperature on sea surface, that sea is moderately shallow & 0.62011176 & 0.2339959 \\ \hline
-about one third records show: calm seas, that sea is deep & 0.449312 & 0.4047957 \\ \hline
-about one third records show: moderate water temperature on sea surface, moderately height waves & 0.5076409 & 0.3464668 \\ \hline
-about one third records show: warm water temperature on sea surface, medium height waves & 0.55091566 & 0.303192 \\ \hline
-about one third records show: moderately height waves, sea is almost on surface level depth & 0.5082056 & 0.3459021 \\ \hline
-about one third records show: cold water temperature on sea surface, moderately height waves, that sea is moderately shallow & 0.501532 & 0.3525757 \\ \hline
-about one third records show: medium height waves, that sea is moderately shallow & 0.6836713 & 0.1704364 \\ \hline
-about one third records show: cold water temperature on sea surface, height waves, sea is almost on surface level depth & 0.46707964 & 0.3870281 \\ \hline
-about one third records show: warm water temperature on sea surface, medium height waves, that sea is moderately shallow & 0.5840168 & 0.2700909 \\ \hline
-about one third records show: calm seas & 0.48439604 & 0.3697117 \\ \hline
-about one third records show: moderate water temperature on sea surface, moderately height waves, that sea is moderately shallow & 0.54555035 & 0.3085574 \\ \hline
-about one third records show: cool water temperature on sea surface, moderately height waves & 0.45812026 & 0.3959874 \\ \hline
-about one third records show: cold water temperature on sea surface, calm seas, that sea is shallow & 0.40358758 & 0.4505201 \\ \hline
-about one third records show: that sea is moderately shallow & 0.8541077 & 0.0 \\ \hline
-about one third records show: moderate water temperature on sea surface, moderately height waves, sea is almost on surface level depth & 0.51109797 & 0.3430097 \\ \hline
-about one third records show: warm water temperature on sea surface, height waves, sea is almost on surface level depth & 0.46707964 & 0.3870281 \\ \hline
-about one third records show: calm seas, that sea is moderately shallow & 0.55988413 & 0.2942236 \\ \hline
-about one third records show: warm water temperature on sea surface, calm seas & 0.45812026 & 0.3959874 \\ \hline
-about one third records show: moderate water temperature on sea surface, that sea is profoundly & 0.52271575 & 0.331392 \\ \hline
-about one third records show: calm seas, that sea is profoundly & 0.41296747 & 0.4411402 \\ \hline
-about one third records show: moderate water temperature on sea surface, calm seas, that sea is deep & 0.47183558 & 0.3822721 \\ \hline
-about one third records show: moderate water temperature on sea surface, medium height waves, that sea is profoundly & 0.5300907 & 0.324017 \\ \hline
-about one third records show: cold water temperature on sea surface, calm seas, sea is almost on surface level depth & 0.46707964 & 0.3870281 \\ \hline
-about one third records show: sea is almost on surface level depth & 0.7507505 & 0.1033572 \\ \hline
-about one third records show: medium height waves, that sea is shallow & 0.5367546 & 0.3173531 \\ \hline
-about one third records show: cool water temperature on sea surface, moderately height waves, sea is almost on surface level depth & 0.46707964 & 0.3870281 \\ \hline
-about one third records show: moderate water temperature on sea surface, calm seas & 0.5076409 & 0.3464668 \\ \hline
-about one third records show: cool water temperature on sea surface, medium height waves, that sea is shallow & 0.4860724 & 0.3680353 \\ \hline
-about one third records show: cold water temperature on sea surface, sea is almost on surface level depth & 0.5684332 & 0.2856745 \\ \hline
-about one third records show: warm water temperature on sea surface, medium height waves, that sea is profoundly & 0.4860724 & 0.3680353 \\ \hline
-about one third records show: warm water temperature on sea surface, moderately height waves, that sea is shallow & 0.40358758 & 0.4505201 \\ \hline
-about one third records show: moderate water temperature on sea surface, medium height waves & 0.6004363 & 0.2536714 \\ \hline
-about one third records show: warm water temperature on sea surface, sea is almost on surface level depth & 0.5684332 & 0.2856745 \\ \hline
-about one third records show: moderate water temperature on sea surface, medium height waves, that sea is shallow & 0.5300907 & 0.324017 \\ \hline
-about one third records show: warm water temperature on sea surface, calm seas, sea is almost on surface level depth & 0.46707964 & 0.3870281 \\ \hline
-about one third records show: warm water temperature on sea surface, that sea is profoundly & 0.4731951 & 0.3809126 \\ \hline
-about one third records show: cool water temperature on sea surface, moderately height waves, that sea is moderately shallow & 0.501532 & 0.3525757 \\ \hline
-about one third records show: moderately height waves, that sea is shallow & 0.41296747 & 0.4411402 \\ \hline
-about one third records show: medium height waves, sea is almost on surface level depth & 0.724833 & 0.1292747 \\ \hline
-about one third records show: height waves, sea is almost on surface level depth & 0.5082056 & 0.3459021 \\ \hline
-about one third records show: cold water temperature on sea surface, that sea is deep & 0.50953966 & 0.344568 \\ \hline
-about one third records show: moderate water temperature on sea surface, that sea is moderately shallow & 0.66963243 & 0.1844753 \\ \hline
-about one third records show: warm water temperature on sea surface, calm seas, that sea is deep & 0.42781729 & 0.4262904 \\ \hline
-about one third records show: height waves, that sea is profoundly & 0.41296747 & 0.4411402 \\ \hline
-about one third records show: warm water temperature on sea surface, calm seas, that sea is moderately shallow & 0.501532 & 0.3525757 \\ \hline
-about one third records show: moderately height waves, that sea is moderately shallow & 0.55988413 & 0.2942236 \\ \hline
-about one third records show: cool water temperature on sea surface, height waves, that sea is deep & 0.42781729 & 0.4262904 \\ \hline
-about one third records show: warm water temperature on sea surface, medium height waves, that sea is shallow & 0.4860724 & 0.3680353 \\ \hline
-about one third records show: height waves, that sea is deep & 0.449312 & 0.4047957 \\ \hline
-about one third records show: warm water temperature on sea surface, medium height waves, that sea is deep & 0.5103021 & 0.3438056 \\ \hline
-about one third records show: cool water temperature on sea surface, that sea is deep & 0.50953966 & 0.344568 \\ \hline
-about one third records show: cool water temperature on sea surface, height waves & 0.45812026 & 0.3959874 \\ \hline
-about one third records show: moderate water temperature on sea surface, moderately height waves, that sea is deep & 0.47183558 & 0.3822721 \\ \hline
-about one third records show: moderate water temperature on sea surface, calm seas, that sea is profoundly & 0.4476059 & 0.4065018 \\ \hline
-about one third records show: warm water temperature on sea surface, that sea is shallow & 0.4731951 & 0.3809126 \\ \hline
-about one third records show: cool water temperature on sea surface, calm seas, sea is almost on surface level depth & 0.46707964 & 0.3870281 \\ \hline
-about one third records show: warm water temperature on sea surface, calm seas, that sea is shallow & 0.40358758 & 0.4505201 \\ \hline
-about one third records show: warm water temperature on sea surface, moderately height waves & 0.45812026 & 0.3959874 \\ \hline
-about one third records show: cool water temperature on sea surface, medium height waves, sea is almost on surface level depth & 0.5495645 & 0.3045432 \\ \hline
-about one third records show: cold water temperature on sea surface, moderately height waves, that sea is shallow & 0.40358758 & 0.4505201 \\ \hline
-about one third records show: cool water temperature on sea surface, calm seas, that sea is shallow & 0.40358758 & 0.4505201 \\ \hline
-about one third records show: moderate water temperature on sea surface, height waves, that sea is shallow & 0.4476059 & 0.4065018 \\ \hline
-about one third records show: warm water temperature on sea surface, moderately height waves, sea is almost on surface level depth & 0.46707964 & 0.3870281 \\ \hline
-about one third records show: cool water temperature on sea surface, sea is almost on surface level depth & 0.5684332 & 0.2856745 \\ \hline
-about one third records show: that sea is profoundly & 0.5602743 & 0.2938334 \\ \hline
-about one third records show: cold water temperature on sea surface, moderately height waves, that sea is deep & 0.42781729 & 0.4262904 \\ \hline
-about one third records show: cold water temperature on sea surface, that sea is profoundly & 0.4731951 & 0.3809126 \\ \hline
-about one third records show: moderately height waves, that sea is profoundly & 0.41296747 & 0.4411402 \\ \hline
-about one third records show: warm water temperature on sea surface, height waves & 0.45812026 & 0.3959874 \\ \hline
-about one third records show: moderate water temperature on sea surface, moderately height waves, that sea is shallow & 0.4476059 & 0.4065018 \\ \hline
-about one third records show: warm water temperature on sea surface, moderately height waves, that sea is moderately shallow & 0.501532 & 0.3525757 \\ \hline
-about one third records show: moderate water temperature on sea surface, that sea is shallow & 0.52271575 & 0.331392 \\ \hline
-about one third records show: moderate water temperature on sea surface, calm seas, that sea is shallow & 0.4476059 & 0.4065018 \\ \hline
-about one third records show: cool water temperature on sea surface, medium height waves & 0.55091566 & 0.303192 \\ \hline
-about one third records show: warm water temperature on sea surface, medium height waves, sea is almost on surface level depth & 0.5495645 & 0.3045432 \\ \hline
-about one third records show: cold water temperature on sea surface, calm seas, that sea is moderately shallow & 0.501532 & 0.3525757 \\ \hline
-about one third records show: cold water temperature on sea surface, medium height waves, sea is almost on surface level depth & 0.5495645 & 0.3045432 \\ \hline
-about one third records show: that sea is shallow & 0.5602743 & 0.2938334 \\ \hline
-about one third records show: warm water temperature on sea surface, height waves, that sea is profoundly & 0.40358758 & 0.4505201 \\ \hline
-about one third records show: cool water temperature on sea surface, that sea is profoundly & 0.4731951 & 0.3809126 \\ \hline
-about one third records show: cold water temperature on sea surface, medium height waves, that sea is moderately shallow & 0.5840168 & 0.2700909 \\ \hline
-about one third records show: medium height waves, that sea is deep & 0.57309914 & 0.2810086 \\ \hline
-about one third records show: cool water temperature on sea surface & 0.5601522 & 0.2939555 \\ \hline
-about one third records show: calm seas, sea is almost on surface level depth & 0.5082056 & 0.3459021 \\ \hline
-about one third records show: cool water temperature on sea surface, height waves, that sea is shallow & 0.40358758 & 0.4505201 \\ \hline
-about one third records show: cold water temperature on sea surface, moderately height waves & 0.45812026 & 0.3959874 \\ \hline
-about one third records show: cold water temperature on sea surface, height waves, that sea is deep & 0.42781729 & 0.4262904 \\ \hline
-about one third records show: height waves, that sea is moderately shallow & 0.55988413 & 0.2942236 \\ \hline
-about one third records show: cold water temperature on sea surface, height waves & 0.45812026 & 0.3959874 \\ \hline
-about one third records show: cold water temperature on sea surface, height waves, that sea is profoundly & 0.40358758 & 0.4505201 \\ \hline
-about one third records show: moderate water temperature on sea surface, height waves, that sea is deep & 0.47183558 & 0.3822721 \\ \hline
-about one third records show: cool water temperature on sea surface, calm seas, that sea is moderately shallow & 0.501532 & 0.3525757 \\ \hline
-about one third records show: medium height waves & 0.76291704 & 0.0911907 \\ \hline
-about one third records show: moderate water temperature on sea surface, height waves, that sea is moderately shallow & 0.54555035 & 0.3085574 \\ \hline
-about one third records show: cold water temperature on sea surface, medium height waves, that sea is shallow & 0.4860724 & 0.3680353 \\ \hline
-about one third records show: moderate water temperature on sea surface, medium height waves, that sea is moderately shallow & 0.6280351 & 0.2260726 \\ \hline
-about one third records show: cool water temperature on sea surface, medium height waves, that sea is deep & 0.5103021 & 0.3438056 \\ \hline
-about one third records show: cool water temperature on sea surface, medium height waves, that sea is profoundly & 0.4860724 & 0.3680353 \\ \hline
-about one third records show: moderate water temperature on sea surface, calm seas, sea is almost on surface level depth & 0.51109797 & 0.3430097 \\ \hline
-about one third records show: cool water temperature on sea surface, that sea is shallow & 0.4731951 & 0.3809126 \\ \hline
-about one third records show: cool water temperature on sea surface, moderately height waves, that sea is shallow & 0.40358758 & 0.4505201 \\ \hline
-about one third records show: cool water temperature on sea surface, calm seas, that sea is profoundly & 0.40358758 & 0.4505201 \\ \hline
-about one third records show: height waves & 0.48439604 & 0.3697117 \\ \hline
-about one third records show: cold water temperature on sea surface, calm seas & 0.45812026 & 0.3959874 \\ \hline
-about one third records show: warm water temperature on sea surface, moderately height waves, that sea is deep & 0.42781729 & 0.4262904 \\ \hline
-about one third records show: cold water temperature on sea surface, height waves, that sea is moderately shallow & 0.501532 & 0.3525757 \\ \hline
-about one third records show: cold water temperature on sea surface, moderately height waves, that sea is profoundly & 0.40358758 & 0.4505201 \\ \hline
-about one third records show: cold water temperature on sea surface, calm seas, that sea is deep & 0.42781729 & 0.4262904 \\ \hline
-about one third records show: warm water temperature on sea surface, calm seas, that sea is profoundly & 0.40358758 & 0.4505201 \\ \hline
-about one third records show: moderate water temperature on sea surface, medium height waves, that sea is deep & 0.5543204 & 0.2997873 \\ \hline
-about one third records show: warm water temperature on sea surface, height waves, that sea is shallow & 0.40358758 & 0.4505201 \\ \hline
-about one third records show: moderate water temperature on sea surface, sea is almost on surface level depth & 0.61795384 & 0.2361539 \\ \hline
-about one third records show: warm water temperature on sea surface, moderately height waves, that sea is profoundly & 0.40358758 & 0.4505201 \\ \hline
-about one third records show: height waves, that sea is shallow & 0.41296747 & 0.4411402 \\ \hline
-about one third records show: warm water temperature on sea surface, that sea is deep & 0.50953966 & 0.344568 \\ \hline
-about one third records show: moderate water temperature on sea surface, calm seas, that sea is moderately shallow & 0.54555035 & 0.3085574 \\ \hline
-about one third records show: warm water temperature on sea surface, height waves, that sea is deep & 0.42781729 & 0.4262904 \\ \hline
-about one third records show: cold water temperature on sea surface, height waves, that sea is shallow & 0.40358758 & 0.4505201 \\ \hline
-about one third records show: moderate water temperature on sea surface & 0.6344331 & 0.2196746 \\ \hline
-about one third records show: cool water temperature on sea surface, height waves, sea is almost on surface level depth & 0.46707964 & 0.3870281 \\ \hline
-about one third records show: cool water temperature on sea surface, moderately height waves, that sea is deep & 0.42781729 & 0.4262904 \\ \hline
-about one third records show: moderate water temperature on sea surface, medium height waves, sea is almost on surface level depth & 0.5935828 & 0.2605249 \\ \hline
-about one third records show: cold water temperature on sea surface, that sea is moderately shallow & 0.62011176 & 0.2339959 \\ \hline
-about one third records show: cool water temperature on sea surface, height waves, that sea is profoundly & 0.40358758 & 0.4505201 \\ \hline
-about one third records show: moderately height waves & 0.48439604 & 0.3697117 \\ \hline
-about one third records show: moderate water temperature on sea surface, height waves, sea is almost on surface level depth & 0.51109797 & 0.3430097 \\ \hline
-about one third records show: moderately height waves, that sea is deep & 0.449312 & 0.4047957 \\ \hline
-about one third records show: warm water temperature on sea surface & 0.5601522 & 0.2939555 \\ \hline
-about one third records show: that sea is deep & 0.6329633 & 0.2211444 \\ \hline
-about one third records show: cold water temperature on sea surface, medium height waves, that sea is profoundly & 0.4860724 & 0.3680353 \\ \hline
-about one third records show: cold water temperature on sea surface, medium height waves & 0.55091566 & 0.303192 \\ \hline
+about one third records show: moderate water temperature on sea surface, medium height waves, that sea is moderately shallow & 0.55 & 0.0 \\ \hline
+about one third records show: moderate water temperature on sea surface, medium height waves, sea is almost on surface level depth & 0.519 & 0.03 \\ \hline
+about one third records show: cold water temperature on sea surface, medium height waves, that sea is moderately shallow & 0.511 & 0.039 \\ \hline
+about one third records show: cool water temperature on sea surface, medium height waves, that sea is moderately shallow & 0.511 & 0.039 \\ \hline
+about one third records show: warm water temperature on sea surface, medium height waves, that sea is moderately shallow & 0.511 & 0.039 \\ \hline
 \hline
 \end{longtable}
 
-\subsection{Eksperyment dla posumowania jednopodmiotowego w formie drugiej}
+\noindent Średnia wszystkich miar jakości dla uzyskacnyh podsumowań wyniosła: 0.413
+
+
+%======================================================================================
+
+\subsection{Eksperyment dla posumowania jednopodmiotowego w formie drugiej przy wykorzystaniu maksymalnej dopuszczalnej ilości sumaryzatrorów}
 
 Do przeprowadzenia poniższego eksperymentu wykorzystane zostały te same wartości sumaryzatorów, oraz kwantyfikatorów co w poprzednim eksperymencie, dodatkowo wykorzystany został następujący kwalifikator:
 
 \begin{itemize}
-    \item[kwalifikator]: east\_fo\_Ireland z przestrzeni zmiennej lingwistycznej longitude.
+    \item[kwalifikator]: east\_of\_Ireland z przestrzeni zmiennej lingwistycznej longitude.
 \end{itemize}
 
 \subsubsection{Wyniki eksperymentu}
 
-W poniższej tabeli w kolumnie porównanie znajduje się porównanie miar jakości podsumowania do najlepszego odnalezionego podsumowania, nazwanego tutaj podsumowaniem optymalnym, odnalezione podsumowanie optymalne dla tego eksperymentu przedstawione zostało poniżej:
-
-\begin{itemize}
-    \item[podsumowanie optymalne]: about one third records having that record was made east of Ireland show: that sea is moderately shallow  [0.7909199]
-\end{itemize}
+\noindent Tak jak zostało to wykonane dla poprzedniej subsekcji poniższej zamieszczone zostało 5 najlepszych podsumowań znlaezionych dla aplikacji uruchomionej z wybranymi prarametramy zamieszczonymi powyżej. Dodatkowo wyznaczone zostało porównanie różnicy między najlepszym znalezionym rozwiązaniem, nazwanym tutaj podsumowaniem optymalnym.
 
 \begin{longtable}{|p{0.9\linewidth}|c|c|}
 \hline
-\textbf{Podsumowanie} & \textbf{prawdziwość} & \textbf{Różnica} \\
+\textbf{Podsumowanie} & \textbf{T} & \textbf{\(\Delta \)T} \\
 \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, medium height waves, sea is almost on surface level depth & 0.49552917 & 0.2953907 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, height waves, sea is almost on surface level depth & 0.48903292 & 0.301887 \\ \hline
-about one third records having that record was made east of Ireland show: calm seas, that sea is deep & 0.46734294 & 0.323577 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, height waves, that sea is shallow & 0.4486289 & 0.342291 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, calm seas, that sea is profoundly & 0.4486289 & 0.342291 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, that sea is deep & 0.5712052 & 0.2197147 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, medium height waves, that sea is shallow & 0.5299341 & 0.2609858 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, medium height waves, that sea is profoundly & 0.45512512 & 0.3357948 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, medium height waves, that sea is shallow & 0.45512512 & 0.3357948 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, moderately height waves, that sea is profoundly & 0.5545731 & 0.2363468 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, height waves, that sea is deep & 0.4486289 & 0.342291 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, medium height waves, that sea is profoundly & 0.5299341 & 0.2609858 \\ \hline
-about one third records having that record was made east of Ireland show: height waves, that sea is deep & 0.46734294 & 0.323577 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, that sea is profoundly & 0.48704517 & 0.3038747 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, calm seas, that sea is shallow & 0.4486289 & 0.342291 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, calm seas, that sea is deep & 0.4486289 & 0.342291 \\ \hline
-about one third records having that record was made east of Ireland show: height waves & 0.5127975 & 0.2781224 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, medium height waves, that sea is deep & 0.45512512 & 0.3357948 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, height waves, that sea is moderately shallow & 0.529437 & 0.2614829 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, height waves, that sea is moderately shallow & 0.6042459 & 0.186674 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, sea is almost on surface level depth & 0.54765123 & 0.2432687 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, calm seas, that sea is shallow & 0.52343786 & 0.267482 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, medium height waves, that sea is moderately shallow & 0.53593326 & 0.2549866 \\ \hline
-about one third records having that record was made east of Ireland show: height waves, that sea is profoundly & 0.46734294 & 0.323577 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, calm seas, that sea is profoundly & 0.4486289 & 0.342291 \\ \hline
-about one third records having that record was made east of Ireland show: calm seas, that sea is moderately shallow & 0.5885551 & 0.2023648 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface & 0.5479775 & 0.2429424 \\ \hline
-about one third records having that record was made east of Ireland show: calm seas, sea is almost on surface level depth & 0.527949 & 0.2629709 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, height waves, that sea is deep & 0.4486289 & 0.342291 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, medium height waves, that sea is deep & 0.45512512 & 0.3357948 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, medium height waves, sea is almost on surface level depth & 0.57033813 & 0.2205818 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, moderately height waves, that sea is profoundly & 0.47976416 & 0.3111557 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, calm seas, sea is almost on surface level depth & 0.48903292 & 0.301887 \\ \hline
-about one third records having that record was made east of Ireland show: that sea is deep & 0.5484956 & 0.2424243 \\ \hline
-about one third records having that record was made east of Ireland show: medium height waves, sea is almost on surface level depth & 0.5379519 & 0.252968 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, moderately height waves, sea is almost on surface level depth & 0.5201682 & 0.2707517 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, moderately height waves, that sea is moderately shallow & 0.63538116 & 0.1555387 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, medium height waves, sea is almost on surface level depth & 0.49552917 & 0.2953907 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, medium height waves, that sea is profoundly & 0.45512512 & 0.3357948 \\ \hline
-about one third records having that record was made east of Ireland show: that sea is profoundly & 0.5484956 & 0.2424243 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, medium height waves, that sea is profoundly & 0.45512512 & 0.3357948 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, calm seas, that sea is moderately shallow & 0.529437 & 0.2614829 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, that sea is moderately shallow & 0.6924174 & 0.0985025 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, moderately height waves, that sea is moderately shallow & 0.5605722 & 0.2303477 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, calm seas & 0.4824609 & 0.308459 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, moderately height waves, that sea is shallow & 0.47976416 & 0.3111557 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, calm seas, that sea is shallow & 0.4486289 & 0.342291 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, calm seas, that sea is shallow & 0.4486289 & 0.342291 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, moderately height waves, that sea is profoundly & 0.47976416 & 0.3111557 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, height waves & 0.4824609 & 0.308459 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, height waves & 0.4824609 & 0.308459 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, medium height waves, that sea is shallow & 0.45512512 & 0.3357948 \\ \hline
-about one third records having that record was made east of Ireland show: sea is almost on surface level depth & 0.6697077 & 0.1212122 \\ \hline
-about one third records having that record was made east of Ireland show: medium height waves, that sea is deep & 0.47734585 & 0.313574 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, calm seas, sea is almost on surface level depth & 0.48903292 & 0.301887 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, height waves & 0.5666209 & 0.224299 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, height waves, that sea is moderately shallow & 0.529437 & 0.2614829 \\ \hline
-about one third records having that record was made east of Ireland show: moderately height waves, that sea is profoundly & 0.51314074 & 0.2777792 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, medium height waves & 0.48976916 & 0.3011507 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, medium height waves, sea is almost on surface level depth & 0.49552917 & 0.2953907 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, medium height waves, that sea is deep & 0.45512512 & 0.3357948 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, moderately height waves & 0.517488 & 0.2734319 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, sea is almost on surface level depth & 0.54765123 & 0.2432687 \\ \hline
-about one third records having that record was made east of Ireland show: that sea is shallow & 0.5484956 & 0.2424243 \\ \hline
-about one third records having that record was made east of Ireland show: height waves, sea is almost on surface level depth & 0.527949 & 0.2629709 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, height waves, that sea is profoundly & 0.4486289 & 0.342291 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, calm seas, sea is almost on surface level depth & 0.5638419 & 0.227078 \\ \hline
-about one third records having that record was made east of Ireland show: medium height waves, that sea is profoundly & 0.47734585 & 0.313574 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, moderately height waves & 0.6016481 & 0.1892718 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, moderately height waves, that sea is shallow & 0.5545731 & 0.2363468 \\ \hline
-about one third records having that record was made east of Ireland show: that sea is moderately shallow & 0.7909199 & 0.0 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, height waves & 0.4824609 & 0.308459 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, moderately height waves, that sea is moderately shallow & 0.5605722 & 0.2303477 \\ \hline
-about one third records having that record was made east of Ireland show: height waves, that sea is shallow & 0.46734294 & 0.323577 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, calm seas & 0.4824609 & 0.308459 \\ \hline
-about one third records having that record was made east of Ireland show: moderately height waves & 0.5814943 & 0.2094256 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, height waves, sea is almost on surface level depth & 0.48903292 & 0.301887 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, medium height waves & 0.48976916 & 0.3011507 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, moderately height waves, sea is almost on surface level depth & 0.5201682 & 0.2707517 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, calm seas, sea is almost on surface level depth & 0.48903292 & 0.301887 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, medium height waves & 0.48976916 & 0.3011507 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, that sea is shallow & 0.48704517 & 0.3038747 \\ \hline
-about one third records having that record was made east of Ireland show: moderately height waves, that sea is deep & 0.51314074 & 0.2777792 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, moderately height waves, that sea is moderately shallow & 0.5605722 & 0.2303477 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, moderately height waves, that sea is deep & 0.47976416 & 0.3111557 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, calm seas, that sea is moderately shallow & 0.529437 & 0.2614829 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, moderately height waves, that sea is deep & 0.47976416 & 0.3111557 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, moderately height waves & 0.517488 & 0.2734319 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, that sea is shallow & 0.48704517 & 0.3038747 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, moderately height waves, that sea is shallow & 0.47976416 & 0.3111557 \\ \hline
-about one third records having that record was made east of Ireland show: moderately height waves, sea is almost on surface level depth & 0.5737468 & 0.2171731 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, calm seas & 0.5666209 & 0.224299 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, calm seas, that sea is moderately shallow & 0.6042459 & 0.186674 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, that sea is shallow & 0.48704517 & 0.3038747 \\ \hline
-about one third records having that record was made east of Ireland show: calm seas, that sea is shallow & 0.46734294 & 0.323577 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, moderately height waves, that sea is deep & 0.5545731 & 0.2363468 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, height waves, that sea is shallow & 0.4486289 & 0.342291 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface & 0.5479775 & 0.2429424 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, moderately height waves, that sea is profoundly & 0.47976416 & 0.3111557 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, medium height waves, that sea is moderately shallow & 0.53593326 & 0.2549866 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, height waves, that sea is profoundly & 0.4486289 & 0.342291 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, moderately height waves & 0.517488 & 0.2734319 \\ \hline
-about one third records having that record was made east of Ireland show: moderately height waves, that sea is moderately shallow & 0.6343529 & 0.156567 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, that sea is moderately shallow & 0.6082573 & 0.1826626 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, height waves, that sea is deep & 0.52343786 & 0.267482 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, that sea is moderately shallow & 0.6082573 & 0.1826626 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, that sea is shallow & 0.5712052 & 0.2197147 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, medium height waves, that sea is moderately shallow & 0.53593326 & 0.2549866 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, height waves, that sea is shallow & 0.4486289 & 0.342291 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, that sea is profoundly & 0.48704517 & 0.3038747 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, sea is almost on surface level depth & 0.54765123 & 0.2432687 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, moderately height waves, that sea is shallow & 0.47976416 & 0.3111557 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, medium height waves, that sea is moderately shallow & 0.61074215 & 0.1801778 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, calm seas & 0.4824609 & 0.308459 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface & 0.5479775 & 0.2429424 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, medium height waves, that sea is deep & 0.5299341 & 0.2609858 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, calm seas, that sea is deep & 0.52343786 & 0.267482 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, moderately height waves, sea is almost on surface level depth & 0.59497714 & 0.1959428 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, calm seas, that sea is profoundly & 0.52343786 & 0.267482 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, height waves, that sea is moderately shallow & 0.529437 & 0.2614829 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, moderately height waves, that sea is deep & 0.47976416 & 0.3111557 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, that sea is deep & 0.48704517 & 0.3038747 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface & 0.67421764 & 0.1167023 \\ \hline
-about one third records having that record was made east of Ireland show: calm seas, that sea is profoundly & 0.46734294 & 0.323577 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, calm seas, that sea is deep & 0.4486289 & 0.342291 \\ \hline
-about one third records having that record was made east of Ireland show: moderately height waves, that sea is shallow & 0.51314074 & 0.2777792 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, that sea is profoundly & 0.48704517 & 0.3038747 \\ \hline
-about one third records having that record was made east of Ireland show: height waves, that sea is moderately shallow & 0.5885551 & 0.2023648 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, that sea is profoundly & 0.5712052 & 0.2197147 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, that sea is deep & 0.48704517 & 0.3038747 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, height waves, sea is almost on surface level depth & 0.5638419 & 0.227078 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, calm seas, that sea is profoundly & 0.4486289 & 0.342291 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, height waves, sea is almost on surface level depth & 0.48903292 & 0.301887 \\ \hline
-about one third records having that record was made east of Ireland show: calm seas & 0.5127975 & 0.2781224 \\ \hline
-about one third records having that record was made east of Ireland show: medium height waves, that sea is shallow & 0.47734585 & 0.313574 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, moderately height waves, sea is almost on surface level depth & 0.5201682 & 0.2707517 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, height waves, that sea is profoundly & 0.4486289 & 0.342291 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, height waves, that sea is shallow & 0.52343786 & 0.267482 \\ \hline
-about one third records having that record was made east of Ireland show: medium height waves, that sea is moderately shallow & 0.598558 & 0.1923619 \\ \hline
-about one third records having that record was made east of Ireland show: moderate water temperature on sea surface, that sea is deep & 0.48704517 & 0.3038747 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, height waves, that sea is deep & 0.4486289 & 0.342291 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, height waves, that sea is profoundly & 0.52343786 & 0.267482 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, medium height waves & 0.5739292 & 0.2169907 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, calm seas, that sea is deep & 0.4486289 & 0.342291 \\ \hline
-about one third records having that record was made east of Ireland show: cool water temperature on sea surface, calm seas, that sea is moderately shallow & 0.529437 & 0.2614829 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, that sea is moderately shallow & 0.6082573 & 0.1826626 \\ \hline
-about one third records having that record was made east of Ireland show: cold water temperature on sea surface, medium height waves, that sea is shallow & 0.45512512 & 0.3357948 \\ \hline
-about one third records having that record was made east of Ireland show: warm water temperature on sea surface, sea is almost on surface level depth & 0.6318113 & 0.1591086 \\ \hline
-about one third records having that record was made east of Ireland show: medium height waves & 0.5278019 & 0.263118 \\ \hline
-
+about one third records having that record was made east of Ireland show: warm water temperature on sea surface, moderately height waves, that sea is moderately shallow & 0.635 & 0.0 \\ \hline
+about one third records having that record was made east of Ireland show: warm water temperature on sea surface, medium height waves, that sea is moderately shallow & 0.611 & 0.025 \\ \hline
+about one third records having that record was made east fo Ireland show: warm water temperature on sea surface, calm seas, that sea is moderately shallow & 0.604 & 0.031 \\ \hline
+about one third records having that record was made east of Ireland show: warm water temperature on sea surface, height waves, that sea is moderately shallow & 0.604 & 0.031 \\ \hline
+about one third records having that record was made east of Ireland show: warm water temperature on sea surface, moderately height waves, sea is almost on surface level depth & 0.595 & 0.04 \\ \hline
+\hline
 \end{longtable}
+
+\noindent Średnia wszystkich miar jakości dla uzyskacnyh podsumowań wyniosła: 0.501
+
+%======================================================================================
 
 \subsection{Wnioski}
 
@@ -1437,61 +1177,92 @@ about one third records having that record was made east of Ireland show: medium
 
 
 
+%=========================================================================================
+
+\section{Wielopodmiotowe podsumowania lingwistyczne i~ich miary jakości}
+
+\noindent Na potrzeby trego eksperymentu zmuszeni zostaliśmy wyostrzyć jeden ze zbiorów rozmytych, po gruntownej analizie zdecydowaliśmy się wyostrzyć zmienną lingwistyczną "latitude" ze względu na jej mniej więcej równy podział pomiędzy wartości. Dzięki tej operacji uzyskaliśmy 3 podmioty:
+
+\begin{itemize}
+    \item records\_from\_north
+    \item records\_on\_Irland
+    \item records\_from\_south
+\end{itemize}
 
 
+\subsection{Wstęp do Eksperymentów}
 
+\noindent W tej sekcji sprawozdania przeprowadzono serię eksperymentów mających na celu analizę skuteczności różnych rodzajów podsumowań wielopodmiotowych. Nasza aplikacja automatycznie generuje wszystkie cztery rodzaje podsumowań, bez możliwości wyboru konkretnego typu. Eksperymenty te zostały zrealizowane poprzez opracowanie tabel i rankingów podsumowań dla danych atrybutów. W każdym eksperymencie szczegółowo opisano zastosowane miary jakości. Eksperymenty były wykonywane na całej bazie danych, obejmującej 210 tysięcy rekordów. \\
 
+\noindent W celu zapewnienia rzetelności wyników, dane dla dwóch podmiotów były przetwarzane i analizowane w kontekście różnych lingwistycznych zmiennych i ich wartości. Proces generowania podsumowań obejmował:
 
+\begin{itemize}
+    \item[Generowanie Podsumowań Typu 1]: Analiza porównawcza pomiędzy dwoma podmiotami bez dodatkowych kwalifikatorów, uwzględniająca wyłącznie lingwistyczne zmienne podsumowujące.
+    \item[Generowanie Podsumowań Typu 2]: Porównanie pomiędzy podmiotami z uwzględnieniem kwalifikatora, który filtrował dane na podstawie określonego kryterium.
+    \item[Generowanie Podsumowań Typu 3]: Porównanie z uwzględnieniem kwalifikatora w odniesieniu do jednego z podmiotów.
+    \item[Generowanie Podsumowań Typu 4]: Ocena inkluzji zbiorów rozmytych typu 2, mająca na celu określenie relacji porządkującej pomiędzy danymi podmiotami.
+\end{itemize}
 
+\subsubsection{Przyjęte wartości niezbędne do wykonania eksperymentu}
 
+\begin{itemize}
+    \item[podmioty]: records\_from\_north, records\_from\_south 
+    \item[sumaryzatory]: sea\_surface\_temperature, significant\_wave\_height, mixed\_layer\_depth.
+    \item[kwantyfikator relatywny]: about\_one\_third.
+    \item[kwalifikator]: east\_of\_Ireland z przestrzeni zmiennej lingwistycznej longitude.
+\end{itemize}
 
+\subsubsection{Wyniki eksperymentu}
 
+\noindent Poniższej zamieszczone zostało po 3 najlepsze podsumowania dla każdego typu podsumowań lingwistycznych wygenerowanych dla dwuch podmiotów.
+
+\begin{longtable}{|p{0.9\linewidth}|c|c|}
+\hline
+\textbf{Podsumowanie} & \textbf{T} & \textbf{\(\Delta \)T} \\
+\hline
+about one third records having that record was made east fo Ireland show: warm water temperature on sea surface, moderately height waves, that sea is moderately shallow & 0.635 & 0.0 \\ \hline
+\hline
+\end{longtable}
+
+\begin{longtable}{|p{0.9\linewidth}|c|c|}
+\hline
+\textbf{Podsumowanie} & \textbf{T} & \textbf{\(\Delta \)T} \\
+\hline
+about one third records having that record was made east fo Ireland show: warm water temperature on sea surface, moderately height waves, that sea is moderately shallow & 0.635 & 0.0 \\ \hline
+\hline
+\end{longtable}
+
+\begin{longtable}{|p{0.9\linewidth}|c|c|}
+\hline
+\textbf{Podsumowanie} & \textbf{T} & \textbf{\(\Delta \)T} \\
+\hline
+about one third records having that record was made east fo Ireland show: warm water temperature on sea surface, moderately height waves, that sea is moderately shallow & 0.635 & 0.0 \\ \hline
+\hline
+\end{longtable}
+
+\begin{longtable}{|p{0.9\linewidth}|c|c|}
+\hline
+\textbf{Podsumowanie} & \textbf{T} & \textbf{\(\Delta \)T} \\
+\hline
+about one third records having that record was made east fo Ireland show: warm water temperature on sea surface, moderately height waves, that sea is moderately shallow & 0.635 & 0.0 \\ \hline
+\hline
+\end{longtable}
+
+%======================================================================================
+
+\subsection{Wnioski}
+
+\noindent Ponadto, zaobserwowano, że metoda wielopodmiotowych podsumowań lingwistycznych jest szczególnie skuteczna w kontekście analizy porównawczej różnych grup danych. Ta metodologia dostarcza cennych informacji o relacjach między podmiotami, wskazując na potencjalne dominacje cech w poszczególnych grupach. \\
+
+\noindent Ogólnie rzecz biorąc, wielopodmiotowe podsumowania lingwistyczne wykazały swoją skuteczność w generowaniu intuicyjnych i relatywnie wartościowych wniosków, co może mieć zastosowanie w różnych dziedzinach.
+
+%=========================================================================================
+
+\section{Dyskusja, wnioski}
 
 
 
 %=========================================================================================
-
-\section{Wielopodmiotowe podsumowania lingwistyczne i~ich miary jakości}
-Wyniki kolejnych eksperymentów wg punktów 2.-4. opisu projektu 2. Uzasadnienie i
-metoda podziału zbioru danych na rozłączne podmioty. Listy podsumowań
-wielopodmiotowych i tabele/rankingi podsumowań dla danych atrybutów obowiązkowe i
-dokładnie opisane w ,,captions'' (tytułach), konieczny opis kolumn i wierszy tabel.
-{\bf Wzorów podsumowań ani miar nie należy przepisywać ani cytować, wystarczy podać literaturę, ale
-należy skomentować co oznaczają i jaką informacje niosą wybrane miary w wybranych
-przypadkach.}Konieczne uwzględnienie wszystkich 4-ch form podsumowań wielopodmiotowych.
-\\
-
-** Możliwe sformułowanie zagadnienia wielopodmiotowego podsumowania optymalnego **.\\
-\indent {** Ewentualne wyniki realizacji punktu ,,na ocenę 5.0'' wg opisu Projektu 2. i ich porównanie do wyników z
-części obowiązkowej **.}\\
-
-\noindent {\bf Sekcja uzupełniona jako efekt zadania Tydzień 12 wg Harmonogramu Zajęć
-na WIKAMP KSR.}
-
-
-\section{Dyskusja, wnioski}
-Dokładne interpretacje uzyskanych wyników w zależności od parametrów klasyfikacji
-opisanych w punktach 3.-4 opisu Projektu 2.
-Szczególnie istotne są wnioski o charakterze uniwersalnym, istotne dla podobnych zadań.
-Omówić i wyjaśnić napotkane problemy (jeśli były). Każdy wniosek/problem powinien mieć poparcie
-w przeprowadzonych eksperymentach (odwołania do konkretnych wyników: tabel i miar
-jakości). Ocena które wybrane kwantyfikatory, sumaryzatory, kwalifikatory i/lub ich
-miary jakości mają małe albo duże znaczenie dla wiarygodności i jakości otrzymanych
-agregacji/podsumowań.  \\
-\underline{Dla końcowej oceny jest to najważniejsza sekcja} sprawozdania, gdyż prezentuje poziom
-zrozumienia rozwiązywanego problemu.\\
-
-** Możliwości kontynuacji prac w obszarze logiki rozmytej i wnioskowania rozmytego, zwłaszcza w kontekście pracy inżynierskiej,
-magisterskiej, naukowej, itp. **\\
-
-\noindent {\bf Sekcja uzupełniona jako efekt zadań Tydzień 11 i Tydzień 12 wg
-Harmonogramu Zajęć na WIKAMP KSR.}
-
-
-\section{Braki w realizacji projektu 2.}
-Wymienić wg opisu Projektu 2. wszystkie niezrealizowane obowiązkowe elementy projektu, ewentualnie
-podać merytoryczne (ale nie czasowe) przyczyny tych braków.
-
 
 \begin{thebibliography}{99}
  \bibitem{niewiadomski19} A. Niewiadomski, Zbiory rozmyte typu 2. Zastosowania w reprezentowaniu informacji.  Seria „Problemy współczesnej informatyki” pod redakcją L. Rutkowskiego. Akademicka Oficyna Wydawnicza EXIT, Warszawa, 2019.

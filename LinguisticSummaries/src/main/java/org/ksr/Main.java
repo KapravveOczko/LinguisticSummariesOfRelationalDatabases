@@ -25,15 +25,16 @@ public class Main {
         summarizers.add(assets.getVariable("sea_surface_temperature"));
         summarizers.add(assets.getVariable("significant_wave_height"));
         summarizers.add(assets.getVariable("mixed_layer_depth"));
+//        summarizers.add(assets.getVariable("mean_wave_direction"));
 
 
 
         //--------------------------------------------------------------------------------------------------------------//
-//        LinguisticSummary testSummary = new LinguisticSummary(db, qualifier, summarizers, quantifier);
-//        List<String> summaries = testSummary.createLinguisticSummary();
+        LinguisticSummary testSummary = new LinguisticSummary(db, qualifier, summarizers, quantifier);
+        List<String> summaries = testSummary.createLinguisticSummary();
         //-------------------------------------------------------------------------------------------------------------//
-        LinguisticSummaryTwoSubject testSummaryTwoSubject = new LinguisticSummaryTwoSubject(db, "first", "second", qualifier, summarizers, quantifier);
-        List<String> summaries = testSummaryTwoSubject.createLinguisticSummaryTwoSubject();
+//        LinguisticSummaryTwoSubject testSummaryTwoSubject = new LinguisticSummaryTwoSubject(db, "first", "second", qualifier, summarizers, quantifier);
+//        List<String> summaries = testSummaryTwoSubject.createLinguisticSummaryTwoSubject();
 
 
         for(String summary : summaries){
