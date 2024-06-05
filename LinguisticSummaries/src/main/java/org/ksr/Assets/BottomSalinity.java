@@ -4,11 +4,19 @@ import org.ksr.FuzzyLib.LinguisticVariable.LinguisticVariable;
 import org.ksr.FuzzyLib.FuzzySet.FuzzySetConstants;
 import org.ksr.FuzzyLib.FuzzySet.FuzzySetFactory;
 
+import java.io.IOException;
+
 public class BottomSalinity extends LinguisticVariable {
 
     public BottomSalinity() {
         super("sea_bottom_salinity");
-        appendMembershipFunctions();
+//        appendMembershipFunctions();
+        try {
+            loadMembershipFunctions("BottomSalinity");
+        } catch (IOException e) {
+            System.out.println("BottomSalinity");
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -23,6 +31,5 @@ public class BottomSalinity extends LinguisticVariable {
     public String toText(String fuzzySetName){
         return "that water is " + fuzzySetName + " on the bottom";
     }
-
 
 }

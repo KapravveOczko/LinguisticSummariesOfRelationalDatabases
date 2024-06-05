@@ -4,12 +4,19 @@ import org.ksr.FuzzyLib.FuzzySet.FuzzySetConstants;
 import org.ksr.FuzzyLib.FuzzySet.FuzzySetFactory;
 import org.ksr.FuzzyLib.LinguisticVariable.LinguisticVariable;
 
+import java.io.IOException;
+
 public class SurfaceSalinity extends LinguisticVariable {
 
     public SurfaceSalinity() {
         super("sea_surface_salinity");
-        appendMembershipFunctions();
-
+//        appendMembershipFunctions();
+        try {
+            loadMembershipFunctions("SurfaceSalinity");
+        } catch (IOException e) {
+            System.out.println("SurfaceSalinity");
+            throw new RuntimeException(e);
+        }
     }
 
     public void appendMembershipFunctions(){

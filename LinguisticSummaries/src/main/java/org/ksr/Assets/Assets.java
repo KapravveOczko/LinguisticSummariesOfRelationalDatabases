@@ -1,7 +1,9 @@
 package org.ksr.Assets;
 
+import org.ksr.DataController.JsonConnector;
 import org.ksr.FuzzyLib.LinguisticVariable.LinguisticVariable;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,5 +41,7 @@ public class Assets {
     public List<LinguisticVariable> getVariables() {
         return variables;
     }
+
+
 
 }

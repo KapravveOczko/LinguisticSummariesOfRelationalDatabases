@@ -1,7 +1,9 @@
 package org.ksr.FuzzyLib.LinguisticVariable;
 
+import org.ksr.DataController.JsonConnector;
 import org.ksr.FuzzyLib.FuzzySet.FuzzySet;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -9,6 +11,7 @@ import java.util.Optional;
 public abstract class LinguisticVariable {
     private String name;
     private List<FuzzySet> fuzzySets;
+    private static final JsonConnector jsonConnector = new JsonConnector();
 
 
     public LinguisticVariable(String name) {
@@ -63,8 +66,17 @@ public abstract class LinguisticVariable {
         return fuzzySetName;
     }
 
-
     public String getName() {
         return name;
+    }
+
+    public JsonConnector getJsonConnector() {
+        return jsonConnector;
+    }
+
+    protected void loadMembershipFunctions(String folderName) throws IOException {
+        for(FuzzySet membershipFunction : this.jsonConnector.loadAllFuzzySetsFromFolder(folderName)){
+            appendMembershipFunction(membershipFunction);
+        }
     }
 }

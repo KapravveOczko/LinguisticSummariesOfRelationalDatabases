@@ -4,13 +4,21 @@ import org.ksr.FuzzyLib.FuzzySet.FuzzySet;
 import org.ksr.FuzzyLib.FuzzySet.FuzzySetFactory;
 import org.ksr.FuzzyLib.LinguisticVariable.LinguisticVariable;
 
+import java.io.IOException;
+
 import static org.ksr.FuzzyLib.FuzzySet.FuzzySetConstants.TRAPEZOIDAL;
 import static org.ksr.FuzzyLib.FuzzySet.FuzzySetConstants.TRIANGULAR;
 
 public class SurfaceTemperature extends LinguisticVariable {
     public SurfaceTemperature() {
         super("sea_surface_temperature");
-        appendMembershipFunctions();
+//        appendMembershipFunctions();
+        try {
+            loadMembershipFunctions("SurfaceTemperature");
+        } catch (IOException e) {
+            System.out.println("SurfaceTemperature");
+            throw new RuntimeException(e);
+        }
     }
 
     public void appendMembershipFunctions() {

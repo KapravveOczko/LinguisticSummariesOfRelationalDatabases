@@ -3,13 +3,21 @@ package org.ksr.Assets;
 import org.ksr.FuzzyLib.FuzzySet.FuzzySetFactory;
 import org.ksr.FuzzyLib.LinguisticVariable.LinguisticVariable;
 
+import java.io.IOException;
+
 import static org.ksr.FuzzyLib.FuzzySet.FuzzySetConstants.TRAPEZOIDAL;
 import static org.ksr.FuzzyLib.FuzzySet.FuzzySetConstants.TRIANGULAR;
 
 public class WaveHeight extends LinguisticVariable {
     public WaveHeight() {
         super("significant_wave_height");
-        appendMembershipFunctions();
+//        appendMembershipFunctions();
+        try {
+            loadMembershipFunctions("WaveHeight");
+        } catch (IOException e) {
+            System.out.println("WaveHeight");
+            throw new RuntimeException(e);
+        }
     }
 
     public void appendMembershipFunctions() {

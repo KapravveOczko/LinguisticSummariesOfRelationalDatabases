@@ -15,7 +15,8 @@ public class Main {
 //        Gui gui = new Gui();
 //        gui.launchGui();
 
-        DatabaseConnector db = new DatabaseConnector("jdbc:postgresql://localhost:5432/ksr", "postgres", "");
+        try {
+            DatabaseConnector db = new DatabaseConnector("jdbc:postgresql://localhost:5432/ksr", "postgres", "");
         Assets assets = new Assets();
 
         Label quantifier = new Label("about one third", assets.getVariable("relative_quantifiers"));
@@ -41,5 +42,8 @@ public class Main {
             System.out.println(summary);
         }
 
+        }catch (Exception e){
+            System.out.println("Database connection failed");
+        }
     }
 }

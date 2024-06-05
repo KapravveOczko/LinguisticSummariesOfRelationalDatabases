@@ -3,13 +3,21 @@ package org.ksr.Assets;
 import org.ksr.FuzzyLib.FuzzySet.FuzzySetFactory;
 import org.ksr.FuzzyLib.LinguisticVariable.LinguisticVariable;
 
+import java.io.IOException;
+
 import static org.ksr.FuzzyLib.FuzzySet.FuzzySetConstants.GAUSSIAN;
 
 public class WaveFrequency extends LinguisticVariable {
 
     public WaveFrequency() {
         super("mean_wave_period");
-        appendMembershipFunctions();
+//        appendMembershipFunctions();
+        try {
+            loadMembershipFunctions("WaveFrequency");
+        } catch (IOException e) {
+            System.out.println("WaveFrequency");
+            throw new RuntimeException(e);
+        }
     }
 
     public void appendMembershipFunctions() {

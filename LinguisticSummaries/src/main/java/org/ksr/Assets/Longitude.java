@@ -3,12 +3,20 @@ package org.ksr.Assets;
 import org.ksr.FuzzyLib.FuzzySet.FuzzySetFactory;
 import org.ksr.FuzzyLib.LinguisticVariable.LinguisticVariable;
 
+import java.io.IOException;
+
 import static org.ksr.FuzzyLib.FuzzySet.FuzzySetConstants.TRAPEZOIDAL;
 
 public class Longitude extends LinguisticVariable {
     public Longitude() {
         super("longitude");
-        appendMembershipFunctions();
+//        appendMembershipFunctions();
+        try {
+            loadMembershipFunctions("Longitude");
+        } catch (IOException e) {
+            System.out.println("Longitude");
+            throw new RuntimeException(e);
+        }
     }
 
     public void appendMembershipFunctions() {

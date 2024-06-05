@@ -3,13 +3,21 @@ package org.ksr.Assets;
 import org.ksr.FuzzyLib.FuzzySet.FuzzySetFactory;
 import org.ksr.FuzzyLib.LinguisticVariable.LinguisticVariable;
 
+import java.io.IOException;
+
 import static org.ksr.FuzzyLib.FuzzySet.FuzzySetConstants.TRAPEZOIDAL;
 
 public class RelativeQuantifiers extends LinguisticVariable {
 
     public RelativeQuantifiers() {
         super("relative_quantifiers");
-        appendMembershipFunctions();
+//        appendMembershipFunctions();
+        try {
+            loadMembershipFunctions("RelativeQuantifiers");
+        } catch (IOException e) {
+            System.out.println("RelativeQuantifiers");
+            throw new RuntimeException(e);
+        }
     }
 
     public void appendMembershipFunctions() {

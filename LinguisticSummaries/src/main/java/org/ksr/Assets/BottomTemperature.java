@@ -3,13 +3,21 @@ package org.ksr.Assets;
 import org.ksr.FuzzyLib.FuzzySet.FuzzySetFactory;
 import org.ksr.FuzzyLib.LinguisticVariable.LinguisticVariable;
 
+import java.io.IOException;
+
 import static org.ksr.FuzzyLib.FuzzySet.FuzzySetConstants.TRAPEZOIDAL;
 import static org.ksr.FuzzyLib.FuzzySet.FuzzySetConstants.TRIANGULAR;
 
 public class BottomTemperature extends LinguisticVariable {
     public BottomTemperature() {
         super("sea_bottom_temperature");
-        appendMembershipFunctions();
+//        appendMembershipFunctions();
+        try {
+            loadMembershipFunctions("BottomTemperature");
+        } catch (IOException e) {
+            System.out.println("BottomTemperature");
+            throw new RuntimeException(e);
+        }
     }
 
     public void appendMembershipFunctions() {

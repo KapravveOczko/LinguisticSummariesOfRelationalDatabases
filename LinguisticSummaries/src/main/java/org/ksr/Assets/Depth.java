@@ -3,13 +3,21 @@ package org.ksr.Assets;
 import org.ksr.FuzzyLib.FuzzySet.FuzzySetFactory;
 import org.ksr.FuzzyLib.LinguisticVariable.LinguisticVariable;
 
+import java.io.IOException;
+
 import static org.ksr.FuzzyLib.FuzzySet.FuzzySetConstants.TRAPEZOIDAL;
 
 public class Depth extends LinguisticVariable {
 
     public Depth() {
         super("mixed_layer_depth");
-        appendMembershipFunctions();
+//        appendMembershipFunctions();
+        try {
+            loadMembershipFunctions("Depth");
+        } catch (IOException e) {
+            System.out.println("Depth");
+            throw new RuntimeException(e);
+        }
     }
 
     public void appendMembershipFunctions(){
