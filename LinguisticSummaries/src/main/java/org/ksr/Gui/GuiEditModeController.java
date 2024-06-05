@@ -56,7 +56,7 @@ public class GuiEditModeController {
     @FXML
     public void initialize() {
         setTypes();
-        foo();
+//        foo();
 
         functionType.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override

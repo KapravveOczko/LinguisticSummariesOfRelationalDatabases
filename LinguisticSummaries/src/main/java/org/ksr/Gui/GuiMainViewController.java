@@ -6,27 +6,39 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import org.ksr.Assets.BottomSalinity;
+import org.ksr.AssetsController.Assets;
 import org.ksr.Assets.None;
-import org.ksr.Assets.SurfaceSalinity;
+import org.ksr.FuzzyLib.LinguisticSummary.Label;
 import org.ksr.FuzzyLib.LinguisticVariable.LinguisticVariable;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GuiMainViewController {
+
+    Assets assets = new Assets();
 
     @FXML
     private Button buttonGenerateLS;
     @FXML
-    private ChoiceBox<LinguisticVariable> quantifierChoice;
+    private ChoiceBox<Label> quantifierChoice;
+    
     @FXML
-    private ChoiceBox<LinguisticVariable> qualifierChoice;
+    private ChoiceBox<String> subjectChoice1;
     @FXML
-    private ChoiceBox<LinguisticVariable> summarizer1;
+    private ChoiceBox<String> subjectChoice2;
+    
     @FXML
-    private ChoiceBox<LinguisticVariable> summarizer2;
+    private ChoiceBox<Label> qualifierChoice;
+
+
     @FXML
-    private ChoiceBox<LinguisticVariable> summarizer3;
+    private ChoiceBox<LinguisticVariable> summarizerChoice1;
+    @FXML
+    private ChoiceBox<LinguisticVariable> summarizerChoice2;
+    @FXML
+    private ChoiceBox<LinguisticVariable> summarizerChoice3;
     @FXML
     private MenuItem editButton;
 
@@ -35,26 +47,36 @@ public class GuiMainViewController {
         initializeSummarizers();
         initializeQualifier();
         initializeQuantifiers();
+        initializeSubjects();
+    }
+
+    @FXML
+    public void initializeSubjects(){
+        subjectChoice1.getItems().addAll("none", "test_data", "test_small_data", "test_full_data", "test_irland_data", "test_north_data", "test_south_data");
+        subjectChoice2.getItems().addAll("none", "test_data", "test_small_data", "test_full_data", "test_irland_data", "test_north_data", "test_south_data");
     }
 
     @FXML
     public void initializeQuantifiers(){
-        quantifierChoice.getItems().addAll(summarizer1.getItems());
+        quantifierChoice.getItems().addAll(assets.getAllQuantifiers());
     }
 
     @FXML
     public void initializeQualifier(){
-        qualifierChoice.getItems().addAll(summarizer1.getItems());
+        qualifierChoice.getItems().addAll(assets.getAllVariables());
     }
     @FXML
     public void initializeSummarizers(){
-        LinguisticVariable bottomSalinity = new BottomSalinity();
-        LinguisticVariable surfaceSalinity = new SurfaceSalinity();
         LinguisticVariable none = new None("none");
-        summarizer1.getItems().addAll(none, bottomSalinity, surfaceSalinity);
-        summarizer2.getItems().addAll(summarizer1.getItems());
-        summarizer3.getItems().addAll(summarizer1.getItems());
 
+        summarizerChoice1.getItems().addAll(assets.getVariables());
+        summarizerChoice1.getItems().add(none);
+
+        summarizerChoice2.getItems().addAll(assets.getVariables());
+        summarizerChoice2.getItems().add(none);
+
+        summarizerChoice3.getItems().addAll(assets.getVariables());
+        summarizerChoice3.getItems().add(none);
     }
 
     @FXML

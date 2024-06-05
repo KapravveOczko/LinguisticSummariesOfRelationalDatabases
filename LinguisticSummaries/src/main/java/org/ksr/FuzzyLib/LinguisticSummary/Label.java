@@ -31,4 +31,9 @@ public class Label {
     public void setLinguisticVariable(LinguisticVariable linguisticVariable) {
         this.linguisticVariable = linguisticVariable;
     }
+
+    @Override
+    public String toString() {
+        return setName;
+    }
 }

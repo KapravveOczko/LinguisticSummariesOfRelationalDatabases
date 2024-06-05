@@ -1,10 +1,9 @@
 package org.ksr;
-import org.ksr.Assets.*;
+import org.ksr.AssetsController.Assets;
 import org.ksr.DataController.DatabaseConnector;
 import org.ksr.FuzzyLib.LinguisticSummary.Label;
-import org.ksr.FuzzyLib.LinguisticSummary.LinguisticSummary;
-import org.ksr.FuzzyLib.LinguisticSummary.LinguisticSummaryTwoSubject;
 import org.ksr.FuzzyLib.LinguisticVariable.LinguisticVariable;
+import org.ksr.Gui.Gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,12 +11,12 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-//        Gui gui = new Gui();
-//        gui.launchGui();
-
-        try {
-            DatabaseConnector db = new DatabaseConnector("jdbc:postgresql://localhost:5432/ksr", "postgres", "");
+        DatabaseConnector db = new DatabaseConnector("jdbc:postgresql://localhost:5432/ksr", "postgres", "");
         Assets assets = new Assets();
+
+        Gui gui = new Gui();
+        gui.launchGui();
+
 
         Label quantifier = new Label("about one third", assets.getVariable("relative_quantifiers"));
         Label qualifier = new Label("east of Ireland", assets.getVariable("longitude"));
@@ -29,21 +28,17 @@ public class Main {
 //        summarizers.add(assets.getVariable("mean_wave_direction"));
 
 
-
         //--------------------------------------------------------------------------------------------------------------//
 //        LinguisticSummary testSummary = new LinguisticSummary(db, qualifier, summarizers, quantifier);
 //        List<String> summaries = testSummary.createLinguisticSummary();
         //-------------------------------------------------------------------------------------------------------------//
-        LinguisticSummaryTwoSubject testSummaryTwoSubject = new LinguisticSummaryTwoSubject(db, "test_south_data", "test_north_data", qualifier, summarizers, quantifier);
-        List<String> summaries = testSummaryTwoSubject.createLinguisticSummaryTwoSubject();
+//        LinguisticSummaryTwoSubject testSummaryTwoSubject = new LinguisticSummaryTwoSubject(db, "test_south_data", "test_north_data", qualifier, summarizers, quantifier);
+//        List<String> summaries = testSummaryTwoSubject.createLinguisticSummaryTwoSubject();
 
 
-        for(String summary : summaries){
-            System.out.println(summary);
-        }
+//        for(String summary : summaries){
+//            System.out.println(summary);
+//        }
 
-        }catch (Exception e){
-            System.out.println("Database connection failed");
-        }
     }
 }

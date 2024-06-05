@@ -1082,15 +1082,15 @@ obliczeń rozmytych i~generatora podsumowań. Instrukcja użytkownika}
 
 W ramach niniejszej sekcji sprawozdania przeprowadzono serię eksperymentów mających na celu analizę skuteczności różnych rodzajów podsumowań jednopodmiotowych. Eksperymenty te zostały zrealizowane poprzez opracowanie tabel i rankingów podsumowań dla danych atrybutów. W każdym eksperymencie szczegółowo opisano zastosowane miary jakości, a także dokonano oceny jakości podsumowania optymalnego. Należy również wspomnieć że eksperymenty wykonywane były na całej bazie danych to jest 210 tysiącach rekordów.\\
 
-\noindent W trakcie wyznaczania miary jakości wygenerowanych podsumowań lingwistycznych wykorzystaliśmy wszystkie miary możliwe do wykorzystania dla danego przypadku zgodnie z materiałem źrudłowym \cite{niewiadomski19}. Dodatkowo w celu uzyskania wiarygodnych wyników wykorzystane zostały odpowiednie wagi nałożone na poszegulne miary jakości, ich rozkład zaprezentowany został w poniższych tabelach.
+\noindent W trakcie wyznaczania miary jakości wygenerowanych podsumowań lingwistycznych wykorzystaliśmy wszystkie miary możliwe do wykorzystania dla danego przypadku zgodnie z materiałem źródłowym \cite{niewiadomski19}. Dodatkowo w celu uzyskania wiarygodnych wyników wykorzystane zostały odpowiednie wagi nałożone na poszczególne miary jakości, ich rozkład zaprezentowany został w poniższych tabelach.
 
 
 \begin{table}[H]
     \centering
 \caption{Przyjęte wagi nałożone na miary jakości dla jednopodmiotowych podsumowań lingwistycznych typu pierwszego}
 \label{tab:my_label}
-    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|} \hline 
-        miara jakości & T1 & T2 & T3 & T4 & T5 & T6 & T7 & T8 & T9 & T10 & T11\\ \hline 
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
+        miara jakości & T1 & T2 & T3 & T4 & T5 & T6 & T7 & T8 & T9 & T10 & T11\\ \hline
         przyjęta waga & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & - & - & -\\ \hline
     \end{tabular}
 \end{table}
@@ -1099,8 +1099,8 @@ W ramach niniejszej sekcji sprawozdania przeprowadzono serię eksperymentów maj
     \centering
 \caption{Przyjęte wagi nałożone na miary jakości dla jednopodmiotowych podsumowań lingwistycznych typu drugiego}
 \label{tab:my_label}
-    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|} \hline 
-        miara jakości & T1 & T2 & T3 & T4 & T5 & T6 & T7 & T8 & T9 & T10 & T11\\ \hline 
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
+        miara jakości & T1 & T2 & T3 & T4 & T5 & T6 & T7 & T8 & T9 & T10 & T11\\ \hline
         przyjęta waga & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\ \hline
     \end{tabular}
 \end{table}
@@ -1109,7 +1109,7 @@ W ramach niniejszej sekcji sprawozdania przeprowadzono serię eksperymentów maj
 
 %======================================================================================
 
-\subsection{Eksperyment dla posumowania jednopodmiotowego w formie pierwszej dla maksymalnej ilosci sumaryzatorów}
+\subsection{Eksperyment dla posumowania jednopodmiotowego w formie pierwszej dla maksymalnej ilości sumaryzatorów}
 
 Do przeprowadzenia poniższego eksperymentu wykorzystane zostały następne wartości sumaryzatorów, oraz kwantyfikatorów:
 
@@ -1120,7 +1120,7 @@ Do przeprowadzenia poniższego eksperymentu wykorzystane zostały następne wart
 
 \subsubsection{Wyniki eksperymentu}
 
-\noindent W poniższej tabeli w kolumnie zamieszczone zostało 5 najlepszych podsumowań znlaezionych dla aplikacji uruchomionej z wybranymi prarametramy zamieszczonymi powyżej, łączna ilość znalezionych podsumowań wynosi 80. Dodatkowo wyznaczone zostało porównanie różnicy między najlepszym znalezionym rozwiązaniem, nazwanym tutaj podsumowaniem optymalnym.
+\noindent W poniższej tabeli w kolumnie zamieszczone zostało 5 najlepszych podsumowań znalezionych dla aplikacji uruchomionej z wybranymi parametrami zamieszczonymi powyżej, łączna ilość znalezionych podsumowań wynosi 80. Dodatkowo wyznaczone zostało porównanie różnicy między najlepszym znalezionym rozwiązaniem, nazwanym tutaj podsumowaniem optymalnym.
 
 \begin{longtable}{|p{0.9\linewidth}|c|c|}
 \hline
@@ -1134,7 +1134,7 @@ about one third records show: warm water temperature on sea surface, medium heig
 \hline
 \end{longtable}
 
-\noindent Średnia wszystkich miar jakości dla uzyskacnyh podsumowań wyniosła: 0.413
+\noindent Średnia wszystkich miar jakości dla uzyskanych podsumowań wyniosła: 0.413
 
 
 %======================================================================================
@@ -1149,7 +1149,7 @@ Do przeprowadzenia poniższego eksperymentu wykorzystane zostały te same warto�
 
 \subsubsection{Wyniki eksperymentu}
 
-\noindent Tak jak zostało to wykonane dla poprzedniej subsekcji poniższej zamieszczone zostało 5 najlepszych podsumowań znlaezionych dla aplikacji uruchomionej z wybranymi prarametramy zamieszczonymi powyżej. Dodatkowo wyznaczone zostało porównanie różnicy między najlepszym znalezionym rozwiązaniem, nazwanym tutaj podsumowaniem optymalnym.
+\noindent Tak jak zostało to wykonane dla poprzedniej subsekcji poniższej zamieszczone zostało 5 najlepszych podsumowań znalezionych dla aplikacji uruchomionej z wybranymi parametrami zamieszczonymi powyżej. Dodatkowo wyznaczone zostało porównanie różnicy między najlepszym znalezionym rozwiązaniem, nazwanym tutaj podsumowaniem optymalnym.
 
 \begin{longtable}{|p{0.9\linewidth}|c|c|}
 \hline
@@ -1163,7 +1163,7 @@ about one third records having that record was made east of Ireland show: warm w
 \hline
 \end{longtable}
 
-\noindent Średnia wszystkich miar jakości dla uzyskacnyh podsumowań wyniosła: 0.501
+\noindent Średnia wszystkich miar jakości dla uzyskanych podsumowań wyniosła: 0.501
 
 %======================================================================================
 
@@ -1181,7 +1181,7 @@ about one third records having that record was made east of Ireland show: warm w
 
 \section{Wielopodmiotowe podsumowania lingwistyczne i~ich miary jakości}
 
-\noindent Na potrzeby trego eksperymentu zmuszeni zostaliśmy wyostrzyć jeden ze zbiorów rozmytych, po gruntownej analizie zdecydowaliśmy się wyostrzyć zmienną lingwistyczną "latitude" ze względu na jej mniej więcej równy podział pomiędzy wartości. Dzięki tej operacji uzyskaliśmy 3 podmioty:
+\noindent Na potrzeby tego eksperymentu zmuszeni zostaliśmy wyostrzyć jeden ze zbiorów rozmytych, po gruntownej analizie zdecydowaliśmy się wyostrzyć zmienną lingwistyczną "latitude" ze względu na jej mniej więcej równy podział pomiędzy wartości. Dzięki tej operacji uzyskaliśmy 3 podmioty:
 
 \begin{itemize}
     \item records\_from\_north
@@ -1206,7 +1206,7 @@ about one third records having that record was made east of Ireland show: warm w
 \subsubsection{Przyjęte wartości niezbędne do wykonania eksperymentu}
 
 \begin{itemize}
-    \item[podmioty]: records\_from\_north, records\_from\_south 
+    \item[podmioty]: records\_from\_north, records\_from\_south
     \item[sumaryzatory]: sea\_surface\_temperature, significant\_wave\_height, mixed\_layer\_depth.
     \item[kwantyfikator relatywny]: about\_one\_third.
     \item[kwalifikator]: east\_of\_Ireland z przestrzeni zmiennej lingwistycznej longitude.
@@ -1214,7 +1214,7 @@ about one third records having that record was made east of Ireland show: warm w
 
 \subsubsection{Wyniki eksperymentu}
 
-\noindent Poniższej zamieszczone zostały najlepsze podsumowania dla każdego typu podsumowań lingwistycznych wygenerowanych dla dwuch podmiotów.
+\noindent Poniższej zamieszczone zostały najlepsze podsumowania dla każdego typu podsumowań lingwistycznych wygenerowanych dla dwóch podmiotów.
 
 \begin{longtable}{|p{0.9\linewidth}|c|}
 \hline
@@ -1268,6 +1268,22 @@ more test\_south\_data than test\_north\_data show: warm water temperature on se
 
 \section{Dyskusja, wnioski}
 
+W ramach przeprowadzonych eksperymentów dokonano analizy skuteczności różnych rodzajów podsumowań jednopodmiotowych oraz wielopodmiotowych, z uwzględnieniem różnych miar jakości. Eksperymenty przeprowadzone na bazie danych zawierającej 210 tysięcy rekordów wykazały, że dobór odpowiednich sumaryzatorów, kwantyfikatorów oraz kwalifikatorów jest kluczowy dla uzyskania optymalnych podsumowań lingwistycznych. Wyniki eksperymentów sugerują, że istnieją konkretne kombinacje tych elementów, które prowadzą do generowania podsumowań o wysokiej jakości. \\
+
+\noindent Jednopodmiotowe podsumowania lingwistyczne, szczególnie te generowane przy użyciu formy pierwszej, wykazały różnorodność w jakości podsumowań w zależności od zastosowanych sumaryzatorów. W eksperymencie z maksymalną ilością sumaryzatorów, najlepsze podsumowania miały miarę jakości T na poziomie 0.55, co wskazuje na umiarkowaną skuteczność w ujęciu ogólnym. Jednakże, uwzględnienie kwalifikatorów w formie drugiej podniosło wartość miar jakości, co sugeruje, że dodatkowe warunki mogą znacząco wpływać na precyzję podsumowań. \\
+
+\noindent W kontekście wielopodmiotowych podsumowań lingwistycznych, zaobserwowano, że metodologia ta jest szczególnie przydatna w analizie porównawczej różnych grup danych. Przeprowadzone eksperymenty pokazały, że porównania między różnymi podmiotami (np. danych z różnych regionów geograficznych) mogą dostarczać cennych informacji na temat dominujących cech i ich wzajemnych relacji. Generowanie wielopodmiotowych podsumowań lingwistycznych wykazało swoją skuteczność w uzyskiwaniu intuicyjnych i relatywnie wartościowych wniosków, co może być korzystne w różnych zastosowaniach praktycznych. \\
+
+\newpage
+Podsumowując, przeprowadzone badania wykazały, że:
+\begin{itemize}
+    \item Dobór odpowiednich sumaryzatorów, kwantyfikatorów i kwalifikatorów ma kluczowe znaczenie dla jakości podsumowań lingwistycznych.
+    \item Jednopodmiotowe podsumowania lingwistyczne mogą dostarczać wartościowych wniosków, jednak ich skuteczność zależy od użytych parametrów i warunków.
+    \item Wielopodmiotowe podsumowania lingwistyczne są szczególnie przydatne w analizie porównawczej i mogą dostarczać cennych informacji o relacjach między różnymi grupami danych.
+    \item Użycie odpowiednich wag dla miar jakości może prowadzić do bardziej zrównoważonych i realistycznych wyników, co zwiększa użyteczność podsumowań lingwistycznych w praktyce.
+    \item W przyszłości warto rozważyć dalsze badania nad optymalizacją doboru parametrów dla podsumowań lingwistycznych, a także nad ich zastosowaniami w różnych dziedzinach, takich jak analiza danych, zarządzanie informacją czy systemy wspomagania decyzji.
+\end{itemize}
+
 
 
 %=========================================================================================
@@ -1279,7 +1295,4 @@ more test\_south\_data than test\_north\_data show: warm water temperature on se
 \bibitem{dataBase} Marine Institute Monthly Model Means: https://data.world/marineinstitute/b2348da6-873f-4ebb-a03c-5280ee2cf025
 \bibitem{waves} Mechanizm falowania wod morskich Kryteria podzialu i typy falowania morz
 \end{thebibliography}
-
-Literatura zawiera wyłącznie źródła recenzowane i/lub o potwierdzonej wiarygodności,
-możliwe do weryfikacji i cytowane w sprawozdaniu.
 \end{document}

@@ -15,9 +15,9 @@ public class AbsoluteQuantifiers extends LinguisticVariable {
         super("absolute_quantifiers");
 //        appendMembershipFunctions();
         try {
-            loadMembershipFunctions("AbsoluteQualifiers");
+            loadMembershipFunctions("AbsoluteQuantifiers");
         } catch (IOException e) {
-            System.out.println("AbsoluteQualifiers not found");
+            System.out.println("AbsoluteQuantifiers not found");
             throw new RuntimeException(e);
         }
     }
