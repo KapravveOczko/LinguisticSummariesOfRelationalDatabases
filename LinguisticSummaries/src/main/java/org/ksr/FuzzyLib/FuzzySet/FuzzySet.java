@@ -18,6 +18,11 @@ public abstract class FuzzySet {
         return name;
     }
 
+    @Override
+    public String toString() {
+        return getName();
+    }
+
     public Double calculateMembership(double x){
         return null;
     }

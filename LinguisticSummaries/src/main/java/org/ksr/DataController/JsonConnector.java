@@ -73,18 +73,18 @@ public class JsonConnector {
                 dto.getA(), dto.getB(), dto.getC(), dto.getD());
     }
 
-    public static void deleteFile(String folederName, String fileName) throws IOException {
-        String assetsDirectory = Paths.get("Assets", folederName).toAbsolutePath().toString();
+    public void deleteFile(String folderName, String fileName) throws IOException {
+        String assetsDirectory = Paths.get("Assets", folderName).toAbsolutePath().toString();
         File file = new File(assetsDirectory, fileName);
 
         if (file.exists()) {
             if (!file.delete()) {
-                throw new IOException("Nie udało się usunąć pliku: " + fileName);
+                throw new IOException("unable to delete: " + fileName);
             } else {
-                System.out.println("Plik " + fileName + " został pomyślnie usunięty.");
+                System.out.println("fuzzy set: " + fileName + " has been removed successfully");
             }
         } else {
-            throw new IOException("Plik " + fileName + " nie istnieje w folderze: " + assetsDirectory);
+            throw new IOException("fuzzy set: " + fileName + " does not exist in: " + assetsDirectory);
         }
     }
 }

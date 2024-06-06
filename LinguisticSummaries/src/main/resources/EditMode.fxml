@@ -204,7 +204,7 @@
                                     <children>
                                         <ChoiceBox fx:id="choiceToDeleteFrom" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="from" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                                        <Button fx:id="deleteButton" mnemonicParsing="false" text="delete" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                        <Button fx:id="deleteButton" mnemonicParsing="false" text="delete" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" onAction="#deleteMembershipFunction" />
                                         <ChoiceBox fx:id="choiceToDelete" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="delete" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                               <TextArea fx:id="membershipFunctionDeleteLog" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />

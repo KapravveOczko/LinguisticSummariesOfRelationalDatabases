@@ -66,9 +66,9 @@ public class GuiEditModeController {
 
     //----------deleting membership----------//
     @FXML
-    ChoiceBox<String> choiceToDelete;
+    ChoiceBox<LinguisticVariable> choiceToDeleteFrom;
     @FXML
-    ChoiceBox<String> choiceToDeleteFrom;
+    ChoiceBox<FuzzySet> choiceToDelete;
     @FXML
     Button deleteButton;
     @FXML
@@ -83,6 +83,7 @@ public class GuiEditModeController {
         membershipFunctionDeleteLog.setWrapText(true);
         initializeCreateView();
         initializeAddView();
+        initializeDeleteView();
     }
 
     @FXML
@@ -103,6 +104,26 @@ public class GuiEditModeController {
         }
     }
 
+    public String convertToPath(String name){
+
+        return switch (name) {
+            case "sea_bottom_temperature" -> "BottomTemperature";
+            case "absolute_quantifiers" -> "AbsoluteQuantifiers";
+            case "sea_bottom_salinity" -> "BottomSalinity";
+            case "mixed_layer_depth" -> "Depth";
+            case "latitude" -> "Latitude";
+            case "longitude" -> "Longitude";
+            case "relative_quantifiers" -> "RelativeQuantifiers";
+            case "sea_surface_salinity" -> "SurfaceSalinity";
+            case "sea_surface_temperature" -> "SurfaceTemperature";
+            case "mean_wave_direction" -> "WaveDirection";
+            case "mean_wave_period" -> "WaveFrequency";
+            case "significant_wave_height" -> "WaveHeight";
+            case "sea_surface_velocity" -> "WaveSpeed";
+            default -> "";
+        };
+    }
+
     //----------creating membership----------//
 
 
@@ -114,7 +135,7 @@ public class GuiEditModeController {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (newValue != null) {
-                    membershipFunctionLog.setText("Wybrano: " + newValue);
+                    membershipFunctionLog.setText("chosen: " + newValue);
                     updatePreview(functionType.getValue());
                 }
             }
@@ -154,53 +175,49 @@ public class GuiEditModeController {
         preview.setText(newValue);
     }
 
-    public void generateMembershipFunction() throws Exception{
+    public void generateMembershipFunction() throws Exception {
+        try {
+            double aValue = Double.parseDouble(a.getText());
+            double bValue = Double.parseDouble(b.getText());
+            double cValue = Double.parseDouble(c.getText());
+            double dValue = d.getText().isEmpty() ? 0 : Double.parseDouble(d.getText());
 
-        if(functionType.getValue().equals("TRIANGULAR")){
-            try {
-                createdFuzzySet = FuzzySetFactory.createMembershipFunction(FuzzySetConstants.TRIANGULAR,name.getText(), Double.parseDouble(a.getText()),Double.parseDouble(b.getText()),Double.parseDouble(c.getText()));
-                membershipFunctionLog.clear();
-                membershipFunctionLog.setText("membership function added to cash");
-                System.out.println(createdFuzzySet);
-                Label cretedLabel = new Label(createdFuzzySet.getName(), null);
-                fuzzySetList.getItems().add(cretedLabel);
+            if (functionType.getValue().equals("TRIANGULAR")) {
+                if (aValue == bValue || bValue == cValue || aValue == cValue) {
+                    membershipFunctionLog.setText("Values of a, b, and c must be distinct for TRIANGULAR function.");
+                    return;
+                }
+                createdFuzzySet = FuzzySetFactory.createMembershipFunction(FuzzySetConstants.TRIANGULAR, name.getText(), aValue, bValue, cValue);
+            } else if (functionType.getValue().equals("TRAPEZOIDAL")) {
+                if (aValue == bValue || bValue == cValue || cValue == dValue || aValue == dValue) {
+                    membershipFunctionLog.setText("Values of a, b, c, and d must be distinct for TRAPEZOIDAL function.");
+                    return;
+                }
+                createdFuzzySet = FuzzySetFactory.createMembershipFunction(FuzzySetConstants.TRAPEZOIDAL, name.getText(), aValue, bValue, cValue, dValue);
+            } else {
+                if (aValue == bValue) {
+                    membershipFunctionLog.setText("Values of a and b must be distinct for GAUSSIAN function.");
+                    return;
+                }
+                createdFuzzySet = FuzzySetFactory.createMembershipFunction(FuzzySetConstants.GAUSSIAN, name.getText(), aValue, bValue);
             }
-            catch (Exception e){
-                membershipFunctionLog.clear();
-                membershipFunctionLog.setText("a, b or c values are not numbers");
-            }
-        }
-        else if(functionType.getValue().equals("TRAPEZOIDAL")){
-            try {
-                createdFuzzySet = FuzzySetFactory.createMembershipFunction(FuzzySetConstants.TRAPEZOIDAL,name.getText(), Double.parseDouble(a.getText()),Double.parseDouble(b.getText()),Double.parseDouble(c.getText()),Double.parseDouble(d.getText()));
-                membershipFunctionLog.clear();
-                membershipFunctionLog.setText("membership function added to cash");
-                System.out.println(createdFuzzySet);
-                Label cretedLabel = new Label(createdFuzzySet.getName(), null);
-                fuzzySetList.getItems().add(cretedLabel);
-            }
-            catch (Exception e){
-                membershipFunctionLog.clear();
-                membershipFunctionLog.setText("a, b, c or d values are not numbers");
-            }
-        }
-        else {
-            try {
-                createdFuzzySet = FuzzySetFactory.createMembershipFunction(FuzzySetConstants.GAUSSIAN,name.getText(), Double.parseDouble(a.getText()),Double.parseDouble(b.getText()));
-                membershipFunctionLog.clear();
-                membershipFunctionLog.setText("membership function added to cash");
-                System.out.println(createdFuzzySet);
-                Label cretedLabel = new Label(createdFuzzySet.getName(), null);
-                fuzzySetList.getItems().add(cretedLabel);
-            }
-            catch (Exception e){
-                membershipFunctionLog.clear();
-                membershipFunctionLog.setText("a or b values are not numbers");
-            }
-        }
 
+            membershipFunctionLog.clear();
+            membershipFunctionLog.setText("Membership function added to cache");
+            System.out.println(createdFuzzySet);
+            Label createdLabel = new Label(createdFuzzySet.getName(), null);
+            fuzzySetList.getItems().add(createdLabel);
 
+        } catch (NumberFormatException e) {
+            membershipFunctionLog.clear();
+            membershipFunctionLog.setText("a, b, c, or d values are not numbers");
+        } catch (Exception e) {
+            membershipFunctionLog.clear();
+            membershipFunctionLog.setText("An error occurred: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
+
 
     //----------adding membership----------//
 
@@ -224,30 +241,39 @@ public class GuiEditModeController {
         }
     }
 
-    public String convertToPath(String name){
-
-        return switch (name) {
-            case "sea_bottom_temperature" -> "BottomTemperature";
-            case "absolute_quantifiers" -> "AbsoluteQuantifiers";
-            case "sea_bottom_salinity" -> "BottomSalinity";
-            case "mixed_layer_depth" -> "Depth";
-            case "latitude" -> "Latitude";
-            case "longitude" -> "Longitude";
-            case "relative_quantifiers" -> "RelativeQuantifiers";
-            case "sea_surface_salinity" -> "SurfaceSalinity";
-            case "sea_surface_temperature" -> "SurfaceTemperature";
-            case "mean_wave_direction" -> "WaveDirection";
-            case "mean_wave_period" -> "WaveFrequency";
-            case "significant_wave_height" -> "WaveHeight";
-            case "sea_surface_velocity" -> "WaveSpeed";
-            default -> "";
-        };
-    }
-
 
     //----------deleting membership----------//
-    public void deleteMembershipFunction(){
 
+    public void initializeDeleteView() {
+        choiceToDeleteFrom.getItems().addAll(assets.getVariables());
+        choiceToDeleteFrom.getItems().addAll(assets.getQuantifiers());
+
+        choiceToDeleteFrom.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<LinguisticVariable>() {
+            @Override
+            public void changed(ObservableValue<? extends LinguisticVariable> observable, LinguisticVariable oldValue, LinguisticVariable newValue) {
+                if (newValue != null) {
+                    membershipFunctionDeleteLog.setText("chosen: " + newValue.getName());
+                    try {
+                        choiceToDelete.getItems().clear();
+                        choiceToDelete.getItems().addAll(jsonConnector.loadAllFuzzySetsFromFolder(convertToPath(newValue.getName())));
+                    } catch (IOException e) {
+                        membershipFunctionDeleteLog.setText("An error occurred while loading fuzzy sets: " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
+    public void deleteMembershipFunction() throws Exception{
+        try {
+            jsonConnector.deleteFile(convertToPath(choiceToDeleteFrom.getValue().getName()), choiceToDelete.getValue().getName() + ".json");
+            membershipFunctionDeleteLog.clear();
+            membershipFunctionDeleteLog.setText("successfully deleted membership function");
+        } catch (Exception e) {
+            membershipFunctionDeleteLog.clear();
+            membershipFunctionDeleteLog.setText("unable to proceed: " + e.getMessage());
+        }
 
     }
 
