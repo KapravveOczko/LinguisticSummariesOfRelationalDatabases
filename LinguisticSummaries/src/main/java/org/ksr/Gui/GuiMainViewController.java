@@ -8,8 +8,11 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.ksr.AssetsController.Assets;
 import org.ksr.Assets.None;
+import org.ksr.DataController.DatabaseConnector;
 import org.ksr.FuzzyLib.LinguisticSummary.Label;
 import org.ksr.FuzzyLib.LinguisticVariable.LinguisticVariable;
+import org.ksr.FuzzyLib.LinguisticSummary.LinguisticSummary;
+import org.ksr.FuzzyLib.LinguisticSummary.LinguisticSummaryTwoSubject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,11 +46,15 @@ public class GuiMainViewController {
     private MenuItem editButton;
 
     @FXML
+    private TextArea output;
+
+    @FXML
     public void initialize() {
         initializeSummarizers();
         initializeQualifier();
         initializeQuantifiers();
         initializeSubjects();
+        output.setWrapText(true);
     }
 
     @FXML
@@ -63,7 +70,9 @@ public class GuiMainViewController {
 
     @FXML
     public void initializeQualifier(){
+        Label none = new Label("none", null);
         qualifierChoice.getItems().addAll(assets.getAllVariables());
+        qualifierChoice.getItems().add(none);
     }
     @FXML
     public void initializeSummarizers(){
@@ -80,8 +89,52 @@ public class GuiMainViewController {
     }
 
     @FXML
-    public void handleGenerateLSButtonClick() {
+    public void handleGenerateLSButtonClick() throws Exception{
+        output.clear();
         System.out.println("Generate linguistic summary button clicked!");
+        DatabaseConnector db = new DatabaseConnector("jdbc:postgresql://localhost:5432/ksr", "postgres", "");
+        List<String> summaries = new ArrayList<>();
+
+        Label none = new Label("none", null);
+        None noneNone = new None("none");
+
+        try {
+
+            Label qualifier = qualifierChoice.getValue();
+            Label quantifier = null;
+            if(!quantifierChoice.getValue().getSetName().equals(none.getSetName())){
+                quantifier = quantifierChoice.getValue();
+            }
+
+            List<LinguisticVariable> summarizers = new ArrayList<>();
+            if(!summarizerChoice1.getValue().getName().equals(noneNone.getName())){
+                summarizers.add(summarizerChoice1.getValue());
+            }
+            if(!summarizerChoice2.getValue().getName().equals(noneNone.getName())){
+                summarizers.add(summarizerChoice2.getValue());
+            }
+            if(!summarizerChoice3.getValue().getName().equals(noneNone.getName())){
+                summarizers.add(summarizerChoice3.getValue());
+            }
+
+            if(!subjectChoice1.getValue().equals("none") && subjectChoice2.getValue().equals("none")){
+                LinguisticSummary testSummary = new LinguisticSummary(db, subjectChoice1.getValue(), qualifier, summarizers, quantifier);
+                summaries = testSummary.createLinguisticSummary();
+            }
+            else if(!subjectChoice1.getValue().equals("none") && !subjectChoice2.getValue().equals("none") && !subjectChoice1.getValue().equals(subjectChoice2.getValue())) {
+                LinguisticSummaryTwoSubject testSummaryTwoSubject = new LinguisticSummaryTwoSubject(db, subjectChoice1.getValue(), subjectChoice2.getValue(), qualifier, summarizers, quantifier);
+                summaries = testSummaryTwoSubject.createLinguisticSummaryTwoSubject();
+            }
+
+            for(String summary : summaries){
+                System.out.println(summary);
+                output.appendText(summary);
+                output.appendText("\n\n");
+            }
+        }catch (Exception e){
+            output.appendText("unable to generate summaries for chosen values \n\n please check your choices and remember: \n set unused fields to 'none' \n while using one summarizer put your choice in first field");
+        }
+
     }
 
     @FXML

@@ -13,16 +13,18 @@ public class LinguisticSummary {
 
     private Label qualifier; //W
     private List<LinguisticVariable> summarizers;
+    private String subject;
     private Label quantifier;
     private DatabaseConnector db;
     TruthChecker truthChecker;
 
-    public LinguisticSummary(DatabaseConnector db, Label qualifier, List<LinguisticVariable> summarizers, Label quantifier) {
+    public LinguisticSummary(DatabaseConnector db, String subject, Label qualifier, List<LinguisticVariable> summarizers, Label quantifier) {
         this.qualifier = qualifier; //W
         this.summarizers = summarizers;
         this.quantifier = quantifier;
         this.truthChecker = TruthChecker.getInstance();
         this.db = db;
+        this.subject = subject;
     }
 
     public List<String> createLinguisticSummary() {
@@ -32,7 +34,7 @@ public class LinguisticSummary {
         List<List<Double>> data = new ArrayList<>();
 
         for (LinguisticVariable summarizer : this.summarizers) {
-            data.add(db.getDataFromColumn("test_full_data", summarizer.getName()));
+            data.add(db.getDataFromColumn(this.subject, summarizer.getName()));
         }
 
         List<List<Double>> filteredData = new ArrayList<>();
@@ -43,7 +45,7 @@ public class LinguisticSummary {
         List<Double> qualifierColumn = new ArrayList<>();
         // Filter data based on the qualifier (W)
         if (this.qualifier != null) {
-            qualifierColumn = db.getDataFromColumn("test_full_data", this.qualifier.getLinguisticVariable().getName());
+            qualifierColumn = db.getDataFromColumn(this.subject, this.qualifier.getLinguisticVariable().getName());
             FuzzySet fuzzySetQualifier = qualifier.getLinguisticVariable().getMembershipFunction(qualifier.getSetName());
 
             for (int i = 0; i < qualifierColumn.size(); i++) {

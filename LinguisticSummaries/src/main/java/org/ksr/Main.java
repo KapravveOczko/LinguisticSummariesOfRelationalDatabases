@@ -11,12 +11,13 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        DatabaseConnector db = new DatabaseConnector("jdbc:postgresql://localhost:5432/ksr", "postgres", "");
-        Assets assets = new Assets();
 
         Gui gui = new Gui();
         gui.launchGui();
 
+        /*
+        DatabaseConnector db = new DatabaseConnector("jdbc:postgresql://localhost:5432/ksr", "postgres", "");
+        Assets assets = new Assets();
 
         Label quantifier = new Label("about one third", assets.getVariable("relative_quantifiers"));
         Label qualifier = new Label("east of Ireland", assets.getVariable("longitude"));
@@ -39,6 +40,7 @@ public class Main {
 //        for(String summary : summaries){
 //            System.out.println(summary);
 //        }
+         */
 
     }
 }
