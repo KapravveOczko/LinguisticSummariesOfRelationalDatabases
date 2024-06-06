@@ -100,10 +100,10 @@ public class GuiMainViewController {
 
         try {
 
-            Label qualifier = qualifierChoice.getValue();
-            Label quantifier = null;
-            if(!quantifierChoice.getValue().getSetName().equals(none.getSetName())){
-                quantifier = quantifierChoice.getValue();
+            Label quantifier = quantifierChoice.getValue();
+            Label qualifier = null;
+            if(!qualifierChoice.getValue().getSetName().equals(none.getSetName())){
+                quantifier = qualifierChoice.getValue();
             }
 
             List<LinguisticVariable> summarizers = new ArrayList<>();
@@ -132,7 +132,7 @@ public class GuiMainViewController {
                 output.appendText("\n\n");
             }
         }catch (Exception e){
-            output.appendText("unable to generate summaries for chosen values \n\n please check your choices and remember: \n set unused fields to 'none' \n while using one summarizer put your choice in first field");
+            output.appendText("unable to generate summaries for chosen values \n\n please check your choices and remember: \n set unused fields to 'none' \n while using one summarizer put your choice in first field \n\n" + e.getMessage());
         }
 
     }

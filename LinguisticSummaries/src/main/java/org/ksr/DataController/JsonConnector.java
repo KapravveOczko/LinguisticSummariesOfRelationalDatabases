@@ -31,6 +31,12 @@ public class JsonConnector {
         }
     }
 
+    public void saveAllFuzzySetToFolder(FuzzySet fuzzySets, String folderName) throws IOException {
+        String assetsDirectory = Paths.get("Assets", folderName).toAbsolutePath().toString();
+        String filePath = assetsDirectory + File.separator + fuzzySets.getName() + ".json";
+        saveFuzzySetToFile(fuzzySets, filePath);
+    }
+
     public List<FuzzySet> loadAllFuzzySetsFromFolder(String folderName) throws IOException {
         String assetsDirectory = Paths.get("Assets", folderName).toAbsolutePath().toString();
         List<FuzzySet> fuzzySets = new ArrayList<>();
