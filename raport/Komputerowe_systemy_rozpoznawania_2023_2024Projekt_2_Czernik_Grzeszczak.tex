@@ -992,6 +992,7 @@ obliczeń rozmytych i~generatora podsumowań. Instrukcja użytkownika}
     \item[Label:] Klasa pomocnicza służąca do obsługi kwalifikatorów oraz kwantyfikatorów, przechowuje nazwę funkcji przynależności oraz zmienną lingwistyczną. Dzięki tem jesteśmy wstanie określić przestrzeń rozważań oraz posługiwać się odpowiednią funkcją podczas tworzenia podsumowań.
     \item[LinguisticSummary:]  Jest to klasa abstrakcyjna reprezentująca podsumowanie lingwistyczne. Posiada pola takie jak qualifier (kwalifikator), summarizer (sumatory), truthChecker (obiekt sprawdzający prawdziwość) i quantifier (kwantyfikator). Udostępnia metody do tworzenia podsumowań lingwistycznych. Uwaga, podmiot pobierany jest bezpośrednio z bazy danych wewnątrz "createLinguisticSummary".
     \item[TruthChecker:] Jest to klasa służąca do sprawdzania stopnia prawdziwości podsumowań lingwistycznych. Jest zaimplementowana jako Singleton, aby zapewnić tylko jedną instancję tej klasy w aplikacji.
+\item[elementy *TwoSubjects]: działają analogicznie co ich jedno podmiotowe odpowiedniki aczkolwiek obsługując dwa podmioty
 \end{itemize}
 
 \begin{figure}[H]
