@@ -1121,11 +1121,11 @@ Do przeprowadzenia poniższego eksperymentu wykorzystane zostały następne wart
 
 \subsubsection{Wyniki eksperymentu}
 
-\noindent W poniższej tabeli w kolumnie zamieszczone zostało 5 najlepszych podsumowań znalezionych dla aplikacji uruchomionej z wybranymi parametrami zamieszczonymi powyżej, łączna ilość znalezionych podsumowań wynosi 80. Dodatkowo wyznaczone zostało porównanie różnicy między najlepszym znalezionym rozwiązaniem, nazwanym tutaj podsumowaniem optymalnym.
+\noindent W poniższej tabeli w kolumnie zamieszczone zostało 5 najlepszych podsumowań znalezionych dla aplikacji uruchomionej z wybranymi parametrami zamieszczonymi powyżej, łączna ilość znalezionych podsumowań wynosi 80. Dodatkowo wyznaczone zostało porównanie różnicy między najlepszym znalezionym rozwiązaniem, nazwanym tutaj podsumowaniem optymalnym. Dodatkowo wprowadzony został wynik uśrednionej wartości wygenerowanych podsumowań, pozwala to na lepsze określenie jakości podsumowania optymalnego.
 
 \begin{longtable}{|p{0.9\linewidth}|c|c|}
 \hline
-\textbf{Podsumowanie} & \textbf{T} & \textbf{\(\Delta \)T} \\
+\textbf{Podsumowanie jednopodmiotowe typu pierwszego} & \textbf{T} & \textbf{\(\Delta \)T} \\
 \hline
 about one third records show: moderate water temperature on sea surface, medium height waves, that sea is moderately shallow & 0.55 & 0.0 \\ \hline
 about one third records show: moderate water temperature on sea surface, medium height waves, sea is almost on surface level depth & 0.519 & 0.03 \\ \hline
@@ -1150,11 +1150,11 @@ Do przeprowadzenia poniższego eksperymentu wykorzystane zostały te same warto�
 
 \subsubsection{Wyniki eksperymentu}
 
-\noindent Tak jak zostało to wykonane dla poprzedniej subsekcji poniższej zamieszczone zostało 5 najlepszych podsumowań znalezionych dla aplikacji uruchomionej z wybranymi parametrami zamieszczonymi powyżej. Dodatkowo wyznaczone zostało porównanie różnicy między najlepszym znalezionym rozwiązaniem, nazwanym tutaj podsumowaniem optymalnym.
+\noindent Tak jak zostało to wykonane dla poprzedniej subsekcji poniższej zamieszczone zostało 5 najlepszych podsumowań znalezionych dla aplikacji uruchomionej z wybranymi parametrami zamieszczonymi powyżej. Dodatkowo wyznaczone zostało porównanie różnicy między najlepszym znalezionym rozwiązaniem, nazwanym tutaj podsumowaniem optymalnym. Podobnie jak w poprzednim eksperymencie tu również przedstawiona została wartość średnia prawdziwości wygenerowanych podsumowań.
 
 \begin{longtable}{|p{0.9\linewidth}|c|c|}
 \hline
-\textbf{Podsumowanie} & \textbf{T} & \textbf{\(\Delta \)T} \\
+\textbf{Podsumowanie jednopodmiotowe typu drugiego} & \textbf{T} & \textbf{\(\Delta \)T} \\
 \hline
 about one third records having that record was made east of Ireland show: warm water temperature on sea surface, moderately height waves, that sea is moderately shallow & 0.635 & 0.0 \\ \hline
 about one third records having that record was made east of Ireland show: warm water temperature on sea surface, medium height waves, that sea is moderately shallow & 0.611 & 0.025 \\ \hline
@@ -1215,11 +1215,11 @@ about one third records having that record was made east of Ireland show: warm w
 
 \subsubsection{Wyniki eksperymentu}
 
-\noindent Poniższej zamieszczone zostały najlepsze podsumowania dla każdego typu podsumowań lingwistycznych wygenerowanych dla dwóch podmiotów.
+\noindent Poniższej zamieszczone zostały najlepsze podsumowania dla każdego typu podsumowań lingwistycznych wygenerowanych dla dwóch podmiotów. Wraz z uzyskanymi przez nie wartościami miary jakości i średnią uzyskaną dla niej wartością.
 
 \begin{longtable}{|p{0.9\linewidth}|c|}
 \hline
-\textbf{Podsumowanie} & \textbf{T} \\
+\textbf{Podsumowanie dwupodmiotowe typu pierwszego} & \textbf{T} \\
 \hline
 about one third test\_south\_data comparing to test\_north\_data show: moderate water temperature on sea surface, medium height waves, that sea is deep & 0.5 \\
 \hline
@@ -1229,7 +1229,7 @@ about one third test\_south\_data comparing to test\_north\_data show: moderate 
 
 \begin{longtable}{|p{0.9\linewidth}|c|}
 \hline
-\textbf{Podsumowanie} & \textbf{T} \\
+\textbf{Podsumowanie dwupodmiotowe typu drugiego} & \textbf{T} \\
 \hline
 about one third test\_south\_data comparing to test\_north\_data having that record was made east of Ireland show: moderate water temperature on sea surface, moderately height waves, that sea is moderately shallow & 0.212 \\
 \hline
@@ -1239,7 +1239,7 @@ about one third test\_south\_data comparing to test\_north\_data having that rec
 
 \begin{longtable}{|p{0.9\linewidth}|c|}
 \hline
-\textbf{Podsumowanie} & \textbf{T} \\
+\textbf{Podsumowanie dwupodmiotowe typu trzeciego} & \textbf{T} \\
 \hline
 about one third test\_south\_data having that record was made east of Ireland comparing to test\_north\_data show: cool water temperature on sea surface, medium height waves, that sea is deep & 0.788 \\
 \hline
@@ -1249,7 +1249,7 @@ about one third test\_south\_data having that record was made east of Ireland co
 
 \begin{longtable}{|p{0.9\linewidth}|c|}
 \hline
-\textbf{Podsumowanie} & \textbf{T} \\
+\textbf{Podsumowanie dwupodmiotowe typu czwartego} & \textbf{T} \\
 \hline
 more test\_south\_data than test\_north\_data show: warm water temperature on sea surface, medium height waves, that sea is moderately shallow & 0.266 \\
 \hline
@@ -1275,7 +1275,6 @@ W ramach przeprowadzonych eksperymentów dokonano analizy skuteczności różnyc
 
 \noindent W kontekście wielopodmiotowych podsumowań lingwistycznych, zaobserwowano, że metodologia ta jest szczególnie przydatna w analizie porównawczej różnych grup danych. Przeprowadzone eksperymenty pokazały, że porównania między różnymi podmiotami (np. danych z różnych regionów geograficznych) mogą dostarczać cennych informacji na temat dominujących cech i ich wzajemnych relacji. Generowanie wielopodmiotowych podsumowań lingwistycznych wykazało swoją skuteczność w uzyskiwaniu intuicyjnych i relatywnie wartościowych wniosków, co może być korzystne w różnych zastosowaniach praktycznych. \\
 
-\newpage
 Podsumowując, przeprowadzone badania wykazały, że:
 \begin{itemize}
     \item Dobór odpowiednich sumaryzatorów, kwantyfikatorów i kwalifikatorów ma kluczowe znaczenie dla jakości podsumowań lingwistycznych.
